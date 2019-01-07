@@ -37,4 +37,6 @@ public interface UserMapper {
 
     // 修改密码
     int updatePassword(@Param("userId") String userId, @Param("password") String password);
+    //更新头像
+    int updateHeadPhoto(@Param("path")String path,@Param("userId")String userId);
 }

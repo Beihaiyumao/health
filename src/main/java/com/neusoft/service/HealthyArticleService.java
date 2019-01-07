@@ -5,16 +5,21 @@ import com.github.pagehelper.PageHelper;
 
 import com.neusoft.DataDictionary.ArticleState;
 import com.neusoft.dao.HealthyArticleMapper;
-import com.neusoft.entity.ArticleComment;
-import com.neusoft.entity.CollectionArticle;
-import com.neusoft.entity.CommentReply;
-import com.neusoft.entity.HealthyArticle;
+import com.neusoft.entity.*;
+import com.neusoft.tool.FileUtil;
 import com.neusoft.tool.SystemTool;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.Page;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /***
@@ -32,12 +37,47 @@ public class HealthyArticleService {
      * @param healthyArticle
      * @return
      */
-    public int addHealthyArticle(HealthyArticle healthyArticle) {
-        healthyArticle.setArticleId(SystemTool.uuid());
-        healthyArticle.setCreateTime(SystemTool.getDateTime());
-        healthyArticle.setArticleState(ArticleState.ARTICLE_STATE_UNAUDITED.getCode());
-        int code = healthyArticleMapper.insert(healthyArticle);
-        return code;
+    public Result addHealthyArticle(HealthyArticle healthyArticle, MultipartFile file) {
+        if (!file.isEmpty()) {
+            // 获取文件名称,包含后缀
+            String fileName = file.getOriginalFilename();
+            //获取文件后缀
+            String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+            if (suffix.equals("png") || suffix.equals("jpg")) {
+
+                fileName = SystemTool.uuid() + "." + suffix;
+            } else {
+                return new Result(200, "只支持png，jgp后缀的图片", false);
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String time = sdf.format(new Date());
+            // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)
+            // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
+            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/" + "img/" + "healthArticle/" + time + "/";
+            File filePath = new File(path);
+            //如果目录不存在则自动创建
+            if (!filePath.exists()) {
+                filePath.mkdirs();
+            }
+            try {
+                // 该方法是对文件写入的封装，在tool类中，导入该包即可使用，后面会给出方法
+                FileUtil.fileupload(file.getBytes(), path, fileName);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            healthyArticle.setArticleId(SystemTool.uuid());
+            healthyArticle.setCreateTime(SystemTool.getDateTime());
+            healthyArticle.setArticleState(ArticleState.ARTICLE_STATE_UNAUDITED.getCode());
+            healthyArticle.setPic("img/healthArticle/" + time + "/" + fileName);
+            int code = healthyArticleMapper.insert(healthyArticle);
+            if (code == 1) {
+                return new Result(100, "发布文章成功", true);
+            } else {
+                return new Result(200, "发布文章失败", false);
+            }
+        }
+        return new Result(200, "未知错误", false);
     }
 
     /**
@@ -57,10 +97,14 @@ public class HealthyArticleService {
      * @param articleId
      * @return
      */
-    public int passHealthyArticle(String articleId) {
+    public Result passHealthyArticle(String articleId) {
 
         int code = healthyArticleMapper.passHealthyArticle(articleId, SystemTool.getDateTime());
-        return code;
+        if (code == 1) {
+            return new Result(100, "审核通过操作成功", true);
+        } else {
+            return new Result(200, "审核通过操作失败", false);
+        }
     }
 
     /**
@@ -69,9 +113,13 @@ public class HealthyArticleService {
      * @param articleId
      * @return
      */
-    public int outHealthyArticle(String articleId) {
+    public Result outHealthyArticle(String articleId) {
         int code = healthyArticleMapper.outHealthyArticle(articleId, SystemTool.getDateTime());
-        return code;
+        if (code == 1) {
+            return new Result(100, "审核不通过操作成功", true);
+        } else {
+            return new Result(200, "审核不通过操作失败", false);
+        }
     }
 
     /**
@@ -91,11 +139,16 @@ public class HealthyArticleService {
      * @param healthyArticle
      * @return
      */
-    public int updateHealthyArticle(HealthyArticle healthyArticle) {
+    public Result updateHealthyArticle(HealthyArticle healthyArticle) {
         healthyArticle.setCreateTime(SystemTool.getDateTime());
         healthyArticle.setArticleState(ArticleState.ARTICLE_STATE_UNAUDITED.getCode());
         int code = healthyArticleMapper.updateHealthyArticle(healthyArticle);
-        return code;
+        if (code == 1) {
+            return new Result(100, "更新成功", true);
+        } else {
+            return new Result(200, "更新失败", false);
+        }
+
     }
 
     /**
@@ -104,7 +157,7 @@ public class HealthyArticleService {
      * @param articleId
      * @return
      */
-    public int deleteHealthyArticleById(String articleId) {
+    public Result deleteHealthyArticleById(String articleId) {
         if (selectArticleCommentByArticleId(articleId).size() > 0) {
             deleteArticleCommentByArticleId(articleId);
         }
@@ -112,7 +165,11 @@ public class HealthyArticleService {
             deleteCommentReplyByArticleId(articleId);
         }
         int code = healthyArticleMapper.deleteHealthyArticleById(articleId);
-        return code;
+        if (code == 1) {
+            return new Result(100, "删除成功", true);
+        } else {
+            return new Result(200, "删除失败", false);
+        }
     }
 
     /**
@@ -121,11 +178,15 @@ public class HealthyArticleService {
      * @param articleComment
      * @return
      */
-    public int insertArticleComment(ArticleComment articleComment) {
+    public Result insertArticleComment(ArticleComment articleComment) {
         articleComment.setCommentId(SystemTool.uuid());
         articleComment.setCreateTime(SystemTool.getDateTime());
         int code = healthyArticleMapper.insertArticleComment(articleComment);
-        return code;
+        if (code == 1) {
+            return new Result(100, "评论成功", true);
+        } else {
+            return new Result(200, "评论失败", false);
+        }
     }
 
     /**
@@ -156,11 +217,15 @@ public class HealthyArticleService {
      * @param commentReply
      * @return
      */
-    public int insertCommentReply(CommentReply commentReply) {
+    public Result insertCommentReply(CommentReply commentReply) {
         commentReply.setReplyId(SystemTool.uuid());
         commentReply.setCreateTime(SystemTool.getDateTime());
         int code = healthyArticleMapper.insertCommentReply(commentReply);
-        return code;
+        if (code == 1) {
+            return new Result(100, "回复成功", true);
+        } else {
+            return new Result(200, "回复失败", false);
+        }
     }
 
     /**
@@ -203,10 +268,22 @@ public class HealthyArticleService {
      * @param collectionArticle
      * @return
      */
-    public int collectionArticles(CollectionArticle collectionArticle) {
+    public Result collectionArticles(CollectionArticle collectionArticle) {
         collectionArticle.setCollectionArticleId(SystemTool.uuid());
         collectionArticle.setCreateTime(SystemTool.getDateTime());
-        return healthyArticleMapper.collectionArticles(collectionArticle);
+        int code = healthyArticleMapper.collectionArticles(collectionArticle);
+        //如果已收藏则给出提示
+        String collectionArticleDTO = healthyArticleMapper.selectCollectionAritlceById(collectionArticle.getArticleId(), collectionArticle.getUserId());
+        if (collectionArticleDTO == null) {
+
+            if (code == 1) {
+                return new Result(100, "收藏成功", true);
+            } else {
+                return new Result(200, "收藏失败", false);
+            }
+        }
+        return new Result(200, "请不要重复收藏", false);
+
     }
 
     /**
@@ -215,8 +292,13 @@ public class HealthyArticleService {
      * @param articleId
      * @return
      */
-    public int deleteCollectionAritcleByArticleId(String articleId) {
-        return healthyArticleMapper.deleteCollectionAritcleByArticleId(articleId);
+    public Result deleteCollectionAritcleByArticleId(String articleId) {
+        int code= healthyArticleMapper.deleteCollectionAritcleByArticleId(articleId);
+        if(code==1){
+            return new Result(100,"取消收藏成功",true);
+        }else {
+            return new Result(200,"取消收藏失败",false);
+        }
     }
 
     /**

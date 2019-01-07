@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.neusoft.dao.QuestionMapper;
 import com.neusoft.entity.AnswerQuestion;
 import com.neusoft.entity.Question;
+import com.neusoft.entity.Result;
 import com.neusoft.tool.SystemTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,15 @@ public class QuestionService {
      * @param question
      * @return
      */
-    public int insertQuestion(Question question) {
+    public Result insertQuestion(Question question) {
         question.setQuestionId(SystemTool.uuid());
         question.setCreateTime(SystemTool.getDateTime());
-        return questionMapper.insert(question);
+        int code= questionMapper.insert(question);
+        if (code == 1) {
+            return new Result(100, "发布问题成功", true);
+        } else {
+            return new Result(200, "发布问题失败", false);
+        }
     }
 
     /**
@@ -57,8 +63,13 @@ public class QuestionService {
      * @param questionId
      * @return
      */
-    public int deleteQuestion(String questionId) {
-        return questionMapper.deleteByPrimaryKey(questionId);
+    public Result deleteQuestion(String questionId) {
+        int code= questionMapper.deleteByPrimaryKey(questionId);
+        if (code == 1) {
+            return new Result(100, "删除问题成功", true);
+        } else {
+            return new Result(200, "删除问题失败", false);
+        }
     }
 
     /**

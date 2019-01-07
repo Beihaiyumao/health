@@ -27,12 +27,8 @@ public class QuestionController {
      */
     @RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
     public Result insertQuestion(@RequestBody Question question) {
-        int code = questionService.insertQuestion(question);
-        if (code == 1) {
-            return new Result(100, "发布问题成功", true);
-        } else {
-            return new Result(200, "发布问题失败", false);
-        }
+        return questionService.insertQuestion(question);
+
     }
 
     /**
@@ -75,12 +71,8 @@ public class QuestionController {
      */
     @RequestMapping(value = "/deleteQuestion", method = RequestMethod.POST)
     public Result deleteQuestion(@RequestParam("questionId") String questionId) {
-        int code = questionService.deleteQuestion(questionId);
-        if (code == 1) {
-            return new Result(100, "删除问题成功", true);
-        } else {
-            return new Result(200, "删除问题失败", false);
-        }
+        return questionService.deleteQuestion(questionId);
+
     }
 
     /**

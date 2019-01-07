@@ -6,6 +6,7 @@ import com.neusoft.DataDictionary.BlackState;
 import com.neusoft.dao.DoctorMapper;
 import com.neusoft.entity.AnswerQuestion;
 import com.neusoft.entity.Doctor;
+import com.neusoft.entity.Result;
 import com.neusoft.tool.SystemTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,8 +77,13 @@ public class DoctorService {
      * @param doctorId
      * @return
      */
-    public int deleteDoctorById(String doctorId) {
-        return doctorMapper.deleteDoctorById(doctorId);
+    public Result deleteDoctorById(String doctorId) {
+       int code=doctorMapper.deleteDoctorById(doctorId);
+        if (code == 1) {
+            return new Result(100, "注销成功", true);
+        } else {
+            return new Result(200, "注销失败", false);
+        }
     }
 
     /**
@@ -96,8 +102,13 @@ public class DoctorService {
      * @param doctor
      * @return
      */
-    public int updateDoctorInfo(Doctor doctor) {
-        return doctorMapper.updateDoctorInfo(doctor);
+    public Result updateDoctorInfo(Doctor doctor) {
+        int code=doctorMapper.updateDoctorInfo(doctor);
+        if (code == 1) {
+            return new Result(100, "更新个人信息成功", true);
+        } else {
+            return new Result(200, "更新个人信息失败", false);
+        }
     }
 
     /**
@@ -117,10 +128,15 @@ public class DoctorService {
      * @param answerQuestion
      * @return
      */
-    public int insertAnswerQuestion(AnswerQuestion answerQuestion) {
+    public Result insertAnswerQuestion(AnswerQuestion answerQuestion) {
         answerQuestion.setAnswerId(SystemTool.uuid());
         answerQuestion.setCreateTime(SystemTool.getDateTime());
-        return doctorMapper.insertAnswerQuestion(answerQuestion);
+        int code= doctorMapper.insertAnswerQuestion(answerQuestion);
+        if (code == 1) {
+            return new Result(100, "感谢您的回答", true);
+        } else {
+            return new Result(200, "未知错误请重试", false);
+        }
     }
 
     /**
@@ -142,7 +158,12 @@ public class DoctorService {
      * @param answerId
      * @return
      */
-    public int deleteMyAnswerQuestion(String answerId) {
-        return doctorMapper.deleteMyAnswerQuestion(answerId);
+    public Result deleteMyAnswerQuestion(String answerId) {
+        int code=doctorMapper.deleteMyAnswerQuestion(answerId);
+        if (code == 1) {
+            return new Result(100, "删除回答成功", true);
+        } else {
+            return new Result(200, "删除回答失败", false);
+        }
     }
 }

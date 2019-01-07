@@ -110,12 +110,8 @@ public class DoctorController {
      */
     @PostMapping("/deleteDoctor")
     public Result deleteDoctorById(@RequestParam("doctorId") String doctorId) {
-        int code = doctorService.deleteDoctorById(doctorId);
-        if (code == 1) {
-            return new Result(100, "注销成功", true);
-        } else {
-            return new Result(200, "注销失败", false);
-        }
+        return doctorService.deleteDoctorById(doctorId);
+
     }
 
     /**
@@ -137,12 +133,8 @@ public class DoctorController {
      */
     @PostMapping("/updateInfo")
     public Result updateDoctorInfo(@RequestBody Doctor doctor) {
-        int code = doctorService.updateDoctorInfo(doctor);
-        if (code == 1) {
-            return new Result(100, "更新个人信息成功", true);
-        } else {
-            return new Result(200, "更新个人信息失败", false);
-        }
+        return  doctorService.updateDoctorInfo(doctor);
+
     }
 
     /**
@@ -181,12 +173,8 @@ public class DoctorController {
      */
     @PostMapping("/answerQuestion")
     public Result insertAnswerQuestion(@RequestBody AnswerQuestion answerQuestion) {
-        int code = doctorService.insertAnswerQuestion(answerQuestion);
-        if (code == 1) {
-            return new Result(100, "感谢您的回答", true);
-        } else {
-            return new Result(200, "未知错误请重试", false);
-        }
+        return doctorService.insertAnswerQuestion(answerQuestion);
+
     }
 
     /**
@@ -214,11 +202,7 @@ public class DoctorController {
      */
     @PostMapping("/deleteMyAnswerQuestion")
     public Result deleteMyAnswerQuestion(@RequestParam("answerId") String answerId) {
-        int code = doctorService.deleteMyAnswerQuestion(answerId);
-        if (code == 1) {
-            return new Result(100, "删除回答成功", true);
-        } else {
-            return new Result(200, "删除回答失败", false);
-        }
+        return doctorService.deleteMyAnswerQuestion(answerId);
+
     }
 }

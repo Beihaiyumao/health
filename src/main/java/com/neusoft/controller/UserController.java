@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.text.ParseException;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -156,7 +158,7 @@ public class UserController {
     public Result selectUserInfo(@RequestParam("userId") String userId) {
         User userInfo = userService.selectUserInfoByUserId(userId);
 
-        return new Result(100,"成功",true,userInfo);
+        return new Result(100, "成功", true, userInfo);
     }
 
     /*该方法主要作用是获得随机生成的颜色*/
@@ -291,6 +293,18 @@ public class UserController {
     public int updateUserInfo(@RequestBody User user) {
         int code = userService.updateUserInfo(user);
         return code;
+    }
+
+    /**
+     * 更新头像
+     *
+     * @param file
+     * @param userId
+     * @return
+     */
+    @PostMapping("/updateHeadPhoto")
+    public Result updateHeadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
+        return userService.updateHeadPhoto(file, userId);
     }
 
 }

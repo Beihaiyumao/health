@@ -152,7 +152,7 @@ public class AdminService {
      * @param msg
      * @return
      */
-    public int deleteUserById(String userId, String msg) {
+    public Result deleteUserById(String userId, String msg) {
         Blacklist deleteUser = new Blacklist();
         deleteUser.setBlacklistId(SystemTool.uuid());
         deleteUser.setCreateTime(SystemTool.getDateTime());
@@ -161,9 +161,14 @@ public class AdminService {
         deleteUser.setUserId(userId);
         deleteUser.setMsg(msg);
         deleteUser.setRole(Role.USER.getCode());
-        //更新用户表字段
-        adminMapper.updateUserBlackState(userId);
-        return adminMapper.deleteUserById(deleteUser);
+        int code = adminMapper.deleteUserById(deleteUser);
+        if (code == 1) {
+            //更新用户表字段
+            adminMapper.updateUserBlackState(userId);
+            return new Result(100, "已成功拉黑该用户", true);
+        } else {
+            return new Result(200, "拉黑失败", false);
+        }
     }
 
     /**
@@ -173,7 +178,7 @@ public class AdminService {
      * @param msg
      * @return
      */
-    public int selectDoctorInfoById(String doctorId, String msg) {
+    public Result selectDoctorInfoById(String doctorId, String msg) {
         Blacklist deleteDoctor = new Blacklist();
         deleteDoctor.setBlacklistId(SystemTool.uuid());
         deleteDoctor.setCreateTime(SystemTool.getDateTime());
@@ -182,9 +187,14 @@ public class AdminService {
         deleteDoctor.setUserId(doctorId);
         deleteDoctor.setEmail(doctorInfo.getEmail());
         deleteDoctor.setRole(Role.DOCTOR.getCode());
-        //更新医生表字段
-        adminMapper.updateDoctorBlackState(doctorId);
-        return adminMapper.deleteUserById(deleteDoctor);
+        int code = adminMapper.deleteUserById(deleteDoctor);
+        if (code == 1) {
+            //更新医生表字段
+            adminMapper.updateDoctorBlackState(doctorId);
+            return new Result(100, "已成功拉黑该医生", true);
+        } else {
+            return new Result(200, "拉黑失败", false);
+        }
     }
 
     /**

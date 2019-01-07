@@ -178,4 +178,10 @@
         password=#{password}
         where user_id=#{userId}
     </update>
+    <update id="updateHeadPhoto" parameterType="com.neusoft.entity.User">
+        update user
+        SET
+        pic=#{path}
+        where user_id=#{userId}
+    </update>
 </mapper>

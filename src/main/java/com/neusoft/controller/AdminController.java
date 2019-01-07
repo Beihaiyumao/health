@@ -173,12 +173,8 @@ public class AdminController {
      */
     @PostMapping("/blackUser")
     public Result deleteUserById(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
-        int code = adminService.deleteUserById(userId, msg);
-        if (code == 1) {
-            return new Result(100, "已成功拉黑该用户", true);
-        } else {
-            return new Result(200, "拉黑失败", false);
-        }
+        return adminService.deleteUserById(userId, msg);
+
     }
 
     /**
@@ -190,12 +186,8 @@ public class AdminController {
      */
     @PostMapping("/blackDoctor")
     public Result selectDoctorInfoById(@RequestParam("doctorId") String doctorId, @RequestParam("msg") String msg) {
-        int code = adminService.selectDoctorInfoById(doctorId, msg);
-        if (code == 1) {
-            return new Result(100, "已成功拉黑该医生", true);
-        } else {
-            return new Result(200, "拉黑失败", false);
-        }
+        return adminService.selectDoctorInfoById(doctorId, msg);
+
     }
 
     /**

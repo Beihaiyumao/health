@@ -16,6 +16,11 @@ server:
 spring:
   profiles:
     active: dev
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 200MB
 
 mybatis:
     typeAliasesPackage: com.neusoft
