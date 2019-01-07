@@ -1,0 +1,35 @@
+# 项目名称、版本、版权年份
+collect:
+  name: Health
+
+  version: 0.1.0
+  copyrightYear: 2018
+
+#开发环境配置
+server:
+  #端口
+  port: 8002
+  tomcat:
+    uri-encoding: utf-8
+  context-path: /api/v1
+
+spring:
+  profiles:
+    active: dev
+
+mybatis:
+    typeAliasesPackage: com.neusoft
+    mapperLocations: classpath:mapper/*Mapper.xml
+#日志配置
+logging:
+  level:
+    com.asiainfo.collect: debug
+    org.springframework: WARN
+    org.spring.springboot.dao: debug
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+

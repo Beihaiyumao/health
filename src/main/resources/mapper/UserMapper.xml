@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.neusoft.entity.User">
+        <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="pic" property="pic" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    user_id, username, password, sex, email, user_phone, create_time, pic, address
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.neusoft.entity.User">
+    insert into user (user_id, username, password, 
+      sex, email, user_phone, 
+      create_time, pic, address
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{pic,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.neusoft.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="userPhone != null">
+                user_phone,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pic != null">
+                #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.entity.User">
+        update user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                user_phone = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pic != null">
+                pic = #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateUserInfo" parameterType="com.neusoft.entity.User" useGeneratedKeys="true" keyProperty="user_id">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+    <sql id="userInfo">
+    a.user_id as userId ,
+    a.username as username,
+    a.password as
+    password,
+    a.sex as sex,
+    a.email as email,
+    a.user_phone as phone,
+    a.create_time as createTime,
+    a.pic as pic,
+    a.address as address,
+    a.black_state as blackState
+  </sql>
+    <insert id="registNewUser">
+    insert into user
+    value(#{userId},#{username},#{password},#{sex},#{email},#{phone},#{createTime},#{pic},#{address},#{blackState})
+  </insert>
+    <select id="login" resultType="com.neusoft.entity.User">
+        select
+        <include refid="userInfo"></include>
+        from user a
+        where a.email=#{email}
+    </select>
+    <delete id="deleteUser">
+    delete a* from user a where a.user_id=#{userId}
+  </delete>
+    <select id="selectUserInfoByUserId" resultType="com.neusoft.entity.User">
+        select
+        <include refid="userInfo"></include>
+        from user a
+        where a.user_id=#{userId}
+    </select>
+
+    <select id="selectUserBlackMsg" resultType="java.lang.String">
+    SELECT a.msg from blacklist a where a.email=#{email} and a.role='000100000010' order by create_time desc limit 1
+    </select>
+    <update id="updatePassword" parameterType="com.neusoft.entity.User" >
+        UPDATE user
+        SET
+        password=#{password}
+        where user_id=#{userId}
+    </update>
+</mapper>

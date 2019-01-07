@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.HealthyArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.entity.HealthyArticle" >
+    <id column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="article" property="article" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="article_state" property="articleState" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="chage_article_state_time" property="changeAtricleStateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    article_id as articleId,
+    title as title,
+    pic as pic,
+    author as author,
+    article as article,
+    content as content,
+    article_state as articleState,
+    create_time as createTime,
+    chage_article_state_time as changeAtricleStateTime
+  </sql>
+  <sql id="Article_Comment" >
+    comment_id as commentId,
+    article_id as articleId,
+    content as content,
+    user_id as userId,
+    create_time as createTime
+  </sql>
+  <sql id="Comment_Reply_List" >
+    reply_id as replyId,
+    user_id as userId,
+    comment_id as commentId,
+    content as content,
+    to_user_id as toUserId,
+    article_id as articleId,
+    create_time as createTime
+  </sql>
+  <select id="selectHealthyArticleById" resultType="com.neusoft.entity.HealthyArticle" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from healthy_article
+    where article_id = #{articleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteHealthyArticleById" parameterType="java.lang.String" >
+    delete from healthy_article
+    where article_id = #{articleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.entity.HealthyArticle" useGeneratedKeys="true" keyProperty="article_id">
+    insert into healthy_article (article_id, title, pic, 
+      author, article, content, 
+      article_state, create_time, chage_article_state_time
+      )
+    values (#{articleId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR},
+      #{author,jdbcType=VARCHAR}, #{article,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{articleState,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{changeAtricleStateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.entity.HealthyArticle" useGeneratedKeys="true" keyProperty="article_id">
+    insert into healthy_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="article != null" >
+        article,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="articleState != null" >
+        article_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        #{articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="article != null" >
+        #{article,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="articleState != null" >
+        #{articleState,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateHealthyArticle" parameterType="com.neusoft.entity.HealthyArticle" >
+    update healthy_article
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="article != null" >
+        article = #{article,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="articleState != null" >
+        article_state = #{articleState,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changeAtricleStateTime != null" >
+        chage_article_state_time = #{changeAtricleStateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.entity.HealthyArticle" >
+    update healthy_article
+    set title = #{title,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      article = #{article,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      article_state = #{articleState,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      chage_article_state_time = #{changeAtricleStateTime,jdbcType=TIMESTAMP}
+    where article_id = #{articleId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectHealthyArticleByTitle" resultType="com.neusoft.entity.HealthyArticle">
+    select
+    <include refid="Base_Column_List" />
+    from healthy_article
+    where title like CONCAT(CONCAT('%',#{title}), '%')
+  </select>
+  <update id="passHealthyArticle" parameterType="com.neusoft.entity.HealthyArticle" useGeneratedKeys="true" keyProperty="article_id">
+    update healthy_article
+    set article_state = '000000000020' , chage_article_state_time=#{dateTime,jdbcType=TIMESTAMP}where article_id = #{articleId}
+  </update>
+  <update id="outHealthyArticle" parameterType="com.neusoft.entity.HealthyArticle" useGeneratedKeys="true" keyProperty="article_id">
+    update healthy_article
+    set article_state = '000000000030' , chage_article_state_time=#{dateTime,jdbcType=TIMESTAMP}where article_id = #{articleId}
+  </update>
+  <insert id="insertArticleComment" parameterType="com.neusoft.entity.ArticleComment" >
+    insert into article_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        #{commentId,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteArticleCommentByArticleId" parameterType="java.lang.String">
+    delete from article_comment where article_id=#{articleId}
+  </delete>
+  <insert id="insertCommentReply" parameterType="com.neusoft.entity.CommentReply" >
+    insert into comment_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="replyId != null" >
+        reply_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="toUserId != null" >
+        to_user_id,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="replyId != null" >
+        #{replyId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="commentId != null" >
+        #{commentId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserId != null" >
+        #{toUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteCommentReplyByArticleId" parameterType="java.lang.String">
+    delete from comment_reply where article_id=#{articleId}
+  </delete>
+  <select id="selectArticleCommentByArticleId" resultType="com.neusoft.entity.ArticleComment" parameterType="java.lang.String" >
+    select
+    <include refid="Article_Comment" />
+    from article_comment
+    where article_id=#{articleId}
+  </select>
+  <select id="selectCommentRepiyByArticleId" resultType="com.neusoft.entity.CommentReply" parameterType="java.lang.String">
+    select
+    <include refid="Comment_Reply_List" />
+    from comment_reply
+    where article_id=#{articleId}
+  </select>
+  <select id="selectHealthyArticle" resultType="com.neusoft.entity.HealthyArticle">
+    SELECT
+    <include refid="Base_Column_List" />
+    from healthy_article where article_state='000000000020'
+  </select>
+  <insert id="collectionArticles" parameterType="com.neusoft.entity.CollectionArticle" >
+    insert into collection_article (collection_article_id, user_id, article_id,
+    create_time)
+    values (#{collectionArticleId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR},
+    #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <delete id="deleteCollectionAritcleByArticleId" >
+    delete from collection_article where article_id=#{articleId}
+  </delete>
+  <select id="selectCollectionAritlceById"  resultType="java.lang.String">
+    select a.collection_article_id from collection_article a where a.article_id=#{articleId} and a.user_id=#{userId}
+  </select>
+  <select id="selectHealthyArticleByUserId" resultType="com.neusoft.entity.HealthyArticle">
+    SELECT
+    a.article_id as articleId,
+    a.title as title,
+    a.pic as pic,
+    a.author as author,
+    a.article as article,
+    a.content as content,
+    a.article_state as articleState,
+    a.create_time as createTime,
+    a.chage_article_state_time as changeAtricleStateTime
+    from healthy_article a
+    LEFT JOIN collection_article b
+    on a.article_id = b.article_id
+    where b.user_id= #{userId}
+  </select>
+  <select id="selectArticleCommentPageByArticleId" resultType="com.neusoft.entity.ArticleComment" parameterType="java.lang.String" >
+    select
+    <include refid="Article_Comment" />
+    from article_comment
+    where article_id=#{articleId} order by create_time
+  </select>
+  <select id="selectCommentReplyByArticleCommentId" resultType="com.neusoft.entity.CommentReply" parameterType="java.lang.String">
+    select
+    <include refid="Comment_Reply_List" />
+    from comment_reply
+    where comment_id=#{articleCommentId} order by create_time
+  </select>
+</mapper>

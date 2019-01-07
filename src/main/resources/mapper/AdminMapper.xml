@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"   
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.dao.AdminMapper">
+	<sql id="adminInfo">
+		admin_id as adminId,
+		username as username,
+		password as password,
+		create_time as createTime
+	</sql>
+	<sql id="userInfo" >
+		a.user_id as userId,
+		a.username as username,
+		a.password as password,
+		a.sex as sex ,
+		a.email as email ,
+		a.user_phone as userPhone,
+		a.create_time as createTime,
+		a.pic as pic,
+		a.address as address,
+		a.black_state as blackState
+	</sql>
+	<sql id="healthyArticle" >
+		article_id as articleId,
+		title as title,
+		pic as pic,
+		author as author,
+		article as article,
+		content as content,
+		article_state as articleState,
+		create_time as createTime,
+		chage_article_state_time as changeAtricleStateTime
+	</sql>
+	<sql id="doctorInfo" >
+		doctor_id as doctorId,
+		username as username,
+		password as password,
+		sex as sex ,
+		phone as phone,
+		email as email,
+		hospital as hospital,
+		create_time as createTime,
+		black_state as blackState
+	</sql>
+	<sql id="Question" >
+		question_id as questionId,
+		user_id as userId,
+		title as title,
+		detail as detail,
+		create_time as createTime
+	</sql>
+	<select id="adminLogin" resultType="com.neusoft.entity.Admin">
+		select
+		<include refid="adminInfo"></include>
+		from admin
+		where username=#{username}
+	</select>
+	<insert id="addAdmin">
+		insert into admin
+		value(#{adminId},#{username},#{password},#{createTime})
+	</insert>
+	<delete id="deleteAdmin">
+		delete from admin where admin_id=#{adminId}
+	</delete>
+	<select id="selectAllUser" resultType="com.neusoft.entity.User">
+		select
+		<include refid="userInfo" />
+		from user a where a.black_state='000200000010'
+	</select>
+	<select id="selectAllDeleteUser" resultType="com.neusoft.entity.User">
+		select
+		<include refid="userInfo" />
+		from user a where a.black_state='000200000020'
+	</select>
+	<select id="selectExamineHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
+		SELECT
+		<include refid="healthyArticle"/>
+		from healthy_article
+		where article_state='000000000010'
+	</select>
+	<select id="selectPassHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
+		SELECT
+		<include refid="healthyArticle"/>
+		from healthy_article
+		where article_state='000000000020'
+	</select>
+	<select id="selectOutHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
+		SELECT
+		<include refid="healthyArticle" />
+		from healthy_article
+		where article_state='000000000030'
+	</select>
+	<select id="selectAllAdmin" resultType="com.neusoft.entity.Admin">
+		SELECT
+		<include refid="adminInfo"></include>
+		from admin
+	</select>
+	<insert id="deleteUserById" parameterType="com.neusoft.entity.Blacklist">
+		INSERT INTO blacklist
+		VALUE (#{blacklistId},#{userId},#{role},#{email},#{msg},#{createTime})
+	</insert>
+	<update id="updateUserBlackState">
+		UPDATE user SET black_state ='000200000020' where user_id=#{userId}
+	</update>
+	<update id="updateDoctorBlackState">
+				UPDATE doctor SET black_state ='000200000020' where doctor_id=#{doctorId}
+	</update>
+	<select id="selectAllDoctor" resultType="com.neusoft.entity.Doctor">
+		select
+		<include refid="doctorInfo"/>
+		from doctor where black_state='000200000010'
+	</select>
+	<select id="selectAllDeleteDoctor" resultType="com.neusoft.entity.Doctor">
+		select
+		<include refid="doctorInfo"/>
+		from doctor where black_state='000200000020'
+	</select>
+	<select id="selseAllQuestion" resultType="com.neusoft.entity.Question">
+		SELECT
+		<include refid="Question"/>
+		FROM question
+	</select>
+	<select id="selectAllAnswerQuestion" resultType="com.neusoft.entity.AnswerQuestion">
+		SELECT
+		 a.answer_id as answerId,
+		 a.answer_detail as answerDetail,
+		 a.create_time as createTime
+		 from answer_question a
+	</select>
+	<select id="selectAllArticleComment" resultType="com.neusoft.entity.ArticleComment">
+		SELECT
+		a.comment_id as commentId,
+		a.content as content,
+		a.create_time as createTime
+		FROM article_comment a
+  	</select>
+	<select id="selectAllCommentReply" resultType="com.neusoft.entity.CommentReply">
+		SELECT
+		a.reply_id as replyId,
+		a.content as content,
+		a.create_time as createTime
+		from comment_reply a
+	</select>
+</mapper>

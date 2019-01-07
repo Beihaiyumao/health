@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.DoctorMapper">
+    <resultMap id="BaseResultMap" type="com.neusoft.entity.Doctor">
+        <id column="doctor_id" property="doctorId" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="hospital" property="hospital" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="doctorInfo">
+    doctor_id as doctorId,
+    username as username,
+    password as password,
+    sex as sex ,
+    phone as phone,
+    email as email,
+    hospital as hospital,
+    create_time as createTime,
+    black_state as blackState
+  </sql>
+    <select id="selectDoctorInfoById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="doctorInfo"/>
+        from doctor
+        where doctor_id = #{doctorId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from doctor
+    where doctor_id = #{doctorId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="doctorRegist" parameterType="com.neusoft.entity.Doctor">
+    insert into doctor (doctor_id, username, password, 
+      sex, phone, email, 
+      hospital, create_time,)
+    values (#{doctorId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{hospital,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{blackState})
+  </insert>
+    <insert id="insertSelective" parameterType="com.neusoft.entity.Doctor">
+        insert into doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">
+                doctor_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="hospital != null">
+                hospital,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="doctorId != null">
+                #{doctorId,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="hospital != null">
+                #{hospital,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.entity.Doctor">
+        update doctor
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="hospital != null">
+                hospital = #{hospital,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where doctor_id = #{doctorId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateDoctorInfo" parameterType="com.neusoft.entity.Doctor">
+    update doctor
+    set username = #{username,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      hospital = #{hospital,jdbcType=VARCHAR}
+    where doctor_id = #{doctorId,jdbcType=VARCHAR}
+  </update>
+    <select id="login" resultType="com.neusoft.entity.Doctor">
+        SELECT
+        <include refid="doctorInfo"/>
+        from doctor
+        where email=#{email}
+    </select>
+    <select id="allDoctor" resultType="com.neusoft.entity.Doctor">
+        SELECT
+        <include refid="doctorInfo"/>
+        from doctor wbere black_state='000200000010'
+    </select>
+    <delete id="deleteDoctorById">
+    DELETE  from doctor where doctor_id=#{doctorId}
+  </delete>
+    <select id="selectUserBlackMsg" resultType="java.lang.String">
+    SELECT a.msg from blacklist a where a.email=#{email} and a.role='000100000020' order by create_time desc limit 1
+  </select>
+    <update id="updatePassword" parameterType="com.neusoft.entity.Doctor">
+    UPDATE  doctor
+    set password=#{password}
+    where doctor_id=#{doctorId}
+  </update>
+    <insert id="insertAnswerQuestion" parameterType="com.neusoft.entity.AnswerQuestion">
+      insert into answer_question (answer_id, question_id, answer_detail,
+      doctor_id, create_time)
+       values (#{answerId,jdbcType=VARCHAR}, #{questionId,jdbcType=VARCHAR}, #{answerDetail,jdbcType=VARCHAR},
+      #{doctorId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <select id="myAnswerQuestion" resultType="com.neusoft.entity.AnswerQuestion">
+        select
+        a.answer_id as answerId,
+        a.answer_detail as answerDetail,
+        b.title as title,
+        b.detail as detail,
+        b.question_id as questionId,
+        c.username as userName
+        from answer_question a
+        LEFT  JOIN  question b
+        on a.question_id=b.question_id
+        LEFT JOIN  user c
+        on b.user_id=c.user_id
+        where a.doctor_id=#{doctorId}
+    </select>
+    <delete id="deleteMyAnswerQuestion" parameterType="com.neusoft.entity.AnswerQuestion">
+        DELETE  from answer_question where answer_id=#{answerId}
+    </delete>
+</mapper>
