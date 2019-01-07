@@ -178,9 +178,6 @@ public class HealthyArticleController {
     /**
      * 收藏文章
      *
-     *
-     * 
-     *
      * @param collectionArticle
      * @return
      */
