@@ -13,13 +13,21 @@
         <result column="address" property="address" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    user_id, username, password, sex, email, user_phone, create_time, pic, address
+    a.user_id as userId,
+    a.username as username,
+    a.password as password,
+    a.sex as sex,
+    a.email as email,
+    a.user_phone as userPhone,
+    a.create_time as createTime,
+    a.pic as pic,
+    a.address as address
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from user
-        where user_id = #{userId,jdbcType=VARCHAR}
+        from user a
+        where a.user_id = #{userId,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from user

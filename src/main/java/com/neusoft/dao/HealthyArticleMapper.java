@@ -70,7 +70,7 @@ public interface HealthyArticleMapper {
     //根据文章id查找评论列表分页
     Page<ArticleComment> selectArticleCommentPageByArticleId(String articleId);
 
-    //根据评论id查询回复
+    //根据评论id查询所有回复
     List<CommentReply> selectCommentReplyByArticleCommentId(String articleCommentId);
 
 }

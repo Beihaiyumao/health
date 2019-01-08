@@ -20,6 +20,16 @@ public class CommentReply {
 
     private Date createTime; //回复时间
 
+    private String userName; //回复者名字
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getReplyId() {
         return replyId;
     }

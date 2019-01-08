@@ -4,10 +4,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.dao.AdminMapper">
 	<sql id="adminInfo">
-		admin_id as adminId,
-		username as username,
-		password as password,
-		create_time as createTime
+		a.admin_id as adminId,
+		a.username as username,
+		a.password as password,
+		a.create_time as createTime
 	</sql>
 	<sql id="userInfo" >
 		a.user_id as userId,
@@ -22,39 +22,39 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		a.black_state as blackState
 	</sql>
 	<sql id="healthyArticle" >
-		article_id as articleId,
-		title as title,
-		pic as pic,
-		author as author,
-		article as article,
-		content as content,
-		article_state as articleState,
-		create_time as createTime,
-		chage_article_state_time as changeAtricleStateTime
+		a.article_id as articleId,
+		a.title as title,
+		a.pic as pic,
+		a.author as author,
+		a.article as article,
+		a.content as content,
+		a.article_state as articleState,
+		a.create_time as createTime,
+		a.chage_article_state_time as changeAtricleStateTime
 	</sql>
 	<sql id="doctorInfo" >
-		doctor_id as doctorId,
-		username as username,
-		password as password,
-		sex as sex ,
-		phone as phone,
-		email as email,
-		hospital as hospital,
-		create_time as createTime,
-		black_state as blackState
+		a.doctor_id as doctorId,
+		a.username as username,
+		a.password as password,
+		a.sex as sex ,
+		a.phone as phone,
+		a.email as email,
+		a.hospital as hospital,
+		a.create_time as createTime,
+		a.black_state as blackState
 	</sql>
 	<sql id="Question" >
-		question_id as questionId,
-		user_id as userId,
-		title as title,
-		detail as detail,
-		create_time as createTime
+		a.question_id as questionId,
+		a.user_id as userId,
+		a.title as title,
+		a.detail as detail,
+		a.create_time as createTime
 	</sql>
 	<select id="adminLogin" resultType="com.neusoft.entity.Admin">
 		select
 		<include refid="adminInfo"></include>
-		from admin
-		where username=#{username}
+		from admin a
+		where a.username=#{username}
 	</select>
 	<insert id="addAdmin">
 		insert into admin
@@ -76,25 +76,25 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="selectExamineHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
 		<include refid="healthyArticle"/>
-		from healthy_article
-		where article_state='000000000010'
+		from healthy_article a
+		where a.article_state='000000000010'
 	</select>
 	<select id="selectPassHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
 		<include refid="healthyArticle"/>
-		from healthy_article
-		where article_state='000000000020'
+		from healthy_article a
+		where a.article_state='000000000020'
 	</select>
 	<select id="selectOutHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
 		<include refid="healthyArticle" />
-		from healthy_article
-		where article_state='000000000030'
+		from healthy_article a
+		where a.article_state='000000000030'
 	</select>
 	<select id="selectAllAdmin" resultType="com.neusoft.entity.Admin">
 		SELECT
 		<include refid="adminInfo"></include>
-		from admin
+		from admin a
 	</select>
 	<insert id="deleteUserById" parameterType="com.neusoft.entity.Blacklist">
 		INSERT INTO blacklist
@@ -109,17 +109,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="selectAllDoctor" resultType="com.neusoft.entity.Doctor">
 		select
 		<include refid="doctorInfo"/>
-		from doctor where black_state='000200000010'
+		from doctor a where a.black_state='000200000010'
 	</select>
 	<select id="selectAllDeleteDoctor" resultType="com.neusoft.entity.Doctor">
 		select
 		<include refid="doctorInfo"/>
-		from doctor where black_state='000200000020'
+		from doctor a where a.black_state='000200000020'
 	</select>
 	<select id="selseAllQuestion" resultType="com.neusoft.entity.Question">
 		SELECT
 		<include refid="Question"/>
-		FROM question
+		FROM question a
 	</select>
 	<select id="selectAllAnswerQuestion" resultType="com.neusoft.entity.AnswerQuestion">
 		SELECT

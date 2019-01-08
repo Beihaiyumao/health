@@ -16,6 +16,20 @@ public class ArticleComment {
 
     private Date createTime; //评论时间
 
+    private String userName; //评论用户名
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getCommentId() {
         return commentId;
     }

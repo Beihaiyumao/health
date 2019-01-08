@@ -12,21 +12,21 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="doctorInfo">
-    doctor_id as doctorId,
-    username as username,
-    password as password,
-    sex as sex ,
-    phone as phone,
-    email as email,
-    hospital as hospital,
-    create_time as createTime,
-    black_state as blackState
+    a.doctor_id as doctorId,
+    a.username as username,
+    a.password as password,
+    a.sex as sex ,
+    a.phone as phone,
+    a.email as email,
+    a.hospital as hospital,
+    a.create_time as createTime,
+    a.black_state as blackState
   </sql>
     <select id="selectDoctorInfoById" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="doctorInfo"/>
-        from doctor
-        where doctor_id = #{doctorId,jdbcType=VARCHAR}
+        from doctor a
+        where a.doctor_id = #{doctorId,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from doctor
@@ -134,13 +134,13 @@
     <select id="login" resultType="com.neusoft.entity.Doctor">
         SELECT
         <include refid="doctorInfo"/>
-        from doctor
-        where email=#{email}
+        from doctor a
+        where  a.email=#{email}
     </select>
     <select id="allDoctor" resultType="com.neusoft.entity.Doctor">
         SELECT
         <include refid="doctorInfo"/>
-        from doctor wbere black_state='000200000010'
+        from doctor a wbere a.black_state='000200000010'
     </select>
     <delete id="deleteDoctorById">
     DELETE  from doctor where doctor_id=#{doctorId}
