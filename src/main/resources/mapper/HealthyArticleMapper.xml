@@ -311,6 +311,7 @@
   <select id="selectArticleCommentPageByArticleId" resultType="com.neusoft.entity.ArticleComment" parameterType="java.lang.String" >
     select
     b.username as userName,
+    b.pic as headPhoto,
     <include refid="Article_Comment" />
     from article_comment a
     LEFT JOIN user b
@@ -320,6 +321,7 @@
   <select id="selectCommentReplyByArticleCommentId" resultType="com.neusoft.entity.CommentReply" parameterType="java.lang.String">
     select
     b.username as userName,
+    b.pic as headPhoto,
     <include refid="Comment_Reply_List" />
     from comment_reply a
     LEFT  JOIN  user b

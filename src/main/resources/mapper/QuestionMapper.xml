@@ -113,10 +113,17 @@
     SELECT
     a.answer_detail as answerDetail,
     a.create_time as createTime,
-    b.username as doctorName
+    b.username as doctorName,
+    b.pic as doctorHeadPhoto,
+    d.username as userName,
+    d.pic as userHeadPhoto
     from answer_question a
     LEFT  JOIN  doctor b
     on b.doctor_id = a.doctor_id
+    LEFT  JOIN question c
+    on c.question_id=a.question_id
+    LEFT JOIN  user d
+    on c.user_id = d.user_id
     where a.question_id=#{questionId}
   </select>
 </mapper>

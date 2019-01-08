@@ -18,13 +18,33 @@ public class AnswerQuestion {
 
     private String doctorName; //医生名字
 
+    private String doctorHeadPhoto;// 医生头像
+
     private String userName; // 提问者名字
+
+    private String userHeadPhoto; //提问者头像
 
     private String title; //题目
 
     private String detail; // 详细内容
 
     private Date createTime; //创建时间
+
+    public String getDoctorHeadPhoto() {
+        return doctorHeadPhoto;
+    }
+
+    public void setDoctorHeadPhoto(String doctorHeadPhoto) {
+        this.doctorHeadPhoto = doctorHeadPhoto;
+    }
+
+    public String getUserHeadPhoto() {
+        return userHeadPhoto;
+    }
+
+    public void setUserHeadPhoto(String userHeadPhoto) {
+        this.userHeadPhoto = userHeadPhoto;
+    }
 
     public String getDoctorName() {
         return doctorName;

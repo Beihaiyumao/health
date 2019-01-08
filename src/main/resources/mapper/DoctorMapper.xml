@@ -20,7 +20,8 @@
     a.email as email,
     a.hospital as hospital,
     a.create_time as createTime,
-    a.black_state as blackState
+    a.black_state as blackState,
+    a.pic as pic
   </sql>
     <select id="selectDoctorInfoById" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
@@ -35,10 +36,10 @@
     <insert id="doctorRegist" parameterType="com.neusoft.entity.Doctor">
     insert into doctor (doctor_id, username, password, 
       sex, phone, email, 
-      hospital, create_time,)
+      hospital, create_time,pic)
     values (#{doctorId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{hospital,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{blackState})
+      #{hospital,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{blackState},#{pic})
   </insert>
     <insert id="insertSelective" parameterType="com.neusoft.entity.Doctor">
         insert into doctor
@@ -128,7 +129,8 @@
       sex = #{sex,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      hospital = #{hospital,jdbcType=VARCHAR}
+      hospital = #{hospital,jdbcType=VARCHAR},
+      pic =#{pic}
     where doctor_id = #{doctorId,jdbcType=VARCHAR}
   </update>
     <select id="login" resultType="com.neusoft.entity.Doctor">

@@ -18,6 +18,16 @@ public class ArticleComment {
 
     private String userName; //评论用户名
 
+    private String headPhoto; //用户头像
+
+    public String getHeadPhoto() {
+        return headPhoto;
+    }
+
+    public void setHeadPhoto(String headPhoto) {
+        this.headPhoto = headPhoto;
+    }
+
     public String getUserId() {
         return userId;
     }

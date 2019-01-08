@@ -22,6 +22,16 @@ public class CommentReply {
 
     private String userName; //回复者名字
 
+    private String headPhoto; //用户头像
+
+    public String getHeadPhoto() {
+        return headPhoto;
+    }
+
+    public void setHeadPhoto(String headPhoto) {
+        this.headPhoto = headPhoto;
+    }
+
     public String getUserName() {
         return userName;
     }
