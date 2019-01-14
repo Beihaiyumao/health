@@ -55,8 +55,8 @@ public class AdminController {
      *
      * @param adminId
      */
-    @RequestMapping(value = "/deleteAdmin/{adminId}", method = RequestMethod.POST)
-    public void deleteAdmin(@PathVariable("adminId") String adminId) {
+    @RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)
+    public void deleteAdmin(@RequestParam("adminId") String adminId) {
         adminService.deleteAdmin(adminId);
     }
 
@@ -79,7 +79,7 @@ public class AdminController {
      *
      * @return
      */
-    @RequestMapping(value = "/selectAllUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectAllUser", method = RequestMethod.GET)
     public PageInfo<User> selectAllUser(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<User> userList = adminService.selectAllUser(pageNum, pageSize);
@@ -95,7 +95,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allDeleteUser")
+    @GetMapping("/allDeleteUser")
     public PageInfo<User> selectAllDeleteUser(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                               @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<User> allDeleteUser = adminService.selectAllDeleteUser(pageNum, pageSize);
@@ -111,7 +111,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "examineHelthyArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "examineHelthyArticle", method = RequestMethod.GET)
     public PageInfo<HealthyArticle> selectExamineHelthyArticle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                                @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<HealthyArticle> examineHelthyArticle = adminService.selectExamineHelthyArticle(pageNum, pageSize);
@@ -126,7 +126,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "passHelthyArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "passHelthyArticle", method = RequestMethod.GET)
     public PageInfo<HealthyArticle> selectPassHelthyArticle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                             @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<HealthyArticle> passHelthyArticle = adminService.selectPassHelthyArticle(pageNum, pageSize);
@@ -141,7 +141,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "outHelthyArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "outHelthyArticle", method = RequestMethod.GET)
     public PageInfo<HealthyArticle> selectOutHelthyArticle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                            @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<HealthyArticle> outHelthyArticle = adminService.selectOutHelthyArticle(pageNum, pageSize);
@@ -156,7 +156,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "/selectAllAdmin", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectAllAdmin", method = RequestMethod.GET)
     public PageInfo<Admin> selectAllAdmin(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                           @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<Admin> adminList = adminService.selectAllAdmin(pageNum, pageSize);
@@ -171,7 +171,7 @@ public class AdminController {
      * @param msg
      * @return
      */
-    @PostMapping("/blackUser")
+    @GetMapping("/blackUser")
     public Result deleteUserById(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
         return adminService.deleteUserById(userId, msg);
 
@@ -184,7 +184,7 @@ public class AdminController {
      * @param msg
      * @return
      */
-    @PostMapping("/blackDoctor")
+    @GetMapping("/blackDoctor")
     public Result selectDoctorInfoById(@RequestParam("doctorId") String doctorId, @RequestParam("msg") String msg) {
         return adminService.selectDoctorInfoById(doctorId, msg);
 
@@ -197,7 +197,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allDoctor")
+    @GetMapping("/allDoctor")
     public PageInfo<Doctor> selectAllDoctor(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                             @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<Doctor> allDoctor = adminService.selectAllDoctor(pageNum, pageSize);
@@ -212,7 +212,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allDeleteDoctor")
+    @GetMapping("/allDeleteDoctor")
     public PageInfo<Doctor> selectAllDeleteDoctor(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                   @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<Doctor> allDeleteDoctor = adminService.selectAllDeleteDoctor(pageNum, pageSize);
@@ -227,7 +227,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allQuestion")
+    @GetMapping("/allQuestion")
     public PageInfo<Question> selseAllQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<Question> allQuestion = adminService.selseAllQuestion(pageNum, pageSize);
@@ -242,7 +242,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allAnswerQuestion")
+    @GetMapping("/allAnswerQuestion")
     public PageInfo<AnswerQuestion> selectAllAnswerQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                             @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<AnswerQuestion> allAnswerQuestion = adminService.selectAllAnswerQuestion(pageNum, pageSize);
@@ -257,7 +257,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allArticleComment")
+    @GetMapping("/allArticleComment")
     public PageInfo<ArticleComment> selectAllArticleComment(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                             @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<ArticleComment> allArticleComment = adminService.selectAllArticleComment(pageNum, pageSize);
@@ -272,7 +272,7 @@ public class AdminController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allCommentReply")
+    @GetMapping("/allCommentReply")
     public PageInfo<CommentReply> selectAllCommentReply(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<CommentReply> allCommentReply = adminService.selectAllCommentReply(pageNum, pageSize);

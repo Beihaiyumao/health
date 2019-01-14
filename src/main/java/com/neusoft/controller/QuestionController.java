@@ -38,7 +38,7 @@ public class QuestionController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "/allQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/allQuestion", method = RequestMethod.GET)
     public PageInfo<Question> selectAllQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                 @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<Question> allQuestion = questionService.selectAllQuestion(pageNum, pageSize);
@@ -54,7 +54,7 @@ public class QuestionController {
      * @param title
      * @return
      */
-    @RequestMapping(value = "/selectQuestionByTitle", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectQuestionByTitle", method = RequestMethod.GET)
     public PageInfo<Question> selectQuestionByTitle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                     @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                     @RequestParam("title") String title) {
@@ -69,7 +69,7 @@ public class QuestionController {
      * @param questionId
      * @return
      */
-    @RequestMapping(value = "/deleteQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteQuestion", method = RequestMethod.GET)
     public Result deleteQuestion(@RequestParam("questionId") String questionId) {
         return questionService.deleteQuestion(questionId);
 
@@ -83,7 +83,7 @@ public class QuestionController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/myQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
     public PageInfo<Question> myQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                          @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                          @RequestParam("userId") String userId) {
@@ -100,7 +100,7 @@ public class QuestionController {
      * @param questionId
      * @return
      */
-    @PostMapping("/questionAnswer")
+    @GetMapping("/questionAnswer")
     public PageInfo<AnswerQuestion> selectAnswerQuestionByQuestionId(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                                      @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                                      @RequestParam("questionId") String questionId) {

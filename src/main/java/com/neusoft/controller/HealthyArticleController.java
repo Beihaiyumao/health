@@ -34,7 +34,7 @@ public class HealthyArticleController {
      * @param healthyArticle
      */
     @RequestMapping(value = "/addHealthyArticle", method = RequestMethod.POST)
-    public Result addHealthyArticle(@Validated HealthyArticle healthyArticle, @RequestParam("file") MultipartFile file) {
+    public Result addHealthyArticle(@RequestBody HealthyArticle healthyArticle, @RequestParam("file") MultipartFile file) {
         return healthyArticleService.addHealthyArticle(healthyArticle, file);
 
     }
@@ -44,7 +44,7 @@ public class HealthyArticleController {
      *
      * @param title
      */
-    @RequestMapping(value = "/selectHealthyArticleByTitle", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectHealthyArticleByTitle", method = RequestMethod.GET)
     public List<HealthyArticle> selectHealthyArticleByTitle(@RequestParam("title") String title) {
         List<HealthyArticle> healthyArticleList = healthyArticleService.selectHealthyArticleByTitle(title);
         return healthyArticleList;
@@ -56,7 +56,7 @@ public class HealthyArticleController {
      * @param articleId
      * @return
      */
-    @RequestMapping(value = "/passHealthyArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/passHealthyArticle", method = RequestMethod.GET)
     public Result passHealthyArticle(@RequestParam("articleId") String articleId) {
         return healthyArticleService.passHealthyArticle(articleId);
 
@@ -68,7 +68,7 @@ public class HealthyArticleController {
      * @param articleId
      * @return
      */
-    @RequestMapping(value = "/outHealthyArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/outHealthyArticle", method = RequestMethod.GET)
     public Result outHealthyArticle(@RequestParam("articleId") String articleId) {
         return healthyArticleService.outHealthyArticle(articleId);
 
@@ -80,7 +80,7 @@ public class HealthyArticleController {
      * @param articleId
      * @return
      */
-    @RequestMapping(value = "/selectHealthyArticleById", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectHealthyArticleById", method = RequestMethod.GET)
     public HealthyArticle selectHealthyArticleById(@RequestParam("articleId") String articleId) {
         return healthyArticleService.selectHealthyArticleById(articleId);
     }
@@ -103,7 +103,7 @@ public class HealthyArticleController {
      * @param articleId
      * @return
      */
-    @RequestMapping(value = "deleteHealthyArticleById", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteHealthyArticleById", method = RequestMethod.GET)
     public Result deleteHealthyArticleById(@RequestParam("articleId") String articleId) {
         return healthyArticleService.deleteHealthyArticleById(articleId);
 
@@ -140,7 +140,7 @@ public class HealthyArticleController {
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "/healthyArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/healthyArticle", method = RequestMethod.GET)
     public PageInfo<HealthyArticle> selectHealthyArticle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                          @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<HealthyArticle> healthyArticle = healthyArticleService.selectHealthyArticle(pageNum, pageSize);
@@ -167,7 +167,7 @@ public class HealthyArticleController {
      * @param articleId
      * @return
      */
-    @RequestMapping(value = "deleteCollectionAritcle", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteCollectionAritcle", method = RequestMethod.GET)
     public Result deleteCollectionAritcleByArticleId(@RequestParam("articleId") String articleId) {
         return healthyArticleService.deleteCollectionAritcleByArticleId(articleId);
     }
@@ -180,7 +180,7 @@ public class HealthyArticleController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "myCollectionArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "myCollectionArticle", method = RequestMethod.GET)
     public PageInfo<HealthyArticle> selectHealthyArticleByUserId(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                                  @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                                  @RequestParam("userId") String userId) {
@@ -197,7 +197,7 @@ public class HealthyArticleController {
      * @param articleId
      * @return
      */
-    @RequestMapping(value = "/commentList", method = RequestMethod.POST)
+    @RequestMapping(value = "/commentList", method = RequestMethod.GET)
     public PageInfo<ArticleComment> selectArticleCommentPageByArticleId(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                                         @RequestParam("articleId") String articleId) {
@@ -212,7 +212,7 @@ public class HealthyArticleController {
      * @param articleCommentId
      * @return
      */
-    @RequestMapping(value = "/commentReply", method = RequestMethod.POST)
+    @RequestMapping(value = "/commentReply", method = RequestMethod.GET)
     public List<CommentReply> selectCommentReplyByArticleCommentId(@RequestParam("articleCommentId") String articleCommentId) {
         return healthyArticleService.selectCommentReplyByArticleCommentId(articleCommentId);
     }

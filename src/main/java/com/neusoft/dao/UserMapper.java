@@ -27,7 +27,7 @@ public interface UserMapper {
     User login(String email);
 
     /***永久注销用户***/
-    void deleteUser(String userId);
+    int deleteUser(String userId);
 
     /***根据用户id查询用户信息*****/
     User selectUserInfoByUserId(String userId);

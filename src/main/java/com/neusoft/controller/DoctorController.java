@@ -94,7 +94,7 @@ public class DoctorController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/allDoctor")
+    @GetMapping("/allDoctor")
     public PageInfo<Doctor> allDoctor(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                       @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
         Page<Doctor> allDoctor = doctorService.allDoctor(pageNum, pageSize);
@@ -108,7 +108,7 @@ public class DoctorController {
      * @param doctorId
      * @return
      */
-    @PostMapping("/deleteDoctor")
+    @GetMapping("/deleteDoctor")
     public Result deleteDoctorById(@RequestParam("doctorId") String doctorId) {
         return doctorService.deleteDoctorById(doctorId);
 
@@ -120,7 +120,7 @@ public class DoctorController {
      * @param doctorId
      * @return
      */
-    @PostMapping("/doctorInfo")
+    @GetMapping("/doctorInfo")
     public Doctor selectDoctorInfoById(@RequestParam("doctorId") String doctorId) {
         return doctorService.selectDoctorInfoById(doctorId);
     }
@@ -145,7 +145,7 @@ public class DoctorController {
      * @param newPassword
      * @return
      */
-    @PostMapping("/updatePassword")
+    @GetMapping("/updatePassword")
     public Result updatePassword(@RequestParam("doctorId") String doctorId, @RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
         Doctor doctorInfo = doctorService.selectDoctorInfoById(doctorId);
         if (!doctorInfo.getPassword().equals(oldPassword)) {
@@ -185,7 +185,7 @@ public class DoctorController {
      * @param doctorId
      * @return
      */
-    @PostMapping("/myAnswerQuestion")
+    @GetMapping("/myAnswerQuestion")
     public PageInfo<AnswerQuestion> myAnswerQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
                                                      @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                      @RequestParam("doctorId") String doctorId) {
@@ -200,7 +200,7 @@ public class DoctorController {
      * @param answerId
      * @return
      */
-    @PostMapping("/deleteMyAnswerQuestion")
+    @GetMapping("/deleteMyAnswerQuestion")
     public Result deleteMyAnswerQuestion(@RequestParam("answerId") String answerId) {
         return doctorService.deleteMyAnswerQuestion(answerId);
 

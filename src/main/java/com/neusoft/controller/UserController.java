@@ -116,10 +116,10 @@ public class UserController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/deleteUser/{userId}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("userId") String userId) {
-        userService.deleteUser(userId);
-        return "index";
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    public Result deleteUser(@RequestParam("userId") String userId) {
+
+        return userService.deleteUser(userId);
     }
 
     /**
@@ -130,7 +130,7 @@ public class UserController {
      * @param newPassword
      * @return
      */
-    @PostMapping("/updatePassword")
+    @GetMapping("/updatePassword")
     public Result updatePassword(@RequestParam("userId") String userId, @RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
         User userInfo = userService.selectUserInfoByUserId(userId);
 
@@ -154,7 +154,7 @@ public class UserController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/selectUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectUserInfo", method = RequestMethod.GET)
     public Result selectUserInfo(@RequestParam("userId") String userId) {
         User userInfo = userService.selectUserInfoByUserId(userId);
 
@@ -302,7 +302,7 @@ public class UserController {
      * @param userId
      * @return
      */
-    @PostMapping("/updateHeadPhoto")
+    @GetMapping("/updateHeadPhoto")
     public Result updateHeadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
         return userService.updateHeadPhoto(file, userId);
     }

@@ -77,8 +77,14 @@ public class UserService {
     }
 
     /****永久注销用户****/
-    public void deleteUser(String userId) {
-        userMapper.deleteUser(userId);
+    public Result deleteUser(String userId) {
+        int code=userMapper.deleteUser(userId);
+        if(code==1){
+            return new Result(100,"注销成功",true);
+        }
+        else {
+            return new Result(200,"注销失败",false);
+        }
     }
 
     /**
