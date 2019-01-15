@@ -45,9 +45,12 @@ public class HealthyArticleController {
      * @param title
      */
     @RequestMapping(value = "/selectHealthyArticleByTitle", method = RequestMethod.GET)
-    public List<HealthyArticle> selectHealthyArticleByTitle(@RequestParam("title") String title) {
-        List<HealthyArticle> healthyArticleList = healthyArticleService.selectHealthyArticleByTitle(title);
-        return healthyArticleList;
+    public PageInfo<HealthyArticle> selectHealthyArticleByTitle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                                @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                                @RequestParam("title") String title) {
+        Page<HealthyArticle> healthyArticleList = healthyArticleService.selectHealthyArticleByTitle(pageNum, pageSize, title);
+        PageInfo<HealthyArticle> pageInfo = new PageInfo<>(healthyArticleList);
+        return pageInfo;
     }
 
     /**
@@ -171,7 +174,6 @@ public class HealthyArticleController {
     public Result deleteCollectionAritcleByArticleId(@RequestParam("articleId") String articleId) {
         return healthyArticleService.deleteCollectionAritcleByArticleId(articleId);
     }
-
 
 
     /**

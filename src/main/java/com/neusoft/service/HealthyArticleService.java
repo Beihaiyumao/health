@@ -86,9 +86,9 @@ public class HealthyArticleService {
      * @param title
      * @return
      */
-    public List<HealthyArticle> selectHealthyArticleByTitle(String title) {
-        List<HealthyArticle> healthyArticleList = healthyArticleMapper.selectHealthyArticleByTitle(title);
-        return healthyArticleList;
+    public Page<HealthyArticle> selectHealthyArticleByTitle(Integer pageNum,Integer pageSize,String title) {
+         PageHelper.startPage(pageNum,pageSize);
+        return healthyArticleMapper.selectHealthyArticleByTitle(title);
     }
 
     /**

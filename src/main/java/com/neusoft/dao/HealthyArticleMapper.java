@@ -26,7 +26,7 @@ public interface HealthyArticleMapper {
     int updateByPrimaryKey(HealthyArticle record);
 
     //模糊查询文章
-    List<HealthyArticle> selectHealthyArticleByTitle(String title);
+    Page<HealthyArticle> selectHealthyArticleByTitle(String title);
 
     //管理员审核通过文章
     int passHealthyArticle(@Param("articleId") String articleId, @Param("dateTime") Date dateTime);
