@@ -1,6 +1,9 @@
 package com.neusoft.dao;
 
+import com.github.pagehelper.Page;
 import com.neusoft.entity.Blacklist;
+import com.neusoft.entity.HealthyArticle;
+import com.neusoft.entity.Question;
 import com.neusoft.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -39,4 +42,8 @@ public interface UserMapper {
     int updatePassword(@Param("userId") String userId, @Param("password") String password);
     //更新头像
     int updateHeadPhoto(@Param("path")String path,@Param("userId")String userId);
+    //搜索我的收藏文章
+    Page<HealthyArticle> selectMyHealthyArticle(@Param("userId")String userId,@Param("title")String title);
+    //搜索我的问题
+    Page<Question> selectMyQuestion(@Param("userId")String userId,@Param("title")String title);
 }

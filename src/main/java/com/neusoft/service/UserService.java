@@ -1,10 +1,10 @@
 package com.neusoft.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.neusoft.DataDictionary.BlackState;
 import com.neusoft.dao.UserMapper;
-import com.neusoft.entity.Blacklist;
-import com.neusoft.entity.Result;
-import com.neusoft.entity.User;
+import com.neusoft.entity.*;
 import com.neusoft.tool.FileUtil;
 import com.neusoft.tool.SystemTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,12 +78,11 @@ public class UserService {
 
     /****永久注销用户****/
     public Result deleteUser(String userId) {
-        int code=userMapper.deleteUser(userId);
-        if(code==1){
-            return new Result(100,"注销成功",true);
-        }
-        else {
-            return new Result(200,"注销失败",false);
+        int code = userMapper.deleteUser(userId);
+        if (code == 1) {
+            return new Result(100, "注销成功", true);
+        } else {
+            return new Result(200, "注销失败", false);
         }
     }
 
@@ -115,25 +114,24 @@ public class UserService {
      * @param file
      * @return
      */
-    public Result updateHeadPhoto(MultipartFile file,String userId)  {
+    public Result updateHeadPhoto(MultipartFile file, String userId) {
         if (!file.isEmpty()) {
             // 获取文件名称,包含后缀
             String fileName = file.getOriginalFilename();
             //获取文件后缀
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-            if(suffix.equals("png")||suffix.equals("jpg")){
+            if (suffix.equals("png") || suffix.equals("jpg")) {
 
-                fileName=SystemTool.uuid()+"."+suffix;
-            }
-            else {
-                return new Result(200,"只支持png，jgp后缀的图片",false);
+                fileName = SystemTool.uuid() + "." + suffix;
+            } else {
+                return new Result(200, "只支持png，jgp后缀的图片", false);
             }
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String time = sdf.format(new Date());
             // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)
             // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
-            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/"+"img/"+"headPhoto/"+time+"/";
+            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/" + "img/" + "headPhoto/" + time + "/";
             File filePath = new File(path);
             //如果目录不存在则自动创建
             if (!filePath.exists()) {
@@ -146,14 +144,42 @@ public class UserService {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            int code= userMapper.updateHeadPhoto("img/headPhoto/"+time+"/"+fileName,userId);
-            if(code==1){
+            int code = userMapper.updateHeadPhoto("img/headPhoto/" + time + "/" + fileName, userId);
+            if (code == 1) {
                 return new Result(100, "上传成功", true);
-            }else {
+            } else {
                 return new Result(200, "上传失败", false);
             }
 
         }
         return new Result(200, "上传失败", false);
+    }
+
+    /**
+     * 分页搜索我收藏的文章
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @param title
+     * @return
+     */
+    public Page<HealthyArticle> selectMyHealthyArticle(Integer pageNum, Integer pageSize, String userId, String title) {
+        PageHelper.startPage(pageNum, pageSize);
+        return userMapper.selectMyHealthyArticle(userId, title);
+    }
+
+    /**
+     * 搜索我的问题
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @param title
+     * @return
+     */
+    public Page<Question> selectMyQuestion(Integer pageNum, Integer pageSize, String userId, String title) {
+        PageHelper.startPage(pageNum, pageSize);
+        return userMapper.selectMyQuestion(userId, title);
     }
 }

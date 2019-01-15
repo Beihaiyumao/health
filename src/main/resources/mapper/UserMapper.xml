@@ -23,6 +23,24 @@
     a.pic as pic,
     a.address as address
   </sql>
+    <sql id="HealthyArticle" >
+        a.article_id as articleId,
+        a.title as title,
+        a.pic as pic,
+        a.author as author,
+        a.article as article,
+        a.content as content,
+        a.article_state as articleState,
+        a.create_time as createTime,
+        a.chage_article_state_time as changeAtricleStateTime
+    </sql>
+    <sql id="Question" >
+        a.question_id as questionId,
+        a.user_id as userId,
+        a.title as title,
+        a.detail as detail,
+        a.create_time as createTime
+    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
@@ -192,4 +210,17 @@
         pic=#{path}
         where user_id=#{userId}
     </update>
+    <select id="selectMyHealthyArticle" resultType="com.neusoft.entity.HealthyArticle">
+        select
+        <include refid="HealthyArticle" />
+        from healthy_article a
+        left join collection_article b
+        on a.article_id=b.article_id
+        where a.title like CONCAT(CONCAT('%',#{title}), '%')and b.user_id=#{userId}
+    </select>
+    <select id="selectMyQuestion" resultType="com.neusoft.entity.Question">
+        SELECT
+        <include refid="Question"/>
+        from question a where a.title LIKE  CONCAT(CONCAT('%',#{title}), '%') and a.user_id=#{userId}
+    </select>
 </mapper>

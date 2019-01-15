@@ -1,11 +1,17 @@
 package com.neusoft.controller;
 
 import com.alibaba.fastjson.JSONException;
+import com.github.pagehelper.Page;
 import com.neusoft.DataDictionary.BlackState;
 import com.neusoft.dao.UserMapper;
+import com.neusoft.entity.HealthyArticle;
+import com.neusoft.entity.Question;
 import com.neusoft.entity.Result;
 import com.neusoft.entity.User;
+import com.neusoft.service.HealthyArticleService;
+import com.neusoft.service.QuestionService;
 import com.neusoft.service.UserService;
+import com.neusoft.tool.PageInfo;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -37,6 +43,12 @@ public class UserController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private QuestionService questionService;
+
+    @Autowired
+    private HealthyArticleService healthyArticleService;
 
     /**
      * 用户注册
@@ -307,4 +319,73 @@ public class UserController {
         return userService.updateHeadPhoto(file, userId);
     }
 
+    /**
+     * 我的问题列表
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
+    public PageInfo<Question> myQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                         @RequestParam("userId") String userId) {
+        Page<Question> myQuestion = questionService.selectQuestionByUser(pageNum, pageSize, userId);
+        PageInfo<Question> pageInfo = new PageInfo<>(myQuestion);
+        return pageInfo;
+    }
+
+    /**
+     * 搜索我的问题
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @param title
+     * @return
+     */
+    @GetMapping("/selectMyQuestion")
+    public PageInfo<Question> selectMyQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                               @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                               @RequestParam("userId") String userId, @RequestParam("title") String title) {
+        Page<Question> selectMyQuestion = userService.selectMyQuestion(pageNum, pageSize, userId, title);
+        PageInfo<Question> pageInfo = new PageInfo<>(selectMyQuestion);
+        return pageInfo;
+    }
+
+    /**
+     * 我收藏的文章列表
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "myCollectionArticle", method = RequestMethod.GET)
+    public PageInfo<HealthyArticle> selectHealthyArticleByUserId(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                                 @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                                 @RequestParam("userId") String userId) {
+        Page<HealthyArticle> myCollectionArticle = healthyArticleService.selectHealthyArticleByUserId(pageNum, pageSize, userId);
+        PageInfo<HealthyArticle> pageInfo = new PageInfo<>(myCollectionArticle);
+        return pageInfo;
+    }
+
+    /**
+     * 模糊查询我的收藏
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @param title
+     * @return
+     */
+    @GetMapping("/selectMyHealthArticle")
+    public PageInfo<HealthyArticle> selectMyHealthyArticle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                           @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                           @RequestParam("userId") String userId, @RequestParam("title") String title) {
+        Page<HealthyArticle> selectMyHealthyArticle = userService.selectMyHealthyArticle(pageNum, pageSize, userId, title);
+        PageInfo<HealthyArticle> pageInfo = new PageInfo<>(selectMyHealthyArticle);
+        return pageInfo;
+    }
 }

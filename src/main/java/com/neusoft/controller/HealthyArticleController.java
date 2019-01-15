@@ -172,22 +172,7 @@ public class HealthyArticleController {
         return healthyArticleService.deleteCollectionAritcleByArticleId(articleId);
     }
 
-    /**
-     * 我收藏的文章列表
-     *
-     * @param pageNum
-     * @param pageSize
-     * @param userId
-     * @return
-     */
-    @RequestMapping(value = "myCollectionArticle", method = RequestMethod.GET)
-    public PageInfo<HealthyArticle> selectHealthyArticleByUserId(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
-                                                                 @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
-                                                                 @RequestParam("userId") String userId) {
-        Page<HealthyArticle> myCollectionArticle = healthyArticleService.selectHealthyArticleByUserId(pageNum, pageSize, userId);
-        PageInfo<HealthyArticle> pageInfo = new PageInfo<>(myCollectionArticle);
-        return pageInfo;
-    }
+
 
     /**
      * 文章下所有评论分页

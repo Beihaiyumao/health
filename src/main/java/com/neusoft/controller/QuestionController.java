@@ -76,23 +76,6 @@ public class QuestionController {
     }
 
     /**
-     * 我的问题列表
-     *
-     * @param pageNum
-     * @param pageSize
-     * @param userId
-     * @return
-     */
-    @RequestMapping(value = "/myQuestion", method = RequestMethod.GET)
-    public PageInfo<Question> myQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
-                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
-                                         @RequestParam("userId") String userId) {
-        Page<Question> myQuestion = questionService.selectQuestionByUser(pageNum, pageSize, userId);
-        PageInfo<Question> pageInfo = new PageInfo<>(myQuestion);
-        return pageInfo;
-    }
-
-    /**
      * 问题下的所有回复
      *
      * @param pageNum
