@@ -60,7 +60,7 @@ public class UserController {
     public Result regist(@RequestBody User regist, HttpSession session) throws JSONException {
         User register = userMapper.login(regist.getEmail());
         String idCode = (String) session.getAttribute("sRand");
-        System.out.println(idCode);
+        System.out.println(idCode+"上边");
         if (register != null && register.getBlackState().equals(BlackState.BLACK_STATE_TRUE.getCode())) {
             String msg = userMapper.selectUserBlackMsg(regist.getEmail());
             return new Result(200, "抱歉您已被管理员拉黑，具体原因:" + msg, false);
@@ -292,7 +292,7 @@ public class UserController {
         session.removeAttribute("sRand");
         session.setAttribute("sRand", sRand);//存储到session
         ImageIO.write(image, "JPEG", response.getOutputStream()); //输出图片
-        System.out.println(sRand);
+        System.out.println(sRand+"下边");
     }
 
     /**

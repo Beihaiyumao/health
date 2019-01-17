@@ -97,17 +97,17 @@
   <select id="selectAllQuestion" resultType="com.neusoft.entity.Question">
     SELECT
     <include refid="Base_Column_List"/>
-    from question a
+    from question a order by a.create_time desc
   </select>
   <select id="selectQuestionByTitle" resultType="com.neusoft.entity.Question">
     SELECT
     <include refid="Base_Column_List"/>
-    from question a where a.title LIKE  CONCAT(CONCAT('%',#{title}), '%')
+    from question a where a.title LIKE  CONCAT(CONCAT('%',#{title}), '%') order by a.create_time desc
   </select>
   <select id="selectQuestionByUserId" resultType="com.neusoft.entity.Question">
     SELECT
     <include refid="Base_Column_List"/>
-    from question a where a.user_id=#{userId}
+    from question a where a.user_id=#{userId}order by a.create_time desc
   </select>
   <select id="selectAnswerQuestionByQuestionId" resultType="com.neusoft.entity.AnswerQuestion">
     SELECT
@@ -124,6 +124,6 @@
     on c.question_id=a.question_id
     LEFT JOIN  user d
     on c.user_id = d.user_id
-    where a.question_id=#{questionId}
+    where a.question_id=#{questionId} order by a.create_time desc
   </select>
 </mapper>

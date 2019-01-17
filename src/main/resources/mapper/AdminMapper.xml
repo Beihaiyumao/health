@@ -54,7 +54,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		select
 		<include refid="adminInfo"></include>
 		from admin a
-		where a.username=#{username}
+		where a.username=#{username} order by a.create_time desc
 	</select>
 	<insert id="addAdmin">
 		insert into admin
@@ -66,35 +66,35 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="selectAllUser" resultType="com.neusoft.entity.User">
 		select
 		<include refid="userInfo" />
-		from user a where a.black_state='000200000010'
+		from user a where a.black_state='000200000010'order by a.create_time desc
 	</select>
 	<select id="selectAllDeleteUser" resultType="com.neusoft.entity.User">
 		select
 		<include refid="userInfo" />
-		from user a where a.black_state='000200000020'
+		from user a where a.black_state='000200000020' order by a.create_time desc
 	</select>
 	<select id="selectExamineHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
 		<include refid="healthyArticle"/>
 		from healthy_article a
-		where a.article_state='000000000010'
+		where a.article_state='000000000010' order by a.create_time desc
 	</select>
 	<select id="selectPassHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
 		<include refid="healthyArticle"/>
 		from healthy_article a
-		where a.article_state='000000000020'
+		where a.article_state='000000000020' order by a.create_time desc
 	</select>
 	<select id="selectOutHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
 		<include refid="healthyArticle" />
 		from healthy_article a
-		where a.article_state='000000000030'
+		where a.article_state='000000000030' order by a.create_time desc
 	</select>
 	<select id="selectAllAdmin" resultType="com.neusoft.entity.Admin">
 		SELECT
 		<include refid="adminInfo"></include>
-		from admin a
+		from admin a order by a.create_time desc
 	</select>
 	<insert id="deleteUserById" parameterType="com.neusoft.entity.Blacklist">
 		INSERT INTO blacklist
@@ -109,37 +109,37 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="selectAllDoctor" resultType="com.neusoft.entity.Doctor">
 		select
 		<include refid="doctorInfo"/>
-		from doctor a where a.black_state='000200000010'
+		from doctor a where a.black_state='000200000010'order by a.create_time
 	</select>
 	<select id="selectAllDeleteDoctor" resultType="com.neusoft.entity.Doctor">
 		select
 		<include refid="doctorInfo"/>
-		from doctor a where a.black_state='000200000020'
+		from doctor a where a.black_state='000200000020' order by a.create_time desc
 	</select>
 	<select id="selseAllQuestion" resultType="com.neusoft.entity.Question">
 		SELECT
 		<include refid="Question"/>
-		FROM question a
+		FROM question a order by a.create_time desc
 	</select>
 	<select id="selectAllAnswerQuestion" resultType="com.neusoft.entity.AnswerQuestion">
 		SELECT
 		 a.answer_id as answerId,
 		 a.answer_detail as answerDetail,
 		 a.create_time as createTime
-		 from answer_question a
+		 from answer_question a order by a.create_time desc
 	</select>
 	<select id="selectAllArticleComment" resultType="com.neusoft.entity.ArticleComment">
 		SELECT
 		a.comment_id as commentId,
 		a.content as content,
 		a.create_time as createTime
-		FROM article_comment a
+		FROM article_comment a order by a.create_time desc
   	</select>
 	<select id="selectAllCommentReply" resultType="com.neusoft.entity.CommentReply">
 		SELECT
 		a.reply_id as replyId,
 		a.content as content,
 		a.create_time as createTime
-		from comment_reply a
+		from comment_reply a order by a.create_time desc
 	</select>
 </mapper>

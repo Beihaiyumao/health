@@ -174,7 +174,7 @@
         on a.question_id=b.question_id
         LEFT JOIN  user c
         on b.user_id=c.user_id
-        where a.doctor_id=#{doctorId}
+        where a.doctor_id=#{doctorId} order by a.create_time desc
     </select>
     <delete id="deleteMyAnswerQuestion" parameterType="com.neusoft.entity.AnswerQuestion">
         DELETE  from answer_question where answer_id=#{answerId}

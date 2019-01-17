@@ -216,11 +216,11 @@
         from healthy_article a
         left join collection_article b
         on a.article_id=b.article_id
-        where a.title like CONCAT(CONCAT('%',#{title}), '%')and b.user_id=#{userId}
+        where a.title like CONCAT(CONCAT('%',#{title}), '%')and b.user_id=#{userId} order by b.create_time desc
     </select>
     <select id="selectMyQuestion" resultType="com.neusoft.entity.Question">
         SELECT
         <include refid="Question"/>
-        from question a where a.title LIKE  CONCAT(CONCAT('%',#{title}), '%') and a.user_id=#{userId}
+        from question a where a.title LIKE  CONCAT(CONCAT('%',#{title}), '%') and a.user_id=#{userId} order by a.create_time desc
     </select>
 </mapper>

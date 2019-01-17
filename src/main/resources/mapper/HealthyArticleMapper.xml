@@ -161,7 +161,7 @@
     select
     <include refid="Base_Column_List" />
     from healthy_article a
-    where a.title like CONCAT(CONCAT('%',#{title}), '%')
+    where a.title like CONCAT(CONCAT('%',#{title}), '%')order by a.create_time desc
   </select>
   <update id="passHealthyArticle" parameterType="com.neusoft.entity.HealthyArticle" useGeneratedKeys="true" keyProperty="article_id">
     update healthy_article
@@ -267,18 +267,18 @@
     select
     <include refid="Article_Comment" />
     from article_comment a
-    where article_id=#{articleId}
+    where article_id=#{articleId} order by a.create_time desc
   </select>
   <select id="selectCommentRepiyByArticleId" resultType="com.neusoft.entity.CommentReply" parameterType="java.lang.String">
     select
     <include refid="Comment_Reply_List" />
     from comment_reply a
-    where article_id=#{articleId}
+    where article_id=#{articleId} order by a.create_time desc
   </select>
   <select id="selectHealthyArticle" resultType="com.neusoft.entity.HealthyArticle">
     SELECT
     <include refid="Base_Column_List" />
-    from healthy_article a where a.article_state='000000000020'
+    from healthy_article a where a.article_state='000000000020' order by a.create_time desc
   </select>
   <insert id="collectionArticles" parameterType="com.neusoft.entity.CollectionArticle" >
     insert into collection_article (collection_article_id, user_id, article_id,
@@ -306,7 +306,7 @@
     from healthy_article a
     LEFT JOIN collection_article b
     on a.article_id = b.article_id
-    where b.user_id= #{userId}
+    where b.user_id= #{userId} order by b.create_time desc
   </select>
   <select id="selectArticleCommentPageByArticleId" resultType="com.neusoft.entity.ArticleComment" parameterType="java.lang.String" >
     select
@@ -316,7 +316,7 @@
     from article_comment a
     LEFT JOIN user b
     on a.user_id=b.user_id
-    where a.article_id=#{articleId} order by a.create_time
+    where a.article_id=#{articleId} order by a.create_time desc
   </select>
   <select id="selectCommentReplyByArticleCommentId" resultType="com.neusoft.entity.CommentReply" parameterType="java.lang.String">
     select
@@ -326,6 +326,6 @@
     from comment_reply a
     LEFT  JOIN  user b
     a.user_id=b.user_id
-    where a.comment_id=#{articleCommentId} order by a.create_time
+    where a.comment_id=#{articleCommentId} order by a.create_time desc
   </select>
 </mapper>
