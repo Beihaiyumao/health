@@ -17,7 +17,6 @@ public class FileUtil {
         if (targetfile.exists()) {
             targetfile.mkdirs();
         }
-
         //二进制流写入
         FileOutputStream out = new FileOutputStream(filePath + fileName);
         out.write(file);

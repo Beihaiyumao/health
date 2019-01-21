@@ -57,9 +57,12 @@ public class UserController {
      * @throws JSONException
      **/
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
-    public Result regist(@RequestBody User regist, HttpSession session) throws JSONException {
+    public Result regist(@RequestBody User regist, HttpSession session,HttpServletRequest request) throws JSONException {
         User register = userMapper.login(regist.getEmail());
         String idCode = (String) session.getAttribute("sRand");
+        // 验证验证码
+//        String idCode = request.getSession().getAttribute("sRand").toString();
+//        System.out.println(sessionCode+"上边");
         System.out.println(idCode+"上边");
         if (register != null && register.getBlackState().equals(BlackState.BLACK_STATE_TRUE.getCode())) {
             String msg = userMapper.selectUserBlackMsg(regist.getEmail());
@@ -73,7 +76,7 @@ public class UserController {
         }
         if (!regist.getIdentifying().equals(idCode)) {
 
-            return new Result(200, "验证码错误", false);
+            return new Result(200, "验证码错误,请注意大小写", false);
         }
         if (register == null && regist.getIdentifying().equals(idCode)) {
             userService.registNewUser(regist);
