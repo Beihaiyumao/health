@@ -36,3 +36,87 @@
 18:14:15.911 [restartedMain] INFO  org.apache.tomcat.util.net.NioSelectorPool - Using a shared selector for servlet write/read
 18:14:15.968 [restartedMain] INFO  com.neusoft.HealthApplication - Started HealthApplication in 13.433 seconds (JVM running for 16.457)
 18:14:19.552 [http-nio-8002-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+18:49:46.221 [restartedMain] INFO  com.neusoft.HealthApplication - Starting HealthApplication on Umbrella with PID 5880 (F:\NEUSOFT\health\target\classes started by xyc in F:\NEUSOFT\health)
+18:49:46.222 [restartedMain] INFO  com.neusoft.HealthApplication - The following profiles are active: dev
+18:49:48.751 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8002"]
+18:49:48.752 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+18:49:48.753 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet Engine: Apache Tomcat/9.0.13
+18:49:49.038 [restartedMain] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+18:49:50.280 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+18:49:50.531 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8002"]
+18:49:50.539 [restartedMain] INFO  org.apache.tomcat.util.net.NioSelectorPool - Using a shared selector for servlet write/read
+18:49:50.548 [restartedMain] INFO  com.neusoft.HealthApplication - Started HealthApplication in 4.425 seconds (JVM running for 2151.039)
+18:49:54.452 [restartedMain] INFO  com.neusoft.HealthApplication - Starting HealthApplication on Umbrella with PID 5880 (F:\NEUSOFT\health\target\classes started by xyc in F:\NEUSOFT\health)
+18:49:54.453 [restartedMain] INFO  com.neusoft.HealthApplication - The following profiles are active: dev
+18:49:56.197 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8002"]
+18:49:56.198 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+18:49:56.199 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet Engine: Apache Tomcat/9.0.13
+18:49:56.356 [restartedMain] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+18:49:56.402 [restartedMain] WARN  o.s.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'doctorController': Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.neusoft.controller.DoctorController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@e3c580a]
+18:49:56.403 [restartedMain] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+18:49:56.446 [restartedMain] ERROR org.springframework.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'doctorController': Lookup method resolution failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.neusoft.controller.DoctorController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@e3c580a]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:265)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1236)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1151)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:846)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:863)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:546)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248)
+	at com.neusoft.HealthApplication.main(HealthApplication.java:17)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.neusoft.controller.DoctorController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@e3c580a]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:686)
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:583)
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:568)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:248)
+	... 23 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/neusoft/entity/Result
+	at java.lang.Class.getDeclaredMethods0(Native Method)
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:2701)
+	at java.lang.Class.getDeclaredMethods(Class.java:1975)
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:668)
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.neusoft.entity.Result
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:148)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 30 common frames omitted
+18:50:10.348 [restartedMain] INFO  com.neusoft.HealthApplication - Starting HealthApplication on Umbrella with PID 5880 (F:\NEUSOFT\health\target\classes started by xyc in F:\NEUSOFT\health)
+18:50:10.348 [restartedMain] INFO  com.neusoft.HealthApplication - The following profiles are active: dev
+18:50:11.436 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8002"]
+18:50:11.437 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+18:50:11.437 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet Engine: Apache Tomcat/9.0.13
+18:50:11.514 [restartedMain] INFO  org.apache.catalina.core.ContainerBase.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+18:50:12.131 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+18:50:12.266 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8002"]
+18:50:12.270 [restartedMain] INFO  org.apache.tomcat.util.net.NioSelectorPool - Using a shared selector for servlet write/read
+18:50:12.277 [restartedMain] INFO  com.neusoft.HealthApplication - Started HealthApplication in 2.085 seconds (JVM running for 2172.768)
+18:50:17.855 [main] INFO  org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.neusoft.health.HealthApplicationTests], using SpringBootContextLoader
+18:50:17.866 [main] INFO  org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.neusoft.health.HealthApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+18:50:17.868 [main] INFO  org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.neusoft.health.HealthApplicationTests]: HealthApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:50:18.245 [main] INFO  org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.neusoft.HealthApplication for test class com.neusoft.health.HealthApplicationTests
+18:50:18.412 [main] INFO  org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+18:50:18.499 [main] INFO  org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6e0f5f7f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2805d709, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@3ee37e5a, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@2ea41516, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3a44431a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@3c7f66c4, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@194bcebf, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@17497425, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@f0da945, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4803b726, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@ffaa6af, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@53ce1329]
+18:50:19.370 [main] INFO  com.neusoft.health.HealthApplicationTests - Starting HealthApplicationTests on Umbrella with PID 15376 (started by xyc in F:\NEUSOFT\health)
+18:50:19.371 [main] INFO  com.neusoft.health.HealthApplicationTests - The following profiles are active: dev
+18:50:28.073 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+18:50:29.041 [main] INFO  com.neusoft.health.HealthApplicationTests - Started HealthApplicationTests in 10.383 seconds (JVM running for 14.852)
