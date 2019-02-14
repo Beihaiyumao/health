@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.HealthyToolMapper" >
+    <select id="healthToolResult" resultType="com.neusoft.entity.HealthToolResult">
+        select
+        a.result_msg as resultMsg,
+        a.proposal as proposal
+        from health_tool_result a
+        where a.type=#{type} and #{calResult}<![CDATA[ < ]]> a.result_code_end and #{calResult}<![CDATA[ > ]]> a.result_code_start and a.sex=#{sex}
+    </select>
+</mapper>
