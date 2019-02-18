@@ -189,6 +189,9 @@ public class HealthyArticleController {
                                                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                                         @RequestParam("articleId") String articleId) {
         Page<ArticleComment> commentList = healthyArticleService.selectArticleCommentPageByArticleId(pageNum, pageSize, articleId);
+        for(int i=0;i<commentList.size();i++){
+            commentList.get(i).setCommentReply(healthyArticleService.selectCommentReplyByArticleCommentId(commentList.get(i).getCommentId()));
+        }
         PageInfo<ArticleComment> pageInfo = new PageInfo<>(commentList);
         return pageInfo;
     }

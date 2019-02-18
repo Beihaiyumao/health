@@ -1,6 +1,7 @@
 package com.neusoft.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章评论
@@ -19,6 +20,8 @@ public class ArticleComment {
     private String userName; //评论用户名
 
     private String headPhoto; //用户头像
+
+    private List<CommentReply> commentReply; //评论回复
 
     public String getHeadPhoto() {
         return headPhoto;
@@ -75,5 +78,13 @@ public class ArticleComment {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public List<CommentReply> getCommentReply() {
+        return commentReply;
+    }
+
+    public void setCommentReply(List<CommentReply> commentReply) {
+        this.commentReply = commentReply;
     }
 }

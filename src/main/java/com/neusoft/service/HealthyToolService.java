@@ -1,5 +1,6 @@
 package com.neusoft.service;
 
+import com.neusoft.DataDictionary.HealthToolType;
 import com.neusoft.dao.HealthyToolMapper;
 import com.neusoft.entity.HealthToolResult;
 import com.neusoft.entity.Result;
@@ -30,7 +31,7 @@ public class HealthyToolService {
             return new Result(200, "请输入正确的数据", false);
         } else {
             double calBMI = weight / (height * height);
-            HealthToolResult bmiHealthToolResult = healthToolResult("000300000010", calBMI, 0);
+            HealthToolResult bmiHealthToolResult = healthToolResult(HealthToolType.BMI.getCode(), calBMI, 0);
             if (bmiHealthToolResult == null) {
                 return new Result(200, "请输入正确的数据", false);
             }
@@ -52,7 +53,7 @@ public class HealthyToolService {
             return new Result(200, "请输入正确的数据", false);
         } else {
             double whrResult = waist / hip;
-            HealthToolResult whrHealthToolResult = healthToolResult("000300000040", whrResult, sex);
+            HealthToolResult whrHealthToolResult = healthToolResult(HealthToolType.WHR.getCode(), whrResult, sex);
             if (whrHealthToolResult == null) {
                 return new Result(200, "请输入正确的数据", false);
             }

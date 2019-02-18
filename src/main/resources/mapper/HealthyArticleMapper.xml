@@ -325,7 +325,7 @@
     <include refid="Comment_Reply_List" />
     from comment_reply a
     LEFT  JOIN  user b
-    a.user_id=b.user_id
+    on a.user_id=b.user_id
     where a.comment_id=#{articleCommentId} order by a.create_time desc
   </select>
 </mapper>
