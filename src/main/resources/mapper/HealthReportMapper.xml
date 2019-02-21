@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.HealthReportMapper" >
+    <sql id="HealthReport" >
+        a.health_report_id as healthReportId,
+        a.title as title,
+        a.description as description,
+        a.create_time as createTime
+    </sql>
+    <sql id="HealthReportQuestion" >
+        b.health_report_question_id as healthReportQuestionId,
+        b.question_title as questionTitle,
+        b.health_report_id as healthReportId,
+        b.answer_type as answerType,
+        b.create_time as createTime
+    </sql>
+    <sql id="HealthReportAnswers" >
+        c.health_report_answer_id as healthReportAnswerId,
+        c.health_report_question_id as healthReportQuestionId,
+        c.option_content as optionContent,
+        c.mark as mark,
+        c.create_time as createTime
+    </sql>
+    <sql id="HealthReportResult" >
+        d.health_report_result_id as healthReportResultId,
+        d.health_report_id as healthReportId,
+        d.mark_begin as markBegin,
+        d.mark_end as markEnd,
+        d.result as result,
+        d.create_time as createTime
+    </sql>
+    <insert id="addHealthReport" parameterType="com.neusoft.entity.HealthReport" >
+        insert into health_report (health_report_id, title, description,
+        create_time)
+        values (#{healthReportId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <delete id="deleteHealthReport" >
+        delete from health_report
+        where health_report_id = #{healthReportId}
+    </delete>
+    <update id="updateHealthReport" parameterType="com.neusoft.entity.HealthReport">
+    update health_report
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where health_report_id = #{healthReportId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectHealthReport" resultType="com.neusoft.entity.HealthReport">
+        select
+        <include refid="HealthReport" />
+        from health_report a  where  a.title like CONCAT(CONCAT('%',#{title}), '%')order by a.create_time desc
+    </select>
+    <insert id="addHealthReportQuestion" parameterType="com.neusoft.entity.HealthReportQuestion">
+      insert into health_report_question (health_report_question_id, question_title,
+      health_report_id, answer_type, create_time
+      )
+    values (#{healthReportQuestionId,jdbcType=VARCHAR}, #{questionTitle,jdbcType=VARCHAR},
+      #{healthReportId,jdbcType=VARCHAR}, #{answerType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+    </insert>
+    <delete id="deleteHealthReportQuestion">
+    delete from health_report_question
+    where health_report_question_id = #{healthReportQuestionId,jdbcType=VARCHAR}
+    </delete>
+    <update id="updateHealthReportQuestion" parameterType="com.neusoft.entity.HealthReportQuestion">
+      update health_report_question
+    set question_title = #{questionTitle,jdbcType=VARCHAR},
+      answer_type = #{answerType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where health_report_question_id = #{healthReportQuestionId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectHealthReportQuestion" resultType="com.neusoft.entity.HealthReportQuestion">
+        SELECT
+        <include refid="HealthReportQuestion" />
+        FROM health_report_question b where  b.question_title like CONCAT(CONCAT('%',#{title}), '%')order by a.create_time desc
+    </select>
+    <insert id="addHealthReportAnswers" parameterType="com.neusoft.entity.HealthReportAnswers">
+      insert into health_report_answers (health_report_answer_id, health_report_question_id,
+      option_content, mark, create_time
+      )
+    values (#{healthReportAnswerId,jdbcType=VARCHAR}, #{healthReportQuestionId,jdbcType=VARCHAR},
+      #{optionContent,jdbcType=VARCHAR}, #{mark,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+    </insert>
+    <delete id="deleteHealthReportAnswers" >
+    delete from health_report_answers
+    where health_report_answer_id = #{healthReportAnswerId,jdbcType=VARCHAR}
+    </delete>
+    <update id="updateHealthReportAnswers" parameterType="com.neusoft.entity.HealthReportAnswers">
+     update health_report_answers
+     set option_content = #{optionContent,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where health_report_answer_id = #{healthReportAnswerId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectHealthReportAnswers" resultType="com.neusoft.entity.HealthReportAnswers">
+        select
+        <include refid="HealthReportAnswers" />
+        from health_report_answers c where  c.option_content like CONCAT(CONCAT('%',#{optionContent}), '%')order by c.create_time desc
+    </select>
+    <insert id="addHealthReportResult" parameterType="com.neusoft.entity.HealthReportResult">
+     insert into health_report_result (health_report_result_id, health_report_id,
+      mark_begin, mark_end, result,
+      create_time)
+    values (#{healthReportResultId,jdbcType=VARCHAR}, #{healthReportId,jdbcType=VARCHAR},
+      #{markBegin,jdbcType=DOUBLE}, #{markEnd,jdbcType=DOUBLE}, #{result,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <delete id="deleteHealthReportResult">
+     delete from health_report_result
+    where health_report_result_id = #{healthReportResultId,jdbcType=VARCHAR}
+    </delete>
+    <update id="updateHealthReportResult" parameterType="com.neusoft.entity.HealthReportResult">
+      update health_report_result
+      set mark_begin = #{markBegin,jdbcType=DOUBLE},
+      mark_end = #{markEnd,jdbcType=DOUBLE},
+      result = #{result,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+      where health_report_result_id = #{healthReportResultId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectHealthReportResult" resultType="com.neusoft.entity.HealthReportResult">
+      SELECT
+      <include refid="HealthReportResult" />
+      FROM  health_report_result d where d.result like CONCAT(CONCAT('%',#{result}), '%')order by c.create_time desc
+    </select>
+</mapper>
