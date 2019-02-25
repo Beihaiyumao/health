@@ -1,11 +1,10 @@
 package com.neusoft.dao;
 
 import com.github.pagehelper.Page;
-import com.neusoft.entity.HealthReport;
-import com.neusoft.entity.HealthReportAnswers;
-import com.neusoft.entity.HealthReportQuestion;
-import com.neusoft.entity.HealthReportResult;
+import com.neusoft.entity.*;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 健康报告
@@ -59,5 +58,11 @@ public interface HealthReportMapper {
 
     //查询所有报告结果
     Page<HealthReportResult> selectHealthReportResult(@Param("result")String result);
+
+    //根据报告id获取报告
+    Page<Questionnaire> selectAllQuestionnaireByHealthReportId(@Param("healthReportId") String healthReportId);
+
+    //根据问题id查询问题选项
+    List<HealthReportAnswers> selectHealthReportAnswersByQuestionId(@Param("healthReportQuestionId")String healthReportQuestionId);
 
 }

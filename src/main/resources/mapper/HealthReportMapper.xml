@@ -124,4 +124,22 @@
       <include refid="HealthReportResult" />
       FROM  health_report_result d where d.result like CONCAT(CONCAT('%',#{result}), '%')order by c.create_time desc
     </select>
+    <select id="selectAllQuestionnaireByHealthReportId" resultType="com.neusoft.entity.Questionnaire">
+        select
+        a.health_report_id as healthReportId,
+        a.title as healthReportTitle,
+        b.health_report_question_id as healthReportQuestionId,
+        b.question_title as questionTitle,
+        b.answer_type as answerType
+        from health_report a
+        left join health_report_question b
+        on a.health_report_id=b.health_report_id
+        where a.health_report_id=#{healthReportId}
+    </select>
+    <select id="selectHealthReportAnswersByQuestionId" resultType="com.neusoft.entity.HealthReportAnswers">
+        select
+        <include refid="HealthReportAnswers"/>
+        from health_report_answers c
+        where c.health_report_question_id=#{healthReportQuestionId}
+    </select>
 </mapper>

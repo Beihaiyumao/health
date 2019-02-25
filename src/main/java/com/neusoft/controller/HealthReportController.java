@@ -215,4 +215,21 @@ public class HealthReportController {
         PageInfo<HealthReportResult> pageInfo = new PageInfo<>(healthReportResults);
         return pageInfo;
     }
+
+    /**
+     * 根据报告id获取报告
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param healthReportId
+     * @return
+     */
+    @GetMapping("selectAllQuestionnaireByHealthReportId")
+    public PageInfo<Questionnaire> selectAllQuestionnaireByHealthReportId(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                                          @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                                          @RequestParam("healthReportId") String healthReportId) {
+        Page<Questionnaire> questionnairePage = healthReportService.selectAllQuestionnaireByHealthReportId(pageNum, pageSize, healthReportId);
+        PageInfo<Questionnaire> pageInfo = new PageInfo<>(questionnairePage);
+        return pageInfo;
+    }
 }

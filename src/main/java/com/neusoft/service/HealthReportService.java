@@ -8,6 +8,8 @@ import com.neusoft.tool.SystemTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 健康报告
  * create:2019/2/18 xiaoyc
@@ -259,5 +261,32 @@ public class HealthReportService {
     public Page<HealthReportResult> selectHealthReportResult(Integer pageNum, Integer pageSize, String result) {
         PageHelper.startPage(pageNum, pageSize);
         return healthReportMapper.selectHealthReportResult(result);
+    }
+
+    /**
+     * 根据报告id获取报告
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param healthReportId
+     * @return
+     */
+    public Page<Questionnaire> selectAllQuestionnaireByHealthReportId(Integer pageNum, Integer pageSize, String healthReportId) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<Questionnaire> questionnaire = healthReportMapper.selectAllQuestionnaireByHealthReportId(healthReportId);
+        for (int i = 0; i < questionnaire.size(); i++) {
+            questionnaire.get(i).setHealthReportAnswersList(selectHealthReportAnswersByQuestionId(questionnaire.get(i).getHealthReportQuestionId()));
+        }
+        return questionnaire;
+    }
+
+    /**
+     * 根据问题id查询问题选项
+     *
+     * @param healthReportQuestionId
+     * @return
+     */
+    public List<HealthReportAnswers> selectHealthReportAnswersByQuestionId(String healthReportQuestionId) {
+        return healthReportMapper.selectHealthReportAnswersByQuestionId(healthReportQuestionId);
     }
 }
