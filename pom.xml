@@ -16,7 +16,6 @@
     <packaging>war</packaging>
     <name>health</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -280,6 +279,8 @@
     </dependencies>
 
     <build>
+        <!--修改打包名称-->
+        <finalName>health</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -287,6 +288,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
