@@ -31,11 +31,14 @@ public class HealthyToolService {
             return new Result(200, "请输入正确的数据", false);
         } else {
             double calBMI = weight / (height * height);
+            //BMI保留两位小数
+            DecimalFormat df = new DecimalFormat(".00");
+            double calBMI2 = Double.parseDouble(df.format(calBMI));
             HealthToolResult bmiHealthToolResult = healthToolResult(HealthToolType.BMI.getCode(), calBMI, 0);
             if (bmiHealthToolResult == null) {
                 return new Result(200, "请输入正确的数据", false);
             }
-            return new Result(100, bmiHealthToolResult.getResultMsg() + bmiHealthToolResult.getProposal(), true);
+            return new Result(100, "您的BMI值是:" + calBMI2 + ",身体状态:" + bmiHealthToolResult.getResultMsg() + ",医生建议:" + bmiHealthToolResult.getProposal(), true);
         }
     }
 
@@ -53,11 +56,14 @@ public class HealthyToolService {
             return new Result(200, "请输入正确的数据", false);
         } else {
             double whrResult = waist / hip;
+            //WHR保留两位小数
+            DecimalFormat df = new DecimalFormat(".00");
+            double whrResult2 = Double.parseDouble(df.format(whrResult));
             HealthToolResult whrHealthToolResult = healthToolResult(HealthToolType.WHR.getCode(), whrResult, sex);
             if (whrHealthToolResult == null) {
                 return new Result(200, "请输入正确的数据", false);
             }
-            return new Result(100, whrHealthToolResult.getResultMsg() + whrHealthToolResult.getProposal(), true);
+            return new Result(100, "您的腰臀比值是:" + whrResult2 + ",属于" + whrHealthToolResult.getResultMsg() + ",温馨提醒:" + whrHealthToolResult.getProposal(), true);
         }
     }
 
@@ -89,10 +95,14 @@ public class HealthyToolService {
         }
         if (sex == 0) {
             double denResult = 66 + 13.7 * weight + 500 * height - 6.8 * age;
-            return new Result(100, "" + denResult, true);
+            DecimalFormat df = new DecimalFormat(".00");
+            double denResult2 = Double.parseDouble(df.format(denResult));
+            return new Result(100, "您每日所需能量:" + denResult2 + "Kcal", true);
         } else {
             double denResult = 655 + 9.5 * weight + 180 * height - 4.7 * age;
-            return new Result(100, "" + denResult, true);
+            DecimalFormat df = new DecimalFormat(".00");
+            double denResult2 = Double.parseDouble(df.format(denResult));
+            return new Result(100, "您每日所需能量:" + denResult2 + "Kcal", true);
         }
     }
 
