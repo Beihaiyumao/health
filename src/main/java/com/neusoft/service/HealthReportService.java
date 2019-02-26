@@ -29,11 +29,7 @@ public class HealthReportService {
         healthReport.setCreateTime(SystemTool.getDateTime());
         healthReport.setHealthReportId(SystemTool.uuid());
         int code = healthReportMapper.addHealthReport(healthReport);
-        if (code == 1) {
-            return new Result(100, "添加成功", true);
-        } else {
-            return new Result(200, "添加失败", false);
-        }
+        return SystemTool.insert(code);
     }
 
     /**
@@ -44,11 +40,7 @@ public class HealthReportService {
      */
     public Result deleteHealthReport(String healthReportId) {
         int code = healthReportMapper.deleteHealthReport(healthReportId);
-        if (code == 1) {
-            return new Result(100, "删除成功", true);
-        } else {
-            return new Result(200, "删除失败", false);
-        }
+        return SystemTool.delete(code);
     }
 
     /**
@@ -60,11 +52,7 @@ public class HealthReportService {
     public Result updateHealthReport(HealthReport healthReport) {
         healthReport.setCreateTime(SystemTool.getDateTime());
         int code = healthReportMapper.updateHealthReport(healthReport);
-        if (code == 1) {
-            return new Result(100, "修改成功", true);
-        } else {
-            return new Result(200, "修改失败", false);
-        }
+        return SystemTool.update(code);
     }
 
     /**
@@ -90,11 +78,7 @@ public class HealthReportService {
         healthReportQuestion.setCreateTime(SystemTool.getDateTime());
         healthReportQuestion.setHealthReportQuestionId(SystemTool.uuid());
         int code = healthReportMapper.addHealthReportQuestion(healthReportQuestion);
-        if (code == 1) {
-            return new Result(100, "添加成功", true);
-        } else {
-            return new Result(200, "添加失败", false);
-        }
+        return SystemTool.insert(code);
     }
 
     /**
@@ -105,11 +89,7 @@ public class HealthReportService {
      */
     public Result deleteHealthReportQuestion(String healthReportQuestionId) {
         int code = healthReportMapper.deleteHealthReportQuestion(healthReportQuestionId);
-        if (code == 1) {
-            return new Result(100, "删除成功", true);
-        } else {
-            return new Result(200, "删除失败", false);
-        }
+        return SystemTool.delete(code);
     }
 
     /**
@@ -121,11 +101,7 @@ public class HealthReportService {
     public Result updateHealthReportQuestion(HealthReportQuestion healthReportQuestion) {
         healthReportQuestion.setCreateTime(SystemTool.getDateTime());
         int code = healthReportMapper.updateHealthReportQuestion(healthReportQuestion);
-        if (code == 1) {
-            return new Result(100, "修改成功", true);
-        } else {
-            return new Result(200, "修改失败", false);
-        }
+        return SystemTool.update(code);
     }
 
     /**
@@ -151,11 +127,7 @@ public class HealthReportService {
         healthReportAnswers.setCreateTime(SystemTool.getDateTime());
         healthReportAnswers.setHealthReportAnswerId(SystemTool.uuid());
         int code = healthReportMapper.addHealthReportAnswers(healthReportAnswers);
-        if (code == 1) {
-            return new Result(100, "添加成功", true);
-        } else {
-            return new Result(200, "添加失败", false);
-        }
+        return SystemTool.insert(code);
     }
 
     /**
@@ -166,11 +138,7 @@ public class HealthReportService {
      */
     public Result deleteHealthReportAnswers(String healthReportAnswerId) {
         int code = healthReportMapper.deleteHealthReportAnswers(healthReportAnswerId);
-        if (code == 1) {
-            return new Result(100, "删除成功", true);
-        } else {
-            return new Result(200, "删除失败", false);
-        }
+        return SystemTool.delete(code);
     }
 
     /**
@@ -182,11 +150,7 @@ public class HealthReportService {
     public Result updateHealthReportAnswers(HealthReportAnswers healthReportAnswers) {
         healthReportAnswers.setCreateTime(SystemTool.getDateTime());
         int code = healthReportMapper.updateHealthReportAnswers(healthReportAnswers);
-        if (code == 1) {
-            return new Result(100, "修改成功", true);
-        } else {
-            return new Result(200, "修改失败", false);
-        }
+        return SystemTool.update(code);
     }
 
     /**
@@ -212,11 +176,7 @@ public class HealthReportService {
         healthReportResult.setCreateTime(SystemTool.getDateTime());
         healthReportResult.setHealthReportResultId(SystemTool.uuid());
         int code = healthReportMapper.addHealthReportResult(healthReportResult);
-        if (code == 1) {
-            return new Result(100, "添加成功", true);
-        } else {
-            return new Result(200, "添加失败", false);
-        }
+        return SystemTool.insert(code);
     }
 
     /**
@@ -227,11 +187,7 @@ public class HealthReportService {
      */
     public Result deleteHealthReportResult(String healthReportResultId) {
         int code = healthReportMapper.deleteHealthReportResult(healthReportResultId);
-        if (code == 1) {
-            return new Result(100, "删除成功", true);
-        } else {
-            return new Result(200, "删除失败", false);
-        }
+        return SystemTool.delete(code);
     }
 
     /**
@@ -243,11 +199,7 @@ public class HealthReportService {
     public Result updateHealthReportResult(HealthReportResult healthReportResult) {
         healthReportResult.setCreateTime(SystemTool.getDateTime());
         int code = healthReportMapper.updateHealthReportResult(healthReportResult);
-        if (code == 1) {
-            return new Result(100, "修改成功", true);
-        } else {
-            return new Result(200, "修改失败", false);
-        }
+        return SystemTool.update(code);
     }
 
     /**

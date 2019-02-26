@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.dao.HealthDiaryMapper" >
+    <sql id="HealthDiarySport" >
+        a.health_diary_sport_id as healthDiarySportId,
+        a.sport_type as sportType,
+        a.sport_name as sportName,
+        a.sport_time as sportTime,
+        a.sport_duration as sportDuration,
+        a.create_time as createTime,
+        a.user_id as userId
+    </sql>
+    <insert id="insertHealthDiarySport" parameterType="com.neusoft.entity.HealthDiarySport">
+      insert into health_diary_sport (health_diary_sport_id, sport_type, sport_name,
+      sport_time, sport_duration, create_time,
+      user_id)
+      values (#{healthDiarySportId,jdbcType=VARCHAR}, #{sportType,jdbcType=VARCHAR}, #{sportName,jdbcType=VARCHAR},
+      #{sportTime,jdbcType=TIMESTAMP}, #{sportDuration,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+      #{userId,jdbcType=VARCHAR})
+    </insert>
+    <delete id="deleteHealthDiarySport">
+    delete from health_diary_sport
+    where health_diary_sport_id = #{healthDiarySportId,jdbcType=VARCHAR}
+    </delete>
+    <select id="selectMyHealthDiarySport" resultType="com.neusoft.entity.HealthDiarySport">
+        SELECT
+        <include refid="HealthDiarySport"/>
+        FROM health_diary_sport a WHERE a.user_id=#{userId}
+    </select>
+</mapper>
