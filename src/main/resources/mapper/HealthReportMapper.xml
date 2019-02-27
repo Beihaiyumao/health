@@ -142,4 +142,17 @@
         from health_report_answers c
         where c.health_report_question_id=#{healthReportQuestionId}
     </select>
+    <select id="selectHealthReportResultById" resultType="java.lang.String">
+        select
+        a.result
+        from health_report_result a where a.health_report_id=#{healthReportId} and #{mark}<![CDATA[ > ]]> a.mark_begin and #{mark}<![CDATA[ < ]]>a.mark_end
+    </select>
+    <insert id="insertUserHealthReportResult" parameterType="com.neusoft.entity.UserHealthReportResult">
+    insert into health_report_result_user (health_report_result_user_id, health_report_id,
+      user_id, mark, create_time
+      )
+    values (#{healthReportResultUserId,jdbcType=VARCHAR}, #{healthReportId,jdbcType=VARCHAR},
+      #{userId,jdbcType=VARCHAR}, #{mark,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}
+      )
+    </insert>
 </mapper>

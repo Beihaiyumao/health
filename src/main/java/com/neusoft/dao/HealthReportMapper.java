@@ -21,7 +21,7 @@ public interface HealthReportMapper {
     int updateHealthReport(HealthReport healthReport);
 
     //查询报告类目
-    Page<HealthReport> selectHealthReport(@Param("title")String title);
+    Page<HealthReport> selectHealthReport(@Param("title") String title);
 
     //新增题目
     int addHealthReportQuestion(HealthReportQuestion healthReportQuestion);
@@ -33,7 +33,7 @@ public interface HealthReportMapper {
     int updateHealthReportQuestion(HealthReportQuestion healthReportQuestion);
 
     //查询报告题目
-    Page<HealthReportQuestion> selectHealthReportQuestion(@Param("title")String title);
+    Page<HealthReportQuestion> selectHealthReportQuestion(@Param("title") String title);
 
     //新增问题选项
     int addHealthReportAnswers(HealthReportAnswers healthReportAnswers);
@@ -57,12 +57,18 @@ public interface HealthReportMapper {
     int updateHealthReportResult(HealthReportResult healthReportResult);
 
     //查询所有报告结果
-    Page<HealthReportResult> selectHealthReportResult(@Param("result")String result);
+    Page<HealthReportResult> selectHealthReportResult(@Param("result") String result);
 
     //根据报告id获取报告
     Page<Questionnaire> selectAllQuestionnaireByHealthReportId(@Param("healthReportId") String healthReportId);
 
     //根据问题id查询问题选项
-    List<HealthReportAnswers> selectHealthReportAnswersByQuestionId(@Param("healthReportQuestionId")String healthReportQuestionId);
+    List<HealthReportAnswers> selectHealthReportAnswersByQuestionId(@Param("healthReportQuestionId") String healthReportQuestionId);
+
+    //查询报告答案
+    String selectHealthReportResultById(@Param("healthReportId") String healthReportId, @Param("mark") double mark);
+
+    //保存用户报告答案
+    void insertUserHealthReportResult(UserHealthReportResult userHealthReportResult);
 
 }

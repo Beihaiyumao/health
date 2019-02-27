@@ -60,11 +60,11 @@
     <select id="selectMyHealthDiaryFood" resultType="com.neusoft.entity.HealthDiaryFood">
         SELECT
         <include refid="HealthDiaryFood" />
-        FETCH health_diary_food b WHERE  b.user_id=#{userId} order by b.create_time desc
+        FROM health_diary_food b WHERE  b.user_id=#{userId} order by b.create_time desc
     </select>
     <select id="selectAllHealthDiaryFood" resultType="com.neusoft.entity.HealthDiaryFood">
         SELECT
         <include refid="HealthDiaryFood" />
-        FETCH health_diary_food b order by b.create_time desc
+        FROM health_diary_food b order by b.create_time desc
     </select>
 </mapper>

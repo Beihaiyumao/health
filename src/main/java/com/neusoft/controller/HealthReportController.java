@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.neusoft.entity.*;
 import com.neusoft.service.HealthReportService;
 import com.neusoft.tool.PageInfo;
+import com.neusoft.tool.SystemTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -231,5 +232,17 @@ public class HealthReportController {
         Page<Questionnaire> questionnairePage = healthReportService.selectAllQuestionnaireByHealthReportId(pageNum, pageSize, healthReportId);
         PageInfo<Questionnaire> pageInfo = new PageInfo<>(questionnairePage);
         return pageInfo;
+    }
+
+    /**
+     * 用户提交报告
+     *
+     * @param healthReportId
+     * @param mark
+     * @return
+     */
+    @GetMapping("selectHealthReportResultById")
+    public Result selectHealthReportResultById(@RequestParam("healthReportId") String healthReportId, @RequestParam("mark") double mark, @RequestParam("userId") String userId) {
+        return healthReportService.selectHealthReportResultById(healthReportId, mark,userId);
     }
 }

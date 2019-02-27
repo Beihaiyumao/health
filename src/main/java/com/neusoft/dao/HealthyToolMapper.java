@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
  * create: xiaoyc 2019/2/14
  */
 public interface HealthyToolMapper {
+
     //根据计算结果比对
-    public HealthToolResult healthToolResult(@Param("type") String type, @Param("calResult") double calResult,@Param("sex")int sex);
+    HealthToolResult healthToolResult(@Param("type") String type, @Param("calResult") double calResult, @Param("sex") int sex);
 }

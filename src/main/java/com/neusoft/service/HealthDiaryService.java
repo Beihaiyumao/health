@@ -75,6 +75,8 @@ public class HealthDiaryService {
      * @return
      */
     public Result insertHealthDiaryFood(HealthDiaryFood healthDiaryFood) {
+        healthDiaryFood.setCreateTime(SystemTool.getDateTime());
+        healthDiaryFood.setHealthDiaryFoodId(SystemTool.uuid());
         int code = healthDiaryMapper.insertHealthDiaryFood(healthDiaryFood);
         return SystemTool.insert(code);
     }

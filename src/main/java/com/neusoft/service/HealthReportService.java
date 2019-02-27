@@ -241,4 +241,39 @@ public class HealthReportService {
     public List<HealthReportAnswers> selectHealthReportAnswersByQuestionId(String healthReportQuestionId) {
         return healthReportMapper.selectHealthReportAnswersByQuestionId(healthReportQuestionId);
     }
+
+    /**
+     * 报告结果
+     *
+     * @param healthReportId
+     * @param mark
+     * @return
+     */
+    public Result selectHealthReportResultById(String healthReportId, double mark, String userId) {
+
+        String result = healthReportMapper.selectHealthReportResultById(healthReportId, mark);
+        if (result == null || result.isEmpty()) {
+            return SystemTool.error();
+        } else {
+            //保存用户报告结果
+            UserHealthReportResult userHealthReportResult = new UserHealthReportResult();
+            userHealthReportResult.setHealthReportId(healthReportId);
+            userHealthReportResult.setMark(mark);
+            userHealthReportResult.setUserId(userId);
+            userHealthReportResult.setCreateTime(SystemTool.getDateTime());
+            userHealthReportResult.setHealthReportResultUserId(SystemTool.uuid());
+            insertUserHealthReportResult(userHealthReportResult);
+            return SystemTool.result(result);
+        }
+
+    }
+
+    /**
+     * 保存用户报告结果
+     *
+     * @param userHealthReportResult
+     */
+    public void insertUserHealthReportResult(UserHealthReportResult userHealthReportResult) {
+        healthReportMapper.insertUserHealthReportResult(userHealthReportResult);
+    }
 }

@@ -73,4 +73,23 @@ public class SystemTool {
             return new Result(200, "修改失败", false);
         }
     }
+
+    /**
+     * 错误提示
+     *
+     * @return
+     */
+    public static Result error() {
+        return new Result(200, "未知错误,请联系管理员!", false);
+    }
+
+    /**
+     * 返回正确结果集
+     *
+     * @param msg
+     * @return
+     */
+    public static Result result(String msg) {
+        return new Result(100, msg, true);
+    }
 }
