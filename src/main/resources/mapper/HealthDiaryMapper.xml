@@ -10,6 +10,17 @@
         a.create_time as createTime,
         a.user_id as userId
     </sql>
+    <sql id="HealthDiaryFood" >
+        b.health_diary_food_id as healthDiaryFoodId,
+        b.user_id as userId,
+        b.meal_times as mealTimes,
+        b.food_big_type as foodBigType,
+        b.food_son_type as foodSonType,
+        b.food_name as foodName,
+        b.food_time as foodTime,
+        b.food_amount as foodAmount,
+        b.create_time as createTime
+    </sql>
     <insert id="insertHealthDiarySport" parameterType="com.neusoft.entity.HealthDiarySport">
       insert into health_diary_sport (health_diary_sport_id, sport_type, sport_name,
       sport_time, sport_duration, create_time,
@@ -25,6 +36,35 @@
     <select id="selectMyHealthDiarySport" resultType="com.neusoft.entity.HealthDiarySport">
         SELECT
         <include refid="HealthDiarySport"/>
-        FROM health_diary_sport a WHERE a.user_id=#{userId}
+        FROM health_diary_sport a WHERE a.user_id=#{userId} order by a.create_time desc
+    </select>
+    <select id="selectAllHealthDiarySport" resultType="com.neusoft.entity.HealthDiarySport">
+        SELECT
+        <include refid="HealthDiarySport" />
+        FROM health_diary_sport a order by a.create_time desc
+    </select>
+    <insert id="insertHealthDiaryFood" parameterType="com.neusoft.entity.HealthDiaryFood">
+      insert into health_diary_food (health_diary_food_id, user_id, meal_times,
+      food_big_type, food_son_type, food_name,
+      food_time, food_amount, create_time
+      )
+    values (#{healthDiaryFoodId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{mealTimes,jdbcType=VARCHAR},
+      #{foodBigType,jdbcType=VARCHAR}, #{foodSonType,jdbcType=VARCHAR}, #{foodName,jdbcType=VARCHAR},
+      #{foodTime,jdbcType=TIMESTAMP}, #{foodAmount,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+    </insert>
+    <delete id="deleteHealthDiaryFood">
+     delete from health_diary_food
+     where health_diary_food_id = #{healthDiaryFoodId,jdbcType=VARCHAR}
+    </delete>
+    <select id="selectMyHealthDiaryFood" resultType="com.neusoft.entity.HealthDiaryFood">
+        SELECT
+        <include refid="HealthDiaryFood" />
+        FETCH health_diary_food b WHERE  b.user_id=#{userId} order by b.create_time desc
+    </select>
+    <select id="selectAllHealthDiaryFood" resultType="com.neusoft.entity.HealthDiaryFood">
+        SELECT
+        <include refid="HealthDiaryFood" />
+        FETCH health_diary_food b order by b.create_time desc
     </select>
 </mapper>
