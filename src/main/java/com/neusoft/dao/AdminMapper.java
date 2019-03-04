@@ -2,6 +2,7 @@ package com.neusoft.dao;
 
 import com.github.pagehelper.Page;
 import com.neusoft.entity.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -59,4 +60,25 @@ public interface AdminMapper {
 
     //查询所有评论的回复
     Page<CommentReply> selectAllCommentReply();
+
+    //新增导航
+    int insertNavBar(NavBar navBar);
+
+    //所有导航
+    List<NavBar> selectNavBar();
+
+    //删除导航栏
+    int deleteNavBar(@Param("navBarId") String navBarId);
+
+    //新增一级菜单
+    int insertFirstMenu(FirstMenu firstMenu);
+
+    //所有一级菜单
+    Page<FirstMenu> selectFirstMenu();
+
+    //导航栏下的一级菜单
+    List<FirstMenu> selectFirstMenuByNavBarId(@Param("navBarId") String navBarId);
+
+    //删除一级菜单
+    int deleteFirstMenu(@Param("firstMenuId") String firstMenuId);
 }

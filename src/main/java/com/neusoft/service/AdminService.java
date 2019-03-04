@@ -1,6 +1,7 @@
 package com.neusoft.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -267,5 +268,79 @@ public class AdminService {
     public Page<CommentReply> selectAllCommentReply(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return adminMapper.selectAllCommentReply();
+    }
+
+    /**
+     * 新增导航栏
+     *
+     * @param navBar
+     * @return
+     */
+    public Result insertNavBar(NavBar navBar) {
+        navBar.setCreateTime(SystemTool.getDateTime());
+        navBar.setNavBarId(SystemTool.uuid());
+        return SystemTool.insert(adminMapper.insertNavBar(navBar));
+    }
+
+    /**
+     * 导航栏
+     *
+     * @return
+     */
+    public List<NavBar> selectNavBar() {
+        return adminMapper.selectNavBar();
+    }
+
+    /**
+     * 删除导航栏
+     *
+     * @param navBarId
+     * @return
+     */
+    public Result deleteNavBar(String navBarId) {
+        int code = adminMapper.deleteNavBar(navBarId);
+        return SystemTool.delete(code);
+    }
+
+    /**
+     * 新增一级菜单
+     *
+     * @param firstMenu
+     * @return
+     */
+    public Result insertFirstMenu(FirstMenu firstMenu) {
+        firstMenu.setCreateTime(SystemTool.getDateTime());
+        firstMenu.setFirstMenuId(SystemTool.uuid());
+        return SystemTool.insert(adminMapper.insertFirstMenu(firstMenu));
+    }
+
+    /**
+     * 所有一级菜单
+     *
+     * @return
+     */
+    public Page<FirstMenu> selectFirstMenu(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return adminMapper.selectFirstMenu();
+    }
+
+    /**
+     * 导航栏下的一级菜单
+     *
+     * @param navBarId
+     * @return
+     */
+    public List<FirstMenu> selectFirstMenuByNavBarId(String navBarId) {
+        return adminMapper.selectFirstMenuByNavBarId(navBarId);
+    }
+
+    /**
+     * 删除一级菜单
+     *
+     * @param firstMenuId
+     * @return
+     */
+    public Result deleteFirstMenu(String firstMenuId) {
+        return SystemTool.delete(adminMapper.deleteFirstMenu(firstMenuId));
     }
 }

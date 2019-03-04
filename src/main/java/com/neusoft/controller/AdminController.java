@@ -1,6 +1,7 @@
 package com.neusoft.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.github.pagehelper.Page;
 import com.neusoft.entity.*;
 import com.neusoft.tool.PageInfo;
+import com.sun.org.apache.bcel.internal.generic.FMUL;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.ui.Model;
@@ -278,5 +280,83 @@ public class AdminController {
         Page<CommentReply> allCommentReply = adminService.selectAllCommentReply(pageNum, pageSize);
         PageInfo<CommentReply> pageInfo = new PageInfo<>(allCommentReply);
         return pageInfo;
+    }
+
+    /**
+     * 新增导航栏
+     *
+     * @param navBar
+     * @return
+     */
+    @PostMapping("/insertNavBar")
+    public Result insertNavBar(@RequestBody NavBar navBar) {
+        return adminService.insertNavBar(navBar);
+    }
+
+    /**
+     * 导航栏
+     *
+     * @return
+     */
+    @GetMapping("/selectNavBar")
+    public List<NavBar> selectNavBar() {
+        return adminService.selectNavBar();
+    }
+
+    /**
+     * 删除导航栏
+     *
+     * @param navBarId
+     * @return
+     */
+    @GetMapping("/deleteNavBar")
+    public Result deleteNavBar(@RequestParam("navBarId") String navBarId) {
+        return adminService.deleteNavBar(navBarId);
+    }
+
+    /**
+     * 新增一级菜单
+     *
+     * @param firstMenu
+     * @return
+     */
+    @PostMapping("/insertFirstMenu")
+    public Result insertFirstMenu(@RequestBody FirstMenu firstMenu) {
+        return adminService.insertFirstMenu(firstMenu);
+    }
+
+    /**
+     * 所有一级菜单
+     *
+     * @return
+     */
+    @GetMapping("/selectFirstMenu")
+    public PageInfo<FirstMenu> selectFirstMenu(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                               @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
+        Page<FirstMenu> firstMenuPage = adminService.selectFirstMenu(pageNum, pageSize);
+        PageInfo<FirstMenu> pageInfo = new PageInfo<>(firstMenuPage);
+        return pageInfo;
+    }
+
+    /**
+     * 导航栏下的一级菜单
+     *
+     * @param navBarId
+     * @return
+     */
+    @GetMapping("/selectFirstMenuByNavBarId")
+    public List<FirstMenu> selectFirstMenuByNavBarId(@RequestParam("navBarId") String navBarId) {
+        return adminService.selectFirstMenuByNavBarId(navBarId);
+    }
+
+    /**
+     * 删除一级菜单
+     *
+     * @param firstMenuId
+     * @return
+     */
+    @GetMapping("/deleteFirstMenu")
+    public Result deleteFirstMenu(@RequestParam("firstMenuId") String firstMenuId) {
+        return adminService.deleteFirstMenu(firstMenuId);
     }
 }

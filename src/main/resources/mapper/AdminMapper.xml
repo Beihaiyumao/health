@@ -50,6 +50,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		a.detail as detail,
 		a.create_time as createTime
 	</sql>
+	<sql id="FirstMenu" >
+		a.first_menu_id as firstMenuId,
+		a.nav_bar_id as navBarId,
+		a.first_menu_name as firstMenuName,
+		a.create_time as createTime,
+		a.sort_id as sortId
+	</sql>
 	<select id="adminLogin" resultType="com.neusoft.entity.Admin">
 		select
 		<include refid="adminInfo"></include>
@@ -135,6 +142,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		a.create_time as createTime
 		FROM article_comment a order by a.create_time desc
   	</select>
+	<insert id="insertNavBar" parameterType="com.neusoft.entity.NavBar">
+	  insert into nav_bar (nav_bar_id, nav_bar_name, create_time, sort_id
+      )
+    values (#{navBarId,jdbcType=VARCHAR}, #{navBarName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{sortId}
+      )
+	</insert>
 	<select id="selectAllCommentReply" resultType="com.neusoft.entity.CommentReply">
 		SELECT
 		a.reply_id as replyId,
@@ -142,4 +155,36 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		a.create_time as createTime
 		from comment_reply a order by a.create_time desc
 	</select>
+	<select id="selectNavBar" resultType="com.neusoft.entity.NavBar">
+		select
+		a.nav_bar_id as navBarId,
+		a.nav_bar_name as navBarName,
+		a.create_time as createTime,
+		a.sort_id as sortId
+		from nav_bar a order by a.sort_id
+	</select>
+	<delete id="deleteNavBar">
+		DELETE
+		from nav_bar a where a.nav_bar_id=#{navBarId}
+	</delete>
+	<insert id="insertFirstMenu" parameterType="com.neusoft.entity.FirstMenu">
+		insert into first_menu (first_menu_id, nav_bar_id, first_menu_name,
+      	create_time,sort_id)
+    	values (#{firstMenuId,jdbcType=VARCHAR}, #{navBarId,jdbcType=VARCHAR}, #{firstMenuName,jdbcType=VARCHAR},
+      	#{createTime,jdbcType=TIMESTAMP},#{sortId})
+	</insert>
+	<select id="selectFirstMenu" resultType="com.neusoft.entity.FirstMenu">
+		SELECT
+		<include refid="FirstMenu" />
+		FROM first_menu a order by a.create_time desc
+	</select>
+	<select id="selectFirstMenuByNavBarId" resultType="com.neusoft.entity.FirstMenu">
+		SELECT
+		<include refid="FirstMenu" />
+		FROM  first_menu a where a.nav_bar_id=#{navBarId} order by a.sort_id
+	</select>
+	<delete id="deleteFirstMenu">
+		DELETE
+		FROM first_menu a where a.first_menu_id=#{firstMenuId}
+	</delete>
 </mapper>

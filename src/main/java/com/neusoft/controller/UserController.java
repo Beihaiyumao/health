@@ -292,7 +292,6 @@ public class UserController {
             g.drawString(ctmp, 19 * i + 19, 19);
         }
         g.dispose(); //释放g所占用的系统资源
-        session.removeAttribute("sRand");
         session.setAttribute("sRand", sRand);//存储到session
         ImageIO.write(image, "JPEG", response.getOutputStream()); //输出图片
         System.out.println(sRand+"下边");
