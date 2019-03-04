@@ -62,7 +62,7 @@ public interface HealthyArticleMapper {
     int deleteCollectionAritcleByArticleId(@Param("articleId") String articleId);
 
     //根据文章id查询当前用户是否已经收藏该文章
-    String selectCollectionAritlceById(@Param("articleId") String articleId, @Param("userId") String userId);
+    List<String> selectCollectionAritlceById(@Param("articleId") String articleId, @Param("userId") String userId);
 
     //我收藏的文章
     Page<HealthyArticle> selectHealthyArticleByUserId(String userId);

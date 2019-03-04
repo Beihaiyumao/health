@@ -86,8 +86,8 @@ public class HealthyArticleService {
      * @param title
      * @return
      */
-    public Page<HealthyArticle> selectHealthyArticleByTitle(Integer pageNum,Integer pageSize,String title) {
-         PageHelper.startPage(pageNum,pageSize);
+    public Page<HealthyArticle> selectHealthyArticleByTitle(Integer pageNum, Integer pageSize, String title) {
+        PageHelper.startPage(pageNum, pageSize);
         return healthyArticleMapper.selectHealthyArticleByTitle(title);
     }
 
@@ -271,18 +271,17 @@ public class HealthyArticleService {
     public Result collectionArticles(CollectionArticle collectionArticle) {
         collectionArticle.setCollectionArticleId(SystemTool.uuid());
         collectionArticle.setCreateTime(SystemTool.getDateTime());
-        int code = healthyArticleMapper.collectionArticles(collectionArticle);
         //如果已收藏则给出提示
-        String collectionArticleDTO = healthyArticleMapper.selectCollectionAritlceById(collectionArticle.getArticleId(), collectionArticle.getUserId());
-        if (collectionArticleDTO == null) {
-
+        List<String> collectionArticleDTO = healthyArticleMapper.selectCollectionAritlceById(collectionArticle.getArticleId(), collectionArticle.getUserId());
+        if (collectionArticleDTO.size() !=0) {
+            int code = healthyArticleMapper.collectionArticles(collectionArticle);
             if (code == 1) {
                 return new Result(100, "收藏成功", true);
             } else {
                 return new Result(200, "收藏失败", false);
             }
         }
-        return new Result(200, "请不要重复收藏", false);
+        return new Result(300, "请不要重复收藏", false);
 
     }
 
@@ -293,11 +292,11 @@ public class HealthyArticleService {
      * @return
      */
     public Result deleteCollectionAritcleByArticleId(String articleId) {
-        int code= healthyArticleMapper.deleteCollectionAritcleByArticleId(articleId);
-        if(code==1){
-            return new Result(100,"取消收藏成功",true);
-        }else {
-            return new Result(200,"取消收藏失败",false);
+        int code = healthyArticleMapper.deleteCollectionAritcleByArticleId(articleId);
+        if (code == 1) {
+            return new Result(100, "取消收藏成功", true);
+        } else {
+            return new Result(200, "取消收藏失败", false);
         }
     }
 
