@@ -24,7 +24,7 @@ public class QuestionService {
     public Result insertQuestion(Question question) {
         question.setQuestionId(SystemTool.uuid());
         question.setCreateTime(SystemTool.getDateTime());
-        int code= questionMapper.insert(question);
+        int code = questionMapper.insert(question);
         if (code == 1) {
             return new Result(100, "发布问题成功", true);
         } else {
@@ -64,7 +64,7 @@ public class QuestionService {
      * @return
      */
     public Result deleteQuestion(String questionId) {
-        int code= questionMapper.deleteByPrimaryKey(questionId);
+        int code = questionMapper.deleteByPrimaryKey(questionId);
         if (code == 1) {
             return new Result(100, "删除问题成功", true);
         } else {
@@ -96,5 +96,20 @@ public class QuestionService {
     public Page<AnswerQuestion> selectAnswerQuestionByQuestionId(Integer pageNum, Integer pageSize, String questionId) {
         PageHelper.startPage(pageNum, pageSize);
         return questionMapper.selectAnswerQuestionByQuestionId(questionId);
+    }
+
+    /**
+     * 根据问题id查询问题内容
+     *
+     * @param questionId
+     * @return
+     */
+    public Result selectByPrimaryKey(String questionId) {
+        Question question = questionMapper.selectByPrimaryKey(questionId);
+        if (question != null) {
+            return new Result(100, "获取成功", true, question);
+        } else {
+            return new Result(200, "获取失败", false);
+        }
     }
 }

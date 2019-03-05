@@ -273,7 +273,7 @@ public class HealthyArticleService {
         collectionArticle.setCreateTime(SystemTool.getDateTime());
         //如果已收藏则给出提示
         List<String> collectionArticleDTO = healthyArticleMapper.selectCollectionAritlceById(collectionArticle.getArticleId(), collectionArticle.getUserId());
-        if (collectionArticleDTO.size() !=0) {
+        if (collectionArticleDTO.size() ==0) {
             int code = healthyArticleMapper.collectionArticles(collectionArticle);
             if (code == 1) {
                 return new Result(100, "收藏成功", true);

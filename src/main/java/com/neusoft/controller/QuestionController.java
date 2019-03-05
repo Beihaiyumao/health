@@ -91,4 +91,15 @@ public class QuestionController {
         PageInfo<AnswerQuestion> pageInfo = new PageInfo<>(allAnswerQuestion);
         return pageInfo;
     }
+
+    /**
+     * 根据问题id查询问题详情
+     *
+     * @param questionId
+     * @return
+     */
+    @GetMapping("/selectQuestionDetailById")
+    public Result selectByPrimaryKey(@RequestParam("questionId") String questionId) {
+        return questionService.selectByPrimaryKey(questionId);
+    }
 }

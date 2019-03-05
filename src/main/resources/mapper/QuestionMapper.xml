@@ -15,7 +15,7 @@
     a.detail as detail,
     a.create_time as createTime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultType="com.neusoft.entity.Question" >
     select 
     <include refid="Base_Column_List" />
     from question a
