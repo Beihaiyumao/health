@@ -17,7 +17,7 @@ public class HealthApplication extends SpringBootServletInitializer {
         SpringApplication.run(HealthApplication.class, args);
         System.out.println("======================================================================\n" +
                 "\n" +
-                "    欢迎使用   - Created By xyc\n" +
+                "    欢迎使用   - Created By xiaoyc\n" +
                 "\n" +
                 "======================================================================");
     }

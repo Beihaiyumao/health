@@ -27,6 +27,7 @@ public interface QuestionMapper {
 
     //我的问题列表
     Page<Question> selectQuestionByUserId(String userId);
+
     //根据问题id查询回答
-    Page<AnswerQuestion>selectAnswerQuestionByQuestionId(String questionId);
+    Page<AnswerQuestion> selectAnswerQuestionByQuestionId(String questionId);
 }

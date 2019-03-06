@@ -189,7 +189,7 @@ public class HealthyArticleController {
                                                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
                                                                         @RequestParam("articleId") String articleId) {
         Page<ArticleComment> commentList = healthyArticleService.selectArticleCommentPageByArticleId(pageNum, pageSize, articleId);
-        for(int i=0;i<commentList.size();i++){
+        for (int i = 0; i < commentList.size(); i++) {
             commentList.get(i).setCommentReply(healthyArticleService.selectCommentReplyByArticleCommentId(commentList.get(i).getCommentId()));
         }
         PageInfo<ArticleComment> pageInfo = new PageInfo<>(commentList);
@@ -205,5 +205,17 @@ public class HealthyArticleController {
     @RequestMapping(value = "/commentReply", method = RequestMethod.GET)
     public List<CommentReply> selectCommentReplyByArticleCommentId(@RequestParam("articleCommentId") String articleCommentId) {
         return healthyArticleService.selectCommentReplyByArticleCommentId(articleCommentId);
+    }
+
+    /**
+     * 判断用户是否收藏了该文章
+     *
+     * @param userId
+     * @param articleId
+     * @return
+     */
+    @GetMapping("/selectCollectionAritlceById")
+    public Result selectCollectionAritlceById(@RequestParam("userId") String userId, @RequestParam("articleId") String articleId) {
+        return healthyArticleService.selectCollectionAritlceById(userId, articleId);
     }
 }
