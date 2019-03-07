@@ -343,4 +343,39 @@ public class AdminService {
     public Result deleteFirstMenu(String firstMenuId) {
         return SystemTool.delete(adminMapper.deleteFirstMenu(firstMenuId));
     }
+
+    /**
+     * 新增用户反馈
+     *
+     * @param userFeedBack
+     * @return
+     */
+    public Result insertFeedback(UserFeedBack userFeedBack) {
+        userFeedBack.setCreateTime(SystemTool.getDateTime());
+        userFeedBack.setUserFeedbackId(SystemTool.uuid());
+        return SystemTool.insert(adminMapper.insertFeedback(userFeedBack));
+    }
+
+    /**
+     * 所有用户的反馈
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param msg
+     * @return
+     */
+    public Page<UserFeedBack> selectFeedback(Integer pageNum, Integer pageSize, String msg) {
+        PageHelper.startPage(pageNum, pageSize);
+        return adminMapper.selectFeedback(msg);
+    }
+
+    /**
+     * 删除用户反馈
+     *
+     * @param userFeedbackId
+     * @return
+     */
+    public Result deleteFeedback(String userFeedbackId) {
+        return SystemTool.delete(adminMapper.deleteFeedback(userFeedbackId));
+    }
 }

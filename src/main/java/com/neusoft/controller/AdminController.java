@@ -359,4 +359,43 @@ public class AdminController {
     public Result deleteFirstMenu(@RequestParam("firstMenuId") String firstMenuId) {
         return adminService.deleteFirstMenu(firstMenuId);
     }
+
+    /**
+     * 新增用户反馈
+     *
+     * @param userFeedBack
+     * @return
+     */
+    @PostMapping("/insertFeedback")
+    public Result insertFeedback(@RequestBody UserFeedBack userFeedBack) {
+        return adminService.insertFeedback(userFeedBack);
+    }
+
+    /**
+     * 所有用户的反馈
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param msg
+     * @return
+     */
+    @GetMapping("/selectFeedback")
+    public PageInfo<UserFeedBack> selectFeedback(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                 @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                 @RequestParam("msg") String msg) {
+        Page<UserFeedBack> userFeedBackPage = adminService.selectFeedback(pageNum, pageSize, msg);
+        PageInfo<UserFeedBack> pageInfo = new PageInfo<>(userFeedBackPage);
+        return pageInfo;
+    }
+
+    /**
+     * 删除用户反馈
+     *
+     * @param userFeedbackId
+     * @return
+     */
+    @GetMapping("/deleteFeedback")
+    public Result deleteFeedback(@RequestParam("userFeedbackId") String userFeedbackId) {
+        return adminService.deleteFeedback(userFeedbackId);
+    }
 }

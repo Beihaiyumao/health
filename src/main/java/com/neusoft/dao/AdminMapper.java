@@ -81,4 +81,13 @@ public interface AdminMapper {
 
     //删除一级菜单
     int deleteFirstMenu(@Param("firstMenuId") String firstMenuId);
+
+    //新增反馈信息
+    int insertFeedback(UserFeedBack userFeedBack);
+
+    //所有用户反馈信息
+    Page<UserFeedBack> selectFeedback(@Param("msg")String msg);
+
+    //删除用户反馈信息
+    int deleteFeedback(@Param("userFeedbackId") String userFeedbackId);
 }

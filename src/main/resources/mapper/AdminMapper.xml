@@ -57,6 +57,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		a.create_time as createTime,
 		a.sort_id as sortId
 	</sql>
+	<sql id="UserFeedback" >
+		a.user_feedback_id as userFeedbackId,
+		a.user_id as userId,
+		a.msg as msg,
+		a.wechat as wechat,
+		a.create_time as createTime
+	</sql>
 	<select id="adminLogin" resultType="com.neusoft.entity.Admin">
 		select
 		<include refid="adminInfo"></include>
@@ -186,5 +193,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<delete id="deleteFirstMenu">
 		DELETE
 		FROM first_menu a where a.first_menu_id=#{firstMenuId}
+	</delete>
+	<insert id="insertFeedback" parameterType="com.neusoft.entity.UserFeedBack">
+	  insert into user_feedback (user_feedback_id, user_id, msg,
+      wechat, create_time)
+      values (#{userFeedbackId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR},
+      #{wechat,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<select id="selectFeedback" resultType="com.neusoft.entity.UserFeedBack">
+		SELECT
+		<include refid="UserFeedback" />
+		from user_feedback a where a.msg LIKE  CONCAT(CONCAT('%',#{msg}), '%')   order by a.create_time desc
+	</select>
+	<delete id="deleteFeedback">
+		DELETE
+		FROM  user_feedback  where user_feedback_id=#{userFeedbackId}
 	</delete>
 </mapper>
