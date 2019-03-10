@@ -126,4 +126,27 @@
     on c.user_id = d.user_id
     where a.question_id=#{questionId} order by a.create_time desc
   </select>
+  <insert id="collectionQuestionById" parameterType="com.neusoft.entity.CollectionQuestion">
+    insert into collection_question (collection_question_id, user_id, question_id,
+      create_time)
+    values (#{collectionQuestionId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{questionId,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <delete id="deleteCollectionQuestion">
+    delete from collection_question
+    where collection_question_id = #{collectionQuestionId,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectMyCollectionQuestion" resultType="com.neusoft.entity.Question">
+    select
+     <include refid="Base_Column_List"/>
+    FROM question a
+    left JOIN collection_question  b
+    on a.question_id=b.question_id
+    where b.user_id=#{userId} order by b.create_time desc
+  </select>
+  <select id="selectCollectionQuestionIdByUserId" resultType="java.lang.String">
+    select
+    a.collection_question_id
+    from collection_question a WHERE a.user_id=#{userId} and a.question_id=#{questionId}
+  </select>
 </mapper>

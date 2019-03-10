@@ -2,7 +2,11 @@ package com.neusoft.dao;
 
 import com.github.pagehelper.Page;
 import com.neusoft.entity.AnswerQuestion;
+import com.neusoft.entity.CollectionQuestion;
 import com.neusoft.entity.Question;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface QuestionMapper {
     //删除问题
@@ -30,4 +34,16 @@ public interface QuestionMapper {
 
     //根据问题id查询回答
     Page<AnswerQuestion> selectAnswerQuestionByQuestionId(String questionId);
+
+    //收藏问题
+    int collectionQuestionById(CollectionQuestion collectionQuestion);
+
+    //根据当前用户id检验是否已经收藏该问题
+    List<String> selectCollectionQuestionIdByUserId(@Param("userId")String userId,@Param("questionId")String questionId);
+
+    //取消收藏问题
+    int deleteCollectionQuestion(@Param("collectionQuestionId")String collectionQuestionId);
+
+    //我的收藏问列表
+    Page<Question> selectMyCollectionQuestion(@Param("userId")String userId);
 }

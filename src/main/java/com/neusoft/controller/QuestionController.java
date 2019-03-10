@@ -2,6 +2,7 @@ package com.neusoft.controller;
 
 import com.github.pagehelper.Page;
 import com.neusoft.entity.AnswerQuestion;
+import com.neusoft.entity.CollectionQuestion;
 import com.neusoft.entity.Question;
 import com.neusoft.entity.Result;
 import com.neusoft.service.QuestionService;
@@ -101,5 +102,56 @@ public class QuestionController {
     @GetMapping("/selectQuestionDetailById")
     public Result selectByPrimaryKey(@RequestParam("questionId") String questionId) {
         return questionService.selectByPrimaryKey(questionId);
+    }
+
+    /**
+     * 收藏问题
+     *
+     * @param collectionQuestion
+     * @return
+     */
+    @PostMapping("/collectionQuestion")
+    public Result collectionQuestionById(@RequestBody CollectionQuestion collectionQuestion) {
+        return questionService.collectionQuestionById(collectionQuestion);
+    }
+
+    /**
+     * 取消收藏问题
+     *
+     * @param collectionQuestionId
+     * @return
+     */
+    @GetMapping("deleteCollectionQuestion")
+    public Result deleteCollectionQuestion(@RequestParam("collectionQuestionId") String collectionQuestionId) {
+        return questionService.deleteCollectionQuestion(collectionQuestionId);
+    }
+
+    /**
+     * 我的收藏问题列表
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @return
+     */
+    @GetMapping("/selectMyCollectionQuestion")
+    public PageInfo<Question> selectMyCollectionQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                         @RequestParam("userId") String userId) {
+        Page<Question> questionPage = questionService.selectMyCollectionQuestion(pageNum, pageSize, userId);
+        PageInfo<Question> pageInfo = new PageInfo<>(questionPage);
+        return pageInfo;
+    }
+
+    /**
+     * 判断是否收藏了
+     *
+     * @param userId
+     * @param questionId
+     * @return
+     */
+    @GetMapping("/collectionQuestionIsTrue")
+    public Result selectCollectionQuestionIdByUserId(@RequestParam("userId") String userId, @RequestParam("questionId") String questionId) {
+        return questionService.collectionQuestionIsTrue(userId, questionId);
     }
 }
