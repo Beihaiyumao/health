@@ -287,7 +287,7 @@
     #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <delete id="deleteCollectionAritcleByArticleId" >
-    delete from collection_article where article_id=#{articleId}
+    delete from collection_article where collection_article_id=#{collectionArticleId}
   </delete>
   <select id="selectCollectionAritlceById"  resultType="java.lang.String">
     select a.collection_article_id from collection_article a where a.article_id=#{articleId} and a.user_id=#{userId}

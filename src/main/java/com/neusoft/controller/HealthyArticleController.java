@@ -167,12 +167,12 @@ public class HealthyArticleController {
     /**
      * 取消收藏
      *
-     * @param articleId
+     * @param collectionArticleId
      * @return
      */
     @RequestMapping(value = "deleteCollectionAritcle", method = RequestMethod.GET)
-    public Result deleteCollectionAritcleByArticleId(@RequestParam("articleId") String articleId) {
-        return healthyArticleService.deleteCollectionAritcleByArticleId(articleId);
+    public Result deleteCollectionAritcleByArticleId(@RequestParam("collectionArticleId") String collectionArticleId) {
+        return healthyArticleService.deleteCollectionAritcleByArticleId(collectionArticleId);
     }
 
 

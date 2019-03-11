@@ -288,11 +288,11 @@ public class HealthyArticleService {
     /**
      * 删除收藏的文章
      *
-     * @param articleId
+     * @param collectionArticleId
      * @return
      */
-    public Result deleteCollectionAritcleByArticleId(String articleId) {
-        int code = healthyArticleMapper.deleteCollectionAritcleByArticleId(articleId);
+    public Result deleteCollectionAritcleByArticleId(String collectionArticleId) {
+        int code = healthyArticleMapper.deleteCollectionAritcleByArticleId(collectionArticleId);
         if (code == 1) {
             return new Result(100, "取消收藏成功", true);
         } else {
@@ -346,7 +346,7 @@ public class HealthyArticleService {
     public Result selectCollectionAritlceById(String userId, String articleId) {
         List<String> articleIdList = healthyArticleMapper.selectCollectionAritlceById(articleId, userId);
         if (articleIdList.size() != 0) {
-            return new Result(100, "已经收藏过了", true);
+            return new Result(100, "已经收藏过了", true,articleIdList.get(0));
         } else {
             return new Result(200, "没有收藏", true);
         }

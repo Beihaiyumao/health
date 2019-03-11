@@ -179,7 +179,7 @@ public class QuestionService {
         if (collectionQuestionList.size() == 0) {
             return new Result(200, "未收藏", true);
         } else {
-            return new Result(100, "已收藏", true);
+            return new Result(100, "已收藏", true,collectionQuestionList.get(0));
         }
     }
 }
