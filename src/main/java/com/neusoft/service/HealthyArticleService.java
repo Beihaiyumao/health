@@ -346,9 +346,75 @@ public class HealthyArticleService {
     public Result selectCollectionAritlceById(String userId, String articleId) {
         List<String> articleIdList = healthyArticleMapper.selectCollectionAritlceById(articleId, userId);
         if (articleIdList.size() != 0) {
-            return new Result(100, "已经收藏过了", true,articleIdList.get(0));
+            return new Result(100, "已经收藏过了", true, articleIdList.get(0));
         } else {
             return new Result(200, "没有收藏", true);
         }
+    }
+
+    /**
+     * 用户点赞文章
+     *
+     * @param likeArticle
+     * @return
+     */
+    public Result insertLikeArticle(LikeArticle likeArticle) {
+        likeArticle.setLikeArticleId(SystemTool.uuid());
+        likeArticle.setCreateTime(SystemTool.getDateTime());
+        //判断是否点赞了
+        List<String> likeArticleIdList = healthyArticleMapper.selectLikeArticleId(likeArticle.getUserId(), likeArticle.getArticleId());
+        if (likeArticleIdList.size() == 0) {
+            int code = healthyArticleMapper.insertLikeArticle(likeArticle);
+            if (code == 1) {
+                return new Result(100, "点赞成功", true);
+            } else {
+                return new Result(200, "未知错误,请重试", false);
+            }
+        } else {
+            return new Result(200, "请不要重复点赞", false);
+        }
+
+    }
+
+    /**
+     * 判断用户是否点赞该文章
+     *
+     * @param userId
+     * @param articleId
+     * @return
+     */
+    public Result selectLikeArticleId(String userId, String articleId) {
+        List<String> list = healthyArticleMapper.selectLikeArticleId(userId, articleId);
+        if (list.size() == 0) {
+            return new Result(100, "未点赞", true);
+        } else {
+            return new Result(200, "已点赞", false, list.get(0));
+        }
+    }
+
+    /**
+     * 取消点赞
+     *
+     * @param likeArticleId
+     * @return
+     */
+    public Result deleteLikeArticle(String likeArticleId) {
+        int code = healthyArticleMapper.deleteLikeArticle(likeArticleId);
+        if (code == 1) {
+            return new Result(100, "取消点赞成功", true);
+        } else {
+            return new Result(200, "未知错误", false);
+        }
+    }
+
+    /**
+     * 文章总点赞数量
+     *
+     * @param articleId
+     * @return
+     */
+    public Result selectLikeArticleAll(String articleId) {
+        List<String> allLikeArticleList = healthyArticleMapper.selectLikeArticleAll(articleId);
+        return new Result(100, "点赞数是" + allLikeArticleList.size(), true, allLikeArticleList.size());
     }
 }

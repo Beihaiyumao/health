@@ -2,11 +2,9 @@ package com.neusoft.dao;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import com.neusoft.entity.ArticleComment;
-import com.neusoft.entity.CollectionArticle;
-import com.neusoft.entity.CommentReply;
-import com.neusoft.entity.HealthyArticle;
+import com.neusoft.entity.*;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
 import java.util.List;
@@ -73,5 +71,15 @@ public interface HealthyArticleMapper {
     //根据评论id查询所有回复
     List<CommentReply> selectCommentReplyByArticleCommentId(String articleCommentId);
 
+    //点赞文章
+    int insertLikeArticle(LikeArticle likeArticle);
 
+    //判断用户是否点赞过此文章
+    List<String> selectLikeArticleId(@Param("userId") String userId, @Param("articleId") String articleId);
+
+    //取消点赞
+    int deleteLikeArticle(@Param("likeArticleId") String likeArticleId);
+
+    //文章总点赞数
+    List<String>selectLikeArticleAll(@Param("articleId")String articleId);
 }

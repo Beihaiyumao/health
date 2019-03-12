@@ -218,4 +218,49 @@ public class HealthyArticleController {
     public Result selectCollectionAritlceById(@RequestParam("userId") String userId, @RequestParam("articleId") String articleId) {
         return healthyArticleService.selectCollectionAritlceById(userId, articleId);
     }
+
+    /**
+     * 用户点赞文章
+     *
+     * @param likeArticle
+     * @return
+     */
+    @PostMapping("/insertLikeArticle")
+    public Result insertLikeArticle(@RequestBody LikeArticle likeArticle) {
+        return healthyArticleService.insertLikeArticle(likeArticle);
+    }
+
+    /**
+     * 判断用户是否点赞了该文章
+     *
+     * @param userId
+     * @param articleId
+     * @return
+     */
+    @GetMapping("/selectLikeArticleId")
+    public Result selectLikeArticleId(@RequestParam("userId") String userId, @RequestParam("articleId") String articleId) {
+        return healthyArticleService.selectLikeArticleId(userId, articleId);
+    }
+
+    /**
+     * 取消点赞
+     *
+     * @param likeArticleId
+     * @return
+     */
+    @GetMapping("/deleteLikeArticle")
+    public Result deleteLikeArticle(@RequestParam("likeArticleId") String likeArticleId) {
+        return healthyArticleService.deleteLikeArticle(likeArticleId);
+    }
+
+    /**
+     * 文章点赞总数
+     *
+     * @param articleId
+     * @return
+     */
+    @GetMapping("/selectLikeArticleAll")
+    public Result selectLikeArticleAll(@RequestParam("articleId") String articleId) {
+        return healthyArticleService.selectLikeArticleAll(articleId);
+    }
 }

@@ -328,4 +328,24 @@
     on a.user_id=b.user_id
     where a.comment_id=#{articleCommentId} order by a.create_time desc
   </select>
+  <insert id="insertLikeArticle" parameterType="com.neusoft.entity.LikeArticle">
+    insert into like_article (like_article_id, user_id, article_id,
+      create_time)
+    values (#{likeArticleId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="selectLikeArticleId" resultType="java.lang.String">
+    SELECT
+    a.like_article_id
+    FROM like_article a where a.user_id=#{userId}and a.article_id=#{articleId}
+  </select>
+  <delete id="deleteLikeArticle">
+    DELETE
+    FROM  like_article  where like_article_id=#{likeArticleId}
+  </delete>
+  <select id="selectLikeArticleAll" resultType="java.lang.String">
+    SELECT
+    a.like_article_id
+    FROM like_article a where  a.article_id=#{articleId}
+  </select>
 </mapper>
