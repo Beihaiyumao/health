@@ -156,9 +156,7 @@
     update user
     set username = #{username,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
-      email = #{email,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=VARCHAR},
-      pic = #{pic,jdbcType=VARCHAR},
+      user_phone = #{phone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>

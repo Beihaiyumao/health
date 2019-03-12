@@ -57,13 +57,13 @@ public class UserController {
      * @throws JSONException
      **/
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
-    public Result regist(@RequestBody User regist, HttpSession session,HttpServletRequest request) throws JSONException {
+    public Result regist(@RequestBody User regist, HttpSession session, HttpServletRequest request) throws JSONException {
         User register = userMapper.login(regist.getEmail());
         String idCode = (String) session.getAttribute("sRand");
         // 验证验证码
 //        String idCode = request.getSession().getAttribute("sRand").toString();
 //        System.out.println(sessionCode+"上边");
-        System.out.println(idCode+"上边");
+        System.out.println(idCode + "上边");
         if (register != null && register.getBlackState().equals(BlackState.BLACK_STATE_TRUE.getCode())) {
             String msg = userMapper.selectUserBlackMsg(regist.getEmail());
             return new Result(200, "抱歉您已被管理员拉黑，具体原因:" + msg, false);
@@ -294,7 +294,7 @@ public class UserController {
         g.dispose(); //释放g所占用的系统资源
         session.setAttribute("sRand", sRand);//存储到session
         ImageIO.write(image, "JPEG", response.getOutputStream()); //输出图片
-        System.out.println(sRand+"下边");
+        System.out.println(sRand + "下边");
     }
 
     /**
@@ -304,21 +304,21 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
-    public int updateUserInfo(@RequestBody User user) {
-        int code = userService.updateUserInfo(user);
-        return code;
+    public Result updateUserInfo(@RequestBody User user) {
+
+        return userService.updateUserInfo(user);
     }
 
     /**
      * 更新头像
      *
-     * @param file
+     * @param fileName
      * @param userId
      * @return
      */
     @GetMapping("/updateHeadPhoto")
-    public Result updateHeadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
-        return userService.updateHeadPhoto(file, userId);
+    public Result updateHeadPhoto(@RequestParam("fileName") String fileName, @RequestParam("userId") String userId) {
+        return userService.updateHeadPhoto(fileName, userId);
     }
 
     /**

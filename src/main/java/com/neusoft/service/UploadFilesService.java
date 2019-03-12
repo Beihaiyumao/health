@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @Service
 public class UploadFilesService {
-    public Result uploadPic(MultipartFile file) {
+    public Result uploadPic(MultipartFile file,String path) {
         if (!file.isEmpty()) {
             // 获取文件名称,包含后缀
             String fileName = file.getOriginalFilename();
@@ -30,10 +30,6 @@ public class UploadFilesService {
             } else {
                 return new Result(200, "只支持png，jgp后缀的图片", false);
             }
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String time = sdf.format(new Date());
-            String path = "C://usr/uploadFiles/images/" + time + "/";
             File filePath = new File(path);
             //如果目录不存在则自动创建
             if (!filePath.exists()) {
@@ -42,7 +38,7 @@ public class UploadFilesService {
             try {
                 // 该方法是对文件写入的封装，在tool类中，导入该包即可使用，后面会给出方法
                 FileUtil.fileupload(file.getBytes(), path, fileName);
-                return new Result(100, "上传成功", true);
+                return new Result(100, "上传成功", true,fileName);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -51,4 +47,5 @@ public class UploadFilesService {
         }
         return new Result(200, "未知错误", false);
     }
+
 }
