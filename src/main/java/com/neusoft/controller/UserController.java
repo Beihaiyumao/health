@@ -11,14 +11,23 @@ import com.neusoft.entity.User;
 import com.neusoft.service.HealthyArticleService;
 import com.neusoft.service.QuestionService;
 import com.neusoft.service.UserService;
+import com.neusoft.tool.AbsRestClient;
+import com.neusoft.tool.JsonReqClient;
 import com.neusoft.tool.PageInfo;
+import net.sf.json.JSONObject;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.MessageDigest;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -30,7 +39,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -49,6 +57,37 @@ public class UserController {
 
     @Autowired
     private HealthyArticleService healthyArticleService;
+
+    public static final String AppID = "861abd42e5544595a7d211671ad98a9f";
+    public static final String Account_Sid = "177883eb641ab2968ffb41ad84096ec0";
+    public static final String Auth_Token = "03c2e695fb57c0b8ed9912aac6550c5e";
+    public static final String Base_url = "https://open.ucpaas.com/ol/sms/sendsms";
+    public static final String templateid = "444225";
+    public static final String uid = "";
+
+    static AbsRestClient InstantiationRestAPI() {
+        return new JsonReqClient();
+    }
+
+    /**
+     * 短信验证码
+     *
+     * @param phone
+     * @return
+     */
+    @PostMapping("/smsg")
+    public Result smsg(@RequestParam("phone") String phone) {
+        int randNum = (int) ((Math.random() * 9 + 1) * 100000);//随机数
+        String param = randNum + ",60";
+        try {
+            String result = InstantiationRestAPI().sendSms(Account_Sid, Auth_Token, AppID, templateid, param, phone, uid);
+            System.out.println("Response content is: " + result);
+            return new Result(100, randNum + "", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(200, "未知错误,请重试!", false);
+        }
+    }
 
     /**
      * 用户注册
@@ -390,4 +429,5 @@ public class UserController {
         PageInfo<HealthyArticle> pageInfo = new PageInfo<>(selectMyHealthyArticle);
         return pageInfo;
     }
+
 }
