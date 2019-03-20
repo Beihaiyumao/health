@@ -56,14 +56,14 @@ public class AdminService {
      *
      * @param addAdmin
      */
-    public void addAdmin(Admin addAdmin) {
+    public Result addAdmin(Admin addAdmin) {
         //获取当前时间
         Date time = new Date(new java.util.Date().getTime());
         //管理员id
         String adminId = SystemTool.uuid();
         addAdmin.setAdminId(adminId);
         addAdmin.setCreateTime(time);
-        adminMapper.addAdmin(addAdmin);
+        return (SystemTool.insert(adminMapper.addAdmin(addAdmin)));
     }
 
     /**
@@ -71,8 +71,8 @@ public class AdminService {
      *
      * @param adminId
      */
-    public void deleteAdmin(String adminId) {
-        adminMapper.deleteAdmin(adminId);
+    public Result deleteAdmin(String adminId) {
+        return SystemTool.delete(adminMapper.deleteAdmin(adminId));
     }
 
     /**

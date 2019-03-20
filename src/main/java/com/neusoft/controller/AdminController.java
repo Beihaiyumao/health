@@ -48,8 +48,9 @@ public class AdminController {
      * @param addAdmin
      */
     @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
-    public void addAdmin(@RequestBody Admin addAdmin) {
-        adminService.addAdmin(addAdmin);
+    public Result addAdmin(@RequestBody Admin addAdmin) {
+
+        return adminService.addAdmin(addAdmin);
     }
 
     /**
@@ -58,8 +59,9 @@ public class AdminController {
      * @param adminId
      */
     @RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)
-    public void deleteAdmin(@RequestParam("adminId") String adminId) {
-        adminService.deleteAdmin(adminId);
+    public Result deleteAdmin(@RequestParam("adminId") String adminId) {
+
+        return adminService.deleteAdmin(adminId);
     }
 
     /**

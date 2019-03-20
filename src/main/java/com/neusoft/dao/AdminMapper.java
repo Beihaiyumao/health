@@ -11,10 +11,10 @@ public interface AdminMapper {
     Admin adminLogin(String username);
 
     /*****新增管理员****/
-    void addAdmin(Admin admin);
+    int addAdmin(Admin admin);
 
     /*****删除管理员****/
-    void deleteAdmin(String adminId);
+    int deleteAdmin(String adminId);
 
     //查询所有未删除的用户
     Page<User> selectAllUser();
