@@ -398,4 +398,26 @@ public class AdminController {
     public Result deleteFeedback(@RequestParam("userFeedbackId") String userFeedbackId) {
         return adminService.deleteFeedback(userFeedbackId);
     }
+
+    /**
+     * 取消拉黑用户
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/cancelBlackUser")
+    public Result cancelBlackUser(@RequestParam("userId") String userId) {
+        return adminService.cancelBlackUser(userId);
+    }
+
+    /**
+     * 取消拉黑医生
+     *
+     * @param doctorId
+     * @return
+     */
+    @GetMapping("/cancelBlackDoct")
+    public Result cancelBlackDoct(@RequestParam("doctorId") String doctorId) {
+        return adminService.cancelBlackDoct(doctorId);
+    }
 }

@@ -61,8 +61,8 @@ public class DoctorController {
     @PostMapping("/doctorRegist")
     public Result doctorRegist(@RequestBody Doctor doctor, HttpSession session) {
         Doctor doctorRegist = doctorMapper.login(doctor.getEmail());
-        String idCode = (String) session.getAttribute("sRand");
-        System.out.print(idCode);
+//        String idCode = (String) session.getAttribute("sRand");
+//        System.out.print(idCode);
         if (doctorRegist != null && doctorRegist.getBlackState().equals(BlackState.BLACK_STATE_TRUE.getCode())) {
             String msg = doctorMapper.selectUserBlackMsg(doctor.getEmail());
             return new Result(200, "抱歉您已被管理员拉黑，具体原因:" + msg, false);
@@ -70,13 +70,13 @@ public class DoctorController {
         if (doctorRegist != null) {
             return new Result(200, "该邮箱已被注册请直接登录", false);
         }
-        if (doctor.getIdentifying() == null || doctor.getIdentifying().isEmpty()) {
-            return new Result(200, "请输入验证码", false);
-        }
-        if (!doctor.getIdentifying().equals(idCode)) {
-            return new Result(200, "验证码错误", false);
-        }
-        if (doctorRegist == null && doctor.getIdentifying().equals(idCode)) {
+//        if (doctor.getIdentifying() == null || doctor.getIdentifying().isEmpty()) {
+//            return new Result(200, "请输入验证码", false);
+//        }
+//        if (!doctor.getIdentifying().equals(idCode)) {
+//            return new Result(200, "验证码错误", false);
+//        }
+        if (doctorRegist == null ) {
             int code = doctorService.doctorRegist(doctor);
             if (code == 1) {
                 return new Result(100, "注册成功", true);

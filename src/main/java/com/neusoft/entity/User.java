@@ -29,6 +29,8 @@ public class User {
 
     private String blackState; //是否被拉黑
 
+    private String blackMsg; //拉黑原因
+
     public String getBlackState() {
         return blackState;
     }
@@ -115,5 +117,13 @@ public class User {
 
     public void setIdentifying(String identifying) {
         this.identifying = identifying;
+    }
+
+    public String getBlackMsg() {
+        return blackMsg;
+    }
+
+    public void setBlackMsg(String blackMsg) {
+        this.blackMsg = blackMsg;
     }
 }

@@ -378,4 +378,34 @@ public class AdminService {
     public Result deleteFeedback(String userFeedbackId) {
         return SystemTool.delete(adminMapper.deleteFeedback(userFeedbackId));
     }
+
+    /**
+     * 取消拉黑用户
+     *
+     * @param userId
+     * @return
+     */
+    public Result cancelBlackUser(String userId) {
+        int code = adminMapper.cancelBlackUser(userId);
+        if (code == 1) {
+            return new Result(100, "取消拉黑成功!", true);
+        } else {
+            return new Result(200, "取消拉黑失败,请重试", false);
+        }
+    }
+
+    /**
+     * 取消拉黑医生
+     *
+     * @param doctorId
+     * @return
+     */
+    public Result cancelBlackDoct(String doctorId) {
+        int code = adminMapper.cancelBlackDoct(doctorId);
+        if (code == 1) {
+            return new Result(100, "取消拉黑成功!", true);
+        } else {
+            return new Result(200, "取消拉黑失败,请重试", false);
+        }
+    }
 }

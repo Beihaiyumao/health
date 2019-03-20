@@ -86,8 +86,14 @@ public interface AdminMapper {
     int insertFeedback(UserFeedBack userFeedBack);
 
     //所有用户反馈信息
-    Page<UserFeedBack> selectFeedback(@Param("msg")String msg);
+    Page<UserFeedBack> selectFeedback(@Param("msg") String msg);
 
     //删除用户反馈信息
     int deleteFeedback(@Param("userFeedbackId") String userFeedbackId);
+
+    //取消拉黑用户
+    int cancelBlackUser(@Param("userId") String userId);
+
+    //取消拉黑医生
+    int cancelBlackDoct(@Param("doctorId") String doctorId);
 }

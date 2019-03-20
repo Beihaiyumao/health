@@ -98,11 +98,11 @@ public class UserController {
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
     public Result regist(@RequestBody User regist, HttpSession session, HttpServletRequest request) throws JSONException {
         User register = userMapper.login(regist.getEmail());
-        String idCode = (String) session.getAttribute("sRand");
+//        String idCode = (String) session.getAttribute("sRand");
         // 验证验证码
 //        String idCode = request.getSession().getAttribute("sRand").toString();
 //        System.out.println(sessionCode+"上边");
-        System.out.println(idCode + "上边");
+//        System.out.println(idCode + "上边");
         if (register != null && register.getBlackState().equals(BlackState.BLACK_STATE_TRUE.getCode())) {
             String msg = userMapper.selectUserBlackMsg(regist.getEmail());
             return new Result(200, "抱歉您已被管理员拉黑，具体原因:" + msg, false);
@@ -110,14 +110,14 @@ public class UserController {
         if (register != null) {
             return new Result(200, "该邮箱已存在,请直接登录!", false);
         }
-        if (regist.getIdentifying() == null || regist.getIdentifying().isEmpty()) {
-            return new Result(200, "请输入验证码", false);
-        }
-        if (!regist.getIdentifying().equals(idCode)) {
-
-            return new Result(200, "验证码错误,请注意大小写", false);
-        }
-        if (register == null && regist.getIdentifying().equals(idCode)) {
+//        if (regist.getIdentifying() == null || regist.getIdentifying().isEmpty()) {
+//            return new Result(200, "请输入验证码", false);
+//        }
+//        if (!regist.getIdentifying().equals(idCode)) {
+//
+//            return new Result(200, "验证码错误,请注意大小写", false);
+//        }
+        if (register == null ) {
             userService.registNewUser(regist);
             return new Result(100, "注册成功", true);
         }

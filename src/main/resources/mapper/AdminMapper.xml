@@ -84,8 +84,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectAllDeleteUser" resultType="com.neusoft.entity.User">
 		select
+		b.msg as blackMsg,
 		<include refid="userInfo" />
-		from user a where a.black_state='000200000020' order by a.create_time desc
+		from user a
+		LEFT join blacklist b
+		on (a.user_id = b.user_id and b.role='000100000010')
+		where a.black_state='000200000020' order by a.create_time desc
 	</select>
 	<select id="selectExamineHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
@@ -127,8 +131,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectAllDeleteDoctor" resultType="com.neusoft.entity.Doctor">
 		select
+		bl.msg as blackMsg,
 		<include refid="doctorInfo"/>
-		from doctor a where a.black_state='000200000020' order by a.create_time desc
+		from doctor a
+		LEFT join blacklist bl
+		on (a.doctor_id = bl.user_id and bl.role='000100000020')
+		where a.black_state='000200000020' order by a.create_time desc
 	</select>
 	<select id="selseAllQuestion" resultType="com.neusoft.entity.Question">
 		SELECT
@@ -209,4 +217,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		DELETE
 		FROM  user_feedback  where user_feedback_id=#{userFeedbackId}
 	</delete>
+	<update id="cancelBlackUser" >
+		UPDATE user SET black_state ='000200000010' where user_id=#{userId}
+	</update>
+	<update id="cancelBlackDoct">
+		UPDATE doctor SET black_state ='000200000010' where doctor_id=#{doctorId}
+	</update>
 </mapper>
