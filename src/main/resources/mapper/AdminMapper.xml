@@ -154,8 +154,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		SELECT
 		a.comment_id as commentId,
 		a.content as content,
-		a.create_time as createTime
-		FROM article_comment a order by a.create_time desc
+		a.create_time as createTime,
+		b.title as articleName,
+		c.username as userName,
+		c.email as email,
+		a.user_id as userId,
+		a.article_id as articleId
+		FROM article_comment a
+		LEFT join healthy_article b
+		on a.article_id = b.article_id
+		left JOIN  user c
+		on a.user_id =c.user_id
+		order by a.create_time desc
   	</select>
 	<insert id="insertNavBar" parameterType="com.neusoft.entity.NavBar">
 	  insert into nav_bar (nav_bar_id, nav_bar_name, create_time, sort_id
@@ -167,8 +177,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		SELECT
 		a.reply_id as replyId,
 		a.content as content,
-		a.create_time as createTime
-		from comment_reply a order by a.create_time desc
+		a.create_time as createTime,
+		a.user_id as userId,
+		c.username as userName,
+		c.email as email,
+		b.content as commentInfo,
+		d.title as articleTitle
+		from comment_reply a
+		left join article_comment b
+		on a.comment_id = b.comment_id
+		left join user c
+		on a.user_id = c.user_id
+		left join healthy_article d
+		on a.article_id= d.article_id
+		order by a.create_time desc
 	</select>
 	<select id="selectNavBar" resultType="com.neusoft.entity.NavBar">
 		select
@@ -223,4 +245,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<update id="cancelBlackDoct">
 		UPDATE doctor SET black_state ='000200000010' where doctor_id=#{doctorId}
 	</update>
+	<delete id="deleteCommentById">
+		DELETE
+		FROM  article_comment  where comment_id=#{commentId}
+	</delete>
+	<delete id="deleteReplyById">
+		DELETE
+		FROM comment_reply where reply_id=#{replyId}
+	</delete>
 </mapper>

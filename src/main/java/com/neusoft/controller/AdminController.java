@@ -422,4 +422,26 @@ public class AdminController {
     public Result cancelBlackDoct(@RequestParam("doctorId") String doctorId) {
         return adminService.cancelBlackDoct(doctorId);
     }
+
+    /**
+     * 删除评论
+     *
+     * @param commentId
+     * @return
+     */
+    @GetMapping("/deleteCommentById")
+    public Result deleteCommentById(@RequestParam("commentId") String commentId) {
+        return adminService.deleteCommentById(commentId);
+    }
+
+    /**
+     * 删除回复
+     *
+     * @param replyId
+     * @return
+     */
+    @GetMapping("/deleteReplyById")
+    public Result deleteReplyById(@RequestParam("replyId") String replyId) {
+        return adminService.deleteReplyById(replyId);
+    }
 }

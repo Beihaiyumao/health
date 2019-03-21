@@ -408,4 +408,24 @@ public class AdminService {
             return new Result(200, "取消拉黑失败,请重试", false);
         }
     }
+
+    /**
+     * 删除评论
+     *
+     * @param commentId
+     * @return
+     */
+    public Result deleteCommentById(String commentId) {
+        return SystemTool.delete(adminMapper.deleteCommentById(commentId));
+    }
+
+    /**
+     * 删除回复
+     *
+     * @param replyId
+     * @return
+     */
+    public Result deleteReplyById(String replyId) {
+        return SystemTool.delete(adminMapper.deleteReplyById(replyId));
+    }
 }

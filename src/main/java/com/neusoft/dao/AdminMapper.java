@@ -96,4 +96,10 @@ public interface AdminMapper {
 
     //取消拉黑医生
     int cancelBlackDoct(@Param("doctorId") String doctorId);
+
+    //根据评论id删除评论
+    int deleteCommentById(@Param("commentId")String commentId);
+
+    //根据回复id删除回复
+    int deleteReplyById(@Param("replyId")String replyId);
 }

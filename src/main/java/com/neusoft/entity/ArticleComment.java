@@ -21,6 +21,10 @@ public class ArticleComment {
 
     private String headPhoto; //用户头像
 
+    private String articleName; //所属文章名称
+
+    private String email; //评论者邮箱
+
     private List<CommentReply> commentReply; //评论回复
 
     public String getHeadPhoto() {
@@ -86,5 +90,21 @@ public class ArticleComment {
 
     public void setCommentReply(List<CommentReply> commentReply) {
         this.commentReply = commentReply;
+    }
+
+    public String getArticleName() {
+        return articleName;
+    }
+
+    public void setArticleName(String articleName) {
+        this.articleName = articleName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

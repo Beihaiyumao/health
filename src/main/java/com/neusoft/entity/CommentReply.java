@@ -10,13 +10,19 @@ public class CommentReply {
 
     private String userId; //当前用户id
 
+    private String email; //当前用户邮箱
+
     private String commentId; //评论id
+
+    private String commentInfo; //评论内容
 
     private String content; //回复内容
 
     private String toUserId; //评论者id
 
     private String articleId; //文章id
+
+    private String articleTitle; //文章标题
 
     private Date createTime; //回复时间
 
@@ -94,5 +100,29 @@ public class CommentReply {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCommentInfo() {
+        return commentInfo;
+    }
+
+    public void setCommentInfo(String commentInfo) {
+        this.commentInfo = commentInfo;
+    }
+
+    public String getArticleTitle() {
+        return articleTitle;
+    }
+
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
