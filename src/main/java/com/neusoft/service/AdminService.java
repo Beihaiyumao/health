@@ -1,6 +1,6 @@
 package com.neusoft.service;
 
-import java.sql.Date;
+
 import java.util.List;
 
 import com.github.pagehelper.Page;
@@ -9,7 +9,6 @@ import com.neusoft.DataDictionary.Role;
 import com.neusoft.dao.DoctorMapper;
 import com.neusoft.dao.UserMapper;
 import com.neusoft.entity.*;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,13 +56,16 @@ public class AdminService {
      * @param addAdmin
      */
     public Result addAdmin(Admin addAdmin) {
-        //获取当前时间
-        Date time = new Date(new java.util.Date().getTime());
         //管理员id
         String adminId = SystemTool.uuid();
         addAdmin.setAdminId(adminId);
-        addAdmin.setCreateTime(time);
-        return (SystemTool.insert(adminMapper.addAdmin(addAdmin)));
+        addAdmin.setCreateTime(SystemTool.getDateTime());
+        if(adminMapper.selectAdminByName(addAdmin.getUsername()).size()==0){
+            return (SystemTool.insert(adminMapper.addAdmin(addAdmin)));
+        }
+        else {
+            return new Result(200,"该用户名已被注册,请重试!",false);
+        }
     }
 
     /**

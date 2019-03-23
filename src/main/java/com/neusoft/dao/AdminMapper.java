@@ -16,6 +16,9 @@ public interface AdminMapper {
     /*****删除管理员****/
     int deleteAdmin(String adminId);
 
+    //根据管理员用户名查询
+    List<String> selectAdminByName(@Param("adminName") String adminName);
+
     //查询所有未删除的用户
     Page<User> selectAllUser();
 
@@ -98,8 +101,8 @@ public interface AdminMapper {
     int cancelBlackDoct(@Param("doctorId") String doctorId);
 
     //根据评论id删除评论
-    int deleteCommentById(@Param("commentId")String commentId);
+    int deleteCommentById(@Param("commentId") String commentId);
 
     //根据回复id删除回复
-    int deleteReplyById(@Param("replyId")String replyId);
+    int deleteReplyById(@Param("replyId") String replyId);
 }

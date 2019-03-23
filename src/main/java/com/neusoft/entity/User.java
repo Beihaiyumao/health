@@ -31,6 +31,8 @@ public class User {
 
     private String blackMsg; //拉黑原因
 
+    private Date blackTime; //拉黑时间
+
     public String getBlackState() {
         return blackState;
     }
@@ -125,5 +127,13 @@ public class User {
 
     public void setBlackMsg(String blackMsg) {
         this.blackMsg = blackMsg;
+    }
+
+    public Date getBlackTime() {
+        return blackTime;
+    }
+
+    public void setBlackTime(Date blackTime) {
+        this.blackTime = blackTime;
     }
 }

@@ -32,6 +32,8 @@ public class Doctor {
 
     private String blackMsg;//拉黑原因
 
+    private Date blackTime; //拉黑时间
+
     public String getPic() {
         return pic;
     }
@@ -126,5 +128,13 @@ public class Doctor {
 
     public void setBlackMsg(String blackMsg) {
         this.blackMsg = blackMsg;
+    }
+
+    public Date getBlackTime() {
+        return blackTime;
+    }
+
+    public void setBlackTime(Date blackTime) {
+        this.blackTime = blackTime;
     }
 }

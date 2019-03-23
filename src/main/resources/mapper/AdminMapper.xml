@@ -15,7 +15,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		a.password as password,
 		a.sex as sex ,
 		a.email as email ,
-		a.user_phone as userPhone,
+		a.user_phone as phone,
 		a.create_time as createTime,
 		a.pic as pic,
 		a.address as address,
@@ -85,11 +85,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="selectAllDeleteUser" resultType="com.neusoft.entity.User">
 		select
 		b.msg as blackMsg,
+		b.create_time as blackTime,
 		<include refid="userInfo" />
 		from user a
 		LEFT join blacklist b
 		on (a.user_id = b.user_id and b.role='000100000010')
-		where a.black_state='000200000020' order by a.create_time desc
+		where a.black_state='000200000020' order by b.create_time desc
 	</select>
 	<select id="selectExamineHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
@@ -127,16 +128,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="selectAllDoctor" resultType="com.neusoft.entity.Doctor">
 		select
 		<include refid="doctorInfo"/>
-		from doctor a where a.black_state='000200000010'order by a.create_time
+		from doctor a where a.black_state='000200000010'order by a.create_time DESC
 	</select>
 	<select id="selectAllDeleteDoctor" resultType="com.neusoft.entity.Doctor">
 		select
 		bl.msg as blackMsg,
+		bl.create_time as blackTime,
 		<include refid="doctorInfo"/>
 		from doctor a
 		LEFT join blacklist bl
 		on (a.doctor_id = bl.user_id and bl.role='000100000020')
-		where a.black_state='000200000020' order by a.create_time desc
+		where a.black_state='000200000020' order by bl.create_time desc
 	</select>
 	<select id="selseAllQuestion" resultType="com.neusoft.entity.Question">
 		SELECT
@@ -253,4 +255,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		DELETE
 		FROM comment_reply where reply_id=#{replyId}
 	</delete>
+	<select id="selectAdminByName" resultType="java.lang.String">
+		SELECT
+		a.username
+		FROM admin a where a.username=#{adminName}
+	</select>
 </mapper>
