@@ -60,11 +60,10 @@ public class AdminService {
         String adminId = SystemTool.uuid();
         addAdmin.setAdminId(adminId);
         addAdmin.setCreateTime(SystemTool.getDateTime());
-        if(adminMapper.selectAdminByName(addAdmin.getUsername()).size()==0){
+        if (adminMapper.selectAdminByName(addAdmin.getUsername()).size() == 0) {
             return (SystemTool.insert(adminMapper.addAdmin(addAdmin)));
-        }
-        else {
-            return new Result(200,"该用户名已被注册,请重试!",false);
+        } else {
+            return new Result(200, "该用户名已被注册,请重试!", false);
         }
     }
 
@@ -429,5 +428,27 @@ public class AdminService {
      */
     public Result deleteReplyById(String replyId) {
         return SystemTool.delete(adminMapper.deleteReplyById(replyId));
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param password
+     * @param adminId
+     * @param opassword
+     * @return
+     */
+    public Result changePassword( String adminId,String password, String opassword) {
+        Admin admin = adminMapper.selectAdminById(adminId);
+        if (!admin.getPassword().equals(opassword)) {
+            return new Result(200, "旧密码错误,请重试!", false);
+        } else {
+            int code = adminMapper.changePassword(password, adminId);
+            if (code == 1) {
+                return new Result(100, "修改密码成功", true);
+            } else {
+                return new Result(200, "修改密码失败,请重试!", false);
+            }
+        }
     }
 }

@@ -105,4 +105,10 @@ public interface AdminMapper {
 
     //根据回复id删除回复
     int deleteReplyById(@Param("replyId") String replyId);
+
+    //管理员修改密码
+    int changePassword(@Param("password")String password,@Param("adminId")String adminId);
+
+    //根据管理员id查询管理员信息
+    Admin selectAdminById(@Param("adminId")String adminId);
 }

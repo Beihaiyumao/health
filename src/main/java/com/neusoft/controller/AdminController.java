@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 
 import com.github.pagehelper.Page;
+import com.neusoft.dao.AdminMapper;
 import com.neusoft.entity.*;
 import com.neusoft.tool.PageInfo;
 import com.sun.org.apache.bcel.internal.generic.FMUL;
@@ -24,21 +25,24 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private AdminMapper adminMapper;
+
     /**
      * 管理员登陆
      *
      * @param adminLogin
-     * @param session
+     * @param
      * @throws IOException
      */
     @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-    public Result adminLogin(@RequestBody Admin adminLogin, HttpSession session) {
+    public Result adminLogin(@RequestBody Admin adminLogin) {
 
         if (!adminService.adminLogin(adminLogin)) {
             return new Result(200, adminService.getErrorMessage(), false);
         } else {
-            session.setAttribute("username", adminLogin.getUsername());
-            return new Result(100, "登陆成功!", true);
+            Admin admin = adminMapper.adminLogin(adminLogin.getUsername());
+            return new Result(100, "登陆成功!", true, admin);
         }
     }
 
@@ -443,5 +447,19 @@ public class AdminController {
     @GetMapping("/deleteReplyById")
     public Result deleteReplyById(@RequestParam("replyId") String replyId) {
         return adminService.deleteReplyById(replyId);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param adminId
+     * @param password
+     * @param opassword
+     * @return
+     */
+    @GetMapping("/changePassword")
+    public Result changePassword(@RequestParam("adminId") String adminId, @RequestParam("password") String password, @RequestParam("opassword")
+            String opassword) {
+        return adminService.changePassword(adminId, password, opassword);
     }
 }

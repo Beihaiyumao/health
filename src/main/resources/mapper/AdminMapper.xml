@@ -266,4 +266,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		a.username
 		FROM admin a where a.username=#{adminName}
 	</select>
+	<update id="changePassword">
+		UPDATE
+		admin a SET a.password=#{password} where a.admin_id=#{adminId}
+	</update>
+	<select id="selectAdminById" resultType="com.neusoft.entity.Admin">
+		SELECT
+		<include refid="adminInfo"/>
+		from admin a where a.admin_id=#{adminId}
+	</select>
 </mapper>
