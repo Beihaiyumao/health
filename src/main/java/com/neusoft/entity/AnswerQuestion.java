@@ -12,6 +12,8 @@ public class AnswerQuestion {
 
     private String questionId; //问题id
 
+    private String sex; //提问者性别
+
     private String answerDetail; //回答内容
 
     private String doctorId; //医生id
@@ -29,6 +31,10 @@ public class AnswerQuestion {
     private String detail; // 详细内容
 
     private Date createTime; //创建时间
+
+    private Date answerTime; //回答时间
+
+    private String doctorEmail; //医生邮箱
 
     public String getDoctorHeadPhoto() {
         return doctorHeadPhoto;
@@ -116,5 +122,29 @@ public class AnswerQuestion {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Date getAnswerTime() {
+        return answerTime;
+    }
+
+    public void setAnswerTime(Date answerTime) {
+        this.answerTime = answerTime;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
     }
 }

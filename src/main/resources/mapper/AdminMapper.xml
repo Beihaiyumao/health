@@ -234,8 +234,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</insert>
 	<select id="selectFeedback" resultType="com.neusoft.entity.UserFeedBack">
 		SELECT
+		b.username as username,
+		b.user_phone as phone,
+		b.email as email,
 		<include refid="UserFeedback" />
-		from user_feedback a where a.msg LIKE  CONCAT(CONCAT('%',#{msg}), '%')   order by a.create_time desc
+		from user_feedback a
+		LEFT JOIN user b
+		on a.user_id = b.user_id
+		where a.msg LIKE  CONCAT(CONCAT('%',#{msg}), '%')   order by a.create_time desc
 	</select>
 	<delete id="deleteFeedback">
 		DELETE

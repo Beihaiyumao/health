@@ -46,4 +46,10 @@ public interface QuestionMapper {
 
     //我的收藏问列表
     Page<Question> selectMyCollectionQuestion(@Param("userId")String userId);
+
+    //所有问题的回复
+    Page<AnswerQuestion>selectAllAnswerQuestion();
+
+    //删除问题的回复根据回答id
+    int deleteQuestionAnswerById(@Param("answerId")String answerId);
 }

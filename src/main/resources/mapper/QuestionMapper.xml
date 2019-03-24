@@ -149,4 +149,30 @@
     a.collection_question_id
     from collection_question a WHERE a.user_id=#{userId} and a.question_id=#{questionId}
   </select>
+  <select id="selectAllAnswerQuestion" resultType="com.neusoft.entity.AnswerQuestion">
+      SELECT
+      a.answer_detail as answerDetail,
+      a.create_time as answerTime,
+      b.username as doctorName,
+      b.pic as doctorHeadPhoto,
+      d.username as userName,
+      d.pic as userHeadPhoto,
+      c.create_time as createTime,
+      b.email as doctorEmail,
+      c.title as title,
+      d.sex as sex,
+      a.answer_id as answerId
+      from answer_question a
+      LEFT  JOIN  doctor b
+      on b.doctor_id = a.doctor_id
+      LEFT  JOIN question c
+      on c.question_id=a.question_id
+      LEFT JOIN  user d
+      on c.user_id = d.user_id
+      order by a.create_time desc
+  </select>
+  <delete id="deleteQuestionAnswerById">
+    DELETE
+    FROM  answer_question WHERE answer_id=#{answerId}
+  </delete>
 </mapper>

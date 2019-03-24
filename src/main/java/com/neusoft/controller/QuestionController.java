@@ -154,4 +154,30 @@ public class QuestionController {
     public Result selectCollectionQuestionIdByUserId(@RequestParam("userId") String userId, @RequestParam("questionId") String questionId) {
         return questionService.collectionQuestionIsTrue(userId, questionId);
     }
+
+    /**
+     * 所有问题的回答
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectAllAnswerQuestion")
+    public PageInfo<AnswerQuestion> selectAllAnswerQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                            @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
+        Page<AnswerQuestion> answerQuestions = questionService.selectAllAnswerQuestion(pageNum, pageSize);
+        PageInfo<AnswerQuestion> pageInfo = new PageInfo<>(answerQuestions);
+        return pageInfo;
+    }
+
+    /**
+     * 根据回答id删除回答
+     *
+     * @param answerId
+     * @return
+     */
+    @GetMapping("/deleteQuestionAnswerById")
+    public Result deleteQuestionAnswerById(@RequestParam("answerId") String answerId) {
+        return questionService.deleteQuestionAnswerById(answerId);
+    }
 }
