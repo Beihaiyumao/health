@@ -82,4 +82,7 @@ public interface HealthyArticleMapper {
 
     //文章总点赞数
     List<String>selectLikeArticleAll(@Param("articleId")String articleId);
+
+    //我发布的文章列表
+    Page<HealthyArticle>selectAllMyCreateHealthArticle(@Param("userId")String userId,@Param("role")String role);
 }

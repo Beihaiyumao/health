@@ -275,4 +275,70 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<include refid="adminInfo"/>
 		from admin a where a.admin_id=#{adminId}
 	</select>
+	<insert id="insertHealthArticleGenre" parameterType="com.neusoft.entity.HealthArticleGenre">
+		insert into healthy_article_genre (healthy_article_genre_id, article_genre_code,
+      article_genre_name, create_time
+      )
+    values (#{healthyArticleGenreId,jdbcType=VARCHAR}, #{articleGenreCode,jdbcType=VARCHAR},
+      #{articleGenreName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+	</insert>
+	<sql id="HealthArticleGenre" >
+		a.healthy_article_genre_id as healthyArticleGenreId,
+		a.article_genre_code as articleGenreCode,
+		a.article_genre_name as articleGenreName,
+		a.create_time as createTime
+	</sql>
+	<select id="selectAllArticleGenre" resultType="com.neusoft.entity.HealthArticleGenre">
+		SELECT
+		<include refid="HealthArticleGenre"/>
+		FROM healthy_article_genre a order by a.create_time desc
+	</select>
+	<select id="selectHealthArticleGenreByCodeOrName" resultType="com.neusoft.entity.HealthArticleGenre">
+		SELECT
+		<include refid="HealthArticleGenre"/>
+		FROM healthy_article_genre a WHERE a.article_genre_code=#{articleGenreCode} or a.article_genre_name=#{articleGenreName}
+	</select>
+	<delete id="deleteHealthArticleGenreById">
+		DELETE
+		FROM healthy_article_genre WHERE healthy_article_genre_id=#{healthyArticleGenreId}
+	</delete>
+	<insert id="insertHealthQuestionGenre" parameterType="com.neusoft.entity.HealthQuestionGenre">
+		insert into healthy_question_genre (healthy_question_genre_id, question_genre_code,
+      question_genre_name, create_time
+      )
+    values (#{healthyQuestionGenreId,jdbcType=VARCHAR}, #{questionGenreCode,jdbcType=VARCHAR},
+      #{questionGenreName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+	</insert>
+	<sql id="HealthQuestionGenre" >
+		a.healthy_question_genre_id as healthyQuestionGenreId,
+		a.question_genre_code as questionGenreCode,
+		a.question_genre_name as questionGenreName,
+		a.create_time as createTime
+	</sql>
+	<select id="selectHealthQuestionGenreByCodeOrName" resultType="com.neusoft.entity.HealthQuestionGenre">
+		SELECT
+		<include refid="HealthQuestionGenre" />
+		FROM  healthy_question_genre a WHERE a.question_genre_code=#{questionGenreCode}or a.question_genre_name=#{questionGenreName}
+	</select>
+	<select id="selectAllHealthQuestionGenre" resultType="com.neusoft.entity.HealthQuestionGenre">
+		SELECT
+		<include refid="HealthQuestionGenre"/>
+		FROM healthy_question_genre a order by a.create_time desc
+	</select>
+	<delete id="deleteHealthQuestionGenreById">
+		DELETE
+		FROM healthy_question_genre where healthy_question_genre_id=#{healthyQuestionGenreId}
+	</delete>
+	<update id="updateHealthArticleGenre" parameterType="com.neusoft.entity.HealthArticleGenre">
+	 update healthy_article_genre
+     set article_genre_name = #{articleGenreName,jdbcType=VARCHAR}
+     where healthy_article_genre_id = #{healthyArticleGenreId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateHealthQuestionGenre" parameterType="com.neusoft.entity.HealthQuestionGenre">
+	  update healthy_question_genre
+    set question_genre_name = #{questionGenreName,jdbcType=VARCHAR}
+    where healthy_question_genre_id = #{healthyQuestionGenreId,jdbcType=VARCHAR}
+	</update>
 </mapper>

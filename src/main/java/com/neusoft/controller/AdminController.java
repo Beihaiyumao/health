@@ -462,4 +462,102 @@ public class AdminController {
             String opassword) {
         return adminService.changePassword(adminId, password, opassword);
     }
+
+    /**
+     * 新增文章分类
+     *
+     * @param healthArticleGenre
+     * @return
+     */
+    @PostMapping("/insertHealthArticleGenre")
+    public Result insertHealthArticleGenre(@RequestBody HealthArticleGenre healthArticleGenre) {
+        return adminService.insertHealthArticleGenre(healthArticleGenre);
+    }
+
+    /**
+     * 所有的文章分类
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectAllArticleGenre")
+    public PageInfo<HealthArticleGenre> selectAllArticleGenre(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                              @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
+        Page<HealthArticleGenre> healthArticleGenrePage = adminService.selectAllArticleGenre(pageNum, pageSize);
+        PageInfo<HealthArticleGenre> pageInfo = new PageInfo<>(healthArticleGenrePage);
+        return pageInfo;
+    }
+
+    /**
+     * 删除文章分类
+     *
+     * @param healthyArticleGenreId
+     * @return
+     */
+    @GetMapping("/deleteHealthArticleGenreById")
+    public Result deleteHealthArticleGenreById(@RequestParam("healthyArticleGenreId") String healthyArticleGenreId) {
+        return adminService.deleteHealthArticleGenreById(healthyArticleGenreId);
+    }
+
+    /**
+     * 新增问题分类
+     *
+     * @param healthQuestionGenre
+     * @return
+     */
+    @PostMapping("/insertHealthQuestionGenre")
+    public Result insertHealthQuestionGenre(@RequestBody HealthQuestionGenre healthQuestionGenre) {
+        return adminService.insertHealthQuestionGenre(healthQuestionGenre);
+    }
+
+    /**
+     * 所有的问题分类
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectAllHealthQuestionGenre")
+    public PageInfo<HealthQuestionGenre> selectAllHealthQuestionGenre(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                                      @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
+        Page<HealthQuestionGenre> healthQuestionGenrePage = adminService.selectAllHealthQuestionGenre(pageNum, pageSize);
+        PageInfo<HealthQuestionGenre> pageInfo = new PageInfo<>(healthQuestionGenrePage);
+        return pageInfo;
+    }
+
+    /**
+     * 删除问题分类
+     *
+     * @param healthyQuestionGenreId
+     * @return
+     */
+    @GetMapping("/deleteHealthQuestionGenreById")
+    public Result deleteHealthQuestionGenreById(@RequestParam("healthyQuestionGenreId") String healthyQuestionGenreId) {
+        return adminService.deleteHealthQuestionGenreById(healthyQuestionGenreId);
+    }
+
+    /**
+     * 修改文章类别名称
+     *
+     * @param healthyArticleGenreId
+     * @param articleGenreName
+     * @return
+     */
+    @GetMapping("/updateHealthArticleGenre")
+    public Result updateHealthArticleGenre(@RequestParam("healthyArticleGenreId") String healthyArticleGenreId, @RequestParam("articleGenreName") String articleGenreName) {
+        return adminService.updateHealthArticleGenre(healthyArticleGenreId, articleGenreName);
+    }
+
+    /**
+     * 修改问题类别名称
+     *
+     * @param healthyQuestionGenreId
+     * @param questionGenreName
+     * @return
+     */
+    @GetMapping("/updateHealthQuestionGenre")
+    public Result updateHealthQuestionGenre(@RequestParam("healthyQuestionGenreId") String healthyQuestionGenreId, @RequestParam("questionGenreName") String questionGenreName) {
+        return adminService.updateHealthQuestionGenre(healthyQuestionGenreId, questionGenreName);
+    }
 }

@@ -34,7 +34,7 @@ public class HealthyArticleController {
      * @param healthyArticle
      */
     @RequestMapping(value = "/addHealthyArticle", method = RequestMethod.POST)
-    public Result addHealthyArticle(@RequestBody HealthyArticle healthyArticle, @RequestParam("file") MultipartFile file) {
+    public Result addHealthyArticle(HealthyArticle healthyArticle, @RequestParam("file") MultipartFile file) {
         return healthyArticleService.addHealthyArticle(healthyArticle, file);
 
     }
@@ -262,5 +262,23 @@ public class HealthyArticleController {
     @GetMapping("/selectLikeArticleAll")
     public Result selectLikeArticleAll(@RequestParam("articleId") String articleId) {
         return healthyArticleService.selectLikeArticleAll(articleId);
+    }
+
+    /**
+     * 我发布的文章
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @param role
+     * @return
+     */
+    @GetMapping("/selectAllMyCreateHealthArticle")
+    public PageInfo<HealthyArticle> selectAllMyCreateHealthArticle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                                   @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                                   @RequestParam("userId") String userId, @RequestParam("role") String role) {
+        Page<HealthyArticle> healthyArticlePage = healthyArticleService.selectAllMyCreateHealthArticle(pageNum, pageSize, userId, role);
+        PageInfo<HealthyArticle> pageInfo = new PageInfo<>(healthyArticlePage);
+        return pageInfo;
     }
 }

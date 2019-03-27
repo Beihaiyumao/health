@@ -3,6 +3,7 @@ package com.neusoft.dao;
 import com.github.pagehelper.Page;
 import com.neusoft.entity.*;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -107,8 +108,41 @@ public interface AdminMapper {
     int deleteReplyById(@Param("replyId") String replyId);
 
     //管理员修改密码
-    int changePassword(@Param("password")String password,@Param("adminId")String adminId);
+    int changePassword(@Param("password") String password, @Param("adminId") String adminId);
 
     //根据管理员id查询管理员信息
-    Admin selectAdminById(@Param("adminId")String adminId);
+    Admin selectAdminById(@Param("adminId") String adminId);
+
+    //新增文章分类
+    int insertHealthArticleGenre(HealthArticleGenre healthArticleGenre);
+
+    //所有文章分类
+    Page<HealthArticleGenre> selectAllArticleGenre();
+
+    //判断是否已存在此文章分类
+    HealthArticleGenre selectHealthArticleGenreByCodeOrName(@Param("articleGenreCode") String articleGenreCode, @Param("articleGenreName") String articleGenreName);
+
+    //删除文章分类
+    int deleteHealthArticleGenreById(@Param("healthyArticleGenreId") String healthyArticleGenreId);
+
+    //新增问题分类
+    int insertHealthQuestionGenre(HealthQuestionGenre healthQuestionGenre);
+
+    //判断此分类是否存在
+    HealthQuestionGenre selectHealthQuestionGenreByCodeOrName(@Param("questionGenreCode") String questionGenreCode, @Param("questionGenreName") String questionGenreName);
+
+    //所有文章分类
+    Page<HealthQuestionGenre> selectAllHealthQuestionGenre();
+
+    //删除问题分类
+    int deleteHealthQuestionGenreById(@Param("healthyQuestionGenreId") String healthyQuestionGenreId);
+
+    //修改文章分类名称
+    int updateHealthArticleGenre(@Param("healthyArticleGenreId") String healthyArticleGenreId, @Param("articleGenreName") String articleGenreName);
+
+    //修改问题类别名称
+    int updateHealthQuestionGenre(@Param("healthyQuestionGenreId") String healthyQuestionGenreId, @Param("questionGenreName") String questionGenreName);
+
+
 }
+

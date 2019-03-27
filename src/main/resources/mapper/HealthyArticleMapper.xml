@@ -52,11 +52,12 @@
   <insert id="insert" parameterType="com.neusoft.entity.HealthyArticle" useGeneratedKeys="true" keyProperty="article_id">
     insert into healthy_article (article_id, title, pic, 
       author, article, content, 
-      article_state, create_time, chage_article_state_time
+      article_state, create_time, chage_article_state_time,create_user_id,create_user_role,article_genre
       )
     values (#{articleId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR},
       #{author,jdbcType=VARCHAR}, #{article,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{articleState,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{changeAtricleStateTime,jdbcType=TIMESTAMP}
+      #{articleState,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{changeAtricleStateTime,jdbcType=TIMESTAMP},
+      #{createUserId},#{createUserRole},#{articleGenre}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.neusoft.entity.HealthyArticle" useGeneratedKeys="true" keyProperty="article_id">
@@ -347,5 +348,10 @@
     SELECT
     a.like_article_id
     FROM like_article a where  a.article_id=#{articleId}
+  </select>
+  <select id="selectAllMyCreateHealthArticle" resultType="com.neusoft.entity.HealthyArticle">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM healthy_article a where a.create_user_id=#{userId} and a.create_user_role=#{role}
   </select>
 </mapper>

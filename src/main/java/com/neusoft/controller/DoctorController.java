@@ -47,7 +47,7 @@ public class DoctorController {
             Doctor doctorInfo = doctorMapper.login(doctor.getEmail());
             session.setAttribute("username", doctorInfo.getUsername());
             session.setAttribute("doctorId", doctorInfo.getDoctorId());
-            return new Result(100, doctorService.getErrorMessage(), true);
+            return new Result(100, doctorService.getErrorMessage(), true,doctorInfo);
         }
     }
 

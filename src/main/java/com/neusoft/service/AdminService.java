@@ -438,7 +438,7 @@ public class AdminService {
      * @param opassword
      * @return
      */
-    public Result changePassword( String adminId,String password, String opassword) {
+    public Result changePassword(String adminId, String password, String opassword) {
         Admin admin = adminMapper.selectAdminById(adminId);
         if (!admin.getPassword().equals(opassword)) {
             return new Result(200, "旧密码错误,请重试!", false);
@@ -450,5 +450,106 @@ public class AdminService {
                 return new Result(200, "修改密码失败,请重试!", false);
             }
         }
+    }
+
+    /**
+     * 新增文章类别
+     *
+     * @param healthArticleGenre
+     * @return
+     */
+    public Result insertHealthArticleGenre(HealthArticleGenre healthArticleGenre) {
+        HealthArticleGenre healthArticleGenre1 = adminMapper.selectHealthArticleGenreByCodeOrName(healthArticleGenre.getArticleGenreCode(), healthArticleGenre.getArticleGenreName());
+        if (healthArticleGenre1 != null) {
+            return new Result(200, "已存在该分类的code或name", false);
+        } else {
+            healthArticleGenre.setCreateTime(SystemTool.getDateTime());
+            healthArticleGenre.setHealthyArticleGenreId(SystemTool.uuid());
+            return SystemTool.insert(adminMapper.insertHealthArticleGenre(healthArticleGenre));
+        }
+
+    }
+
+    /**
+     * 所有的文章类别
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public Page<HealthArticleGenre> selectAllArticleGenre(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return adminMapper.selectAllArticleGenre();
+    }
+
+    /**
+     * 删除文章分类
+     *
+     * @param healthyArticleGenreId
+     * @return
+     */
+    public Result deleteHealthArticleGenreById(String healthyArticleGenreId) {
+        return SystemTool.delete(adminMapper.deleteHealthArticleGenreById(healthyArticleGenreId));
+    }
+
+    /**
+     * 新增问题分类
+     *
+     * @param healthQuestionGenre
+     * @return
+     */
+    public Result insertHealthQuestionGenre(HealthQuestionGenre healthQuestionGenre) {
+        HealthQuestionGenre healthQuestionGenre1 = adminMapper.selectHealthQuestionGenreByCodeOrName(healthQuestionGenre.getQuestionGenreCode(), healthQuestionGenre.getQuestionGenreName());
+        if (healthQuestionGenre1 != null) {
+            return new Result(200, "已存在该分类的code或name", false);
+        } else {
+            healthQuestionGenre.setCreateTime(SystemTool.getDateTime());
+            healthQuestionGenre.setHealthyQuestionGenreId(SystemTool.uuid());
+            return SystemTool.insert(adminMapper.insertHealthQuestionGenre(healthQuestionGenre));
+        }
+    }
+
+    /**
+     * 所有问题分类
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public Page<HealthQuestionGenre> selectAllHealthQuestionGenre(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return adminMapper.selectAllHealthQuestionGenre();
+    }
+
+    /**
+     * 删除问题分类
+     *
+     * @param healthyQuestionGenreId
+     * @return
+     */
+    public Result deleteHealthQuestionGenreById(String healthyQuestionGenreId) {
+        return SystemTool.delete(adminMapper.deleteHealthQuestionGenreById(healthyQuestionGenreId));
+    }
+
+    /**
+     * 修改文章分类名称
+     *
+     * @param healthyArticleGenreId
+     * @param articleGenreName
+     * @return
+     */
+    public Result updateHealthArticleGenre(String healthyArticleGenreId, String articleGenreName) {
+        return SystemTool.update(adminMapper.updateHealthArticleGenre(healthyArticleGenreId, articleGenreName));
+    }
+
+    /**
+     * 修改问题分类名称
+     *
+     * @param healthyQuestionGenreId
+     * @param questionGenreName
+     * @return
+     */
+    public Result updateHealthQuestionGenre(String healthyQuestionGenreId, String questionGenreName) {
+        return SystemTool.update(adminMapper.updateHealthQuestionGenre(healthyQuestionGenreId, questionGenreName));
     }
 }

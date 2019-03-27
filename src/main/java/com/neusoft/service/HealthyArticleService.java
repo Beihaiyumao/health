@@ -38,12 +38,13 @@ public class HealthyArticleService {
      * @return
      */
     public Result addHealthyArticle(HealthyArticle healthyArticle, MultipartFile file) {
+//        MultipartFile file=healthyArticle.getFile();
         if (!file.isEmpty()) {
             // 获取文件名称,包含后缀
             String fileName = file.getOriginalFilename();
             //获取文件后缀
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-            if (suffix.equals("png") || suffix.equals("jpg")) {
+            if (suffix.equals("png") || suffix.equals("jpg") || suffix.equals("PNG") || suffix.equals("JPG")) {
 
                 fileName = SystemTool.uuid() + "." + suffix;
             } else {
@@ -416,5 +417,19 @@ public class HealthyArticleService {
     public Result selectLikeArticleAll(String articleId) {
         List<String> allLikeArticleList = healthyArticleMapper.selectLikeArticleAll(articleId);
         return new Result(100, "点赞数是" + allLikeArticleList.size(), true, allLikeArticleList.size());
+    }
+
+    /**
+     * 我创建的文章
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @param role
+     * @return
+     */
+    public Page<HealthyArticle> selectAllMyCreateHealthArticle(Integer pageNum, Integer pageSize, String userId, String role) {
+        PageHelper.startPage(pageNum, pageSize);
+        return healthyArticleMapper.selectAllMyCreateHealthArticle(userId, role);
     }
 }

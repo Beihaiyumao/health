@@ -1,5 +1,7 @@
 package com.neusoft.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 /***
@@ -24,6 +26,12 @@ public class HealthyArticle {
     private Date createTime; //创建时间
 
     private Date changeAtricleStateTime; //更改审核状态时间
+
+    private String articleGenre; //文章分类
+
+    private String createUserId; //创建者id
+
+    private String createUserRole; //创建者身份
 
     public String getArticleId() {
         return articleId;
@@ -96,4 +104,29 @@ public class HealthyArticle {
     public void setChangeAtricleStateTime(Date changeAtricleStateTime) {
         this.changeAtricleStateTime = changeAtricleStateTime;
     }
+
+    public String getArticleGenre() {
+        return articleGenre;
+    }
+
+    public void setArticleGenre(String articleGenre) {
+        this.articleGenre = articleGenre;
+    }
+
+    public String getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(String createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public String getCreateUserRole() {
+        return createUserRole;
+    }
+
+    public void setCreateUserRole(String createUserRole) {
+        this.createUserRole = createUserRole;
+    }
+
 }

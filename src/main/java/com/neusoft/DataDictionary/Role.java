@@ -6,11 +6,12 @@ package com.neusoft.DataDictionary;
  */
 public enum Role {
     USER("000100000010", "普通用户"),
-    DOCTOR("000100000020", "医生");
+    DOCTOR("000100000020", "医生"),
+    ADMIN("000100000030", "管理员");
     private String code;
     private String name;
 
-    private Role(String code, String name) {
+    Role(String code, String name) {
         this.code = code;
         this.name = name;
     }
