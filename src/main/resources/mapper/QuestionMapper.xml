@@ -12,13 +12,21 @@
     a.question_id as questionId,
     a.user_id as userId,
     a.title as title,
-    a.detail as detail,
+    LEFT ( a.detail,30)as detail,
     a.create_time as createTime
   </sql>
   <select id="selectByPrimaryKey" resultType="com.neusoft.entity.Question" >
     select 
-    <include refid="Base_Column_List" />
+    a.question_id as questionId,
+    a.user_id as userId,
+    a.title as title,
+    a.detail as detail,
+    b.sex as sex,
+    b.username as username,
+    a.create_time as createTime
     from question a
+    LEFT JOIN  user b
+    on a.user_id = b.user_id
     where a.question_id = #{questionId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
@@ -27,9 +35,9 @@
   </delete>
   <insert id="insert" parameterType="com.neusoft.entity.Question" >
     insert into question (question_id, user_id, title, 
-      detail, create_time)
+      detail, create_time,question_genre)
     values (#{questionId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{questionGenre})
   </insert>
   <insert id="insertSelective" parameterType="com.neusoft.entity.Question" >
     insert into question
@@ -96,8 +104,26 @@
   </update>
   <select id="selectAllQuestion" resultType="com.neusoft.entity.Question">
     SELECT
+    b.sex as sex,
+    b.username as username,
+    c.question_genre_name as questionGenre,
     <include refid="Base_Column_List"/>
-    from question a order by a.create_time desc
+    from question a
+    LEFT JOIN  user b
+    on a.user_id = b.user_id
+    LEFT join healthy_question_genre c
+    on a.question_genre=c.question_genre_code
+    order by a.create_time desc
+  </select>
+  <select id="selectAllQuestionByGenre" resultType="com.neusoft.entity.Question">
+    SELECT
+    b.sex as sex,
+    b.username as username,
+    <include refid="Base_Column_List"/>
+    from question a
+    LEFT JOIN  user b
+    on a.user_id = b.user_id
+    where a.question_genre = #{genre} order by a.create_time desc
   </select>
   <select id="selectQuestionByTitle" resultType="com.neusoft.entity.Question">
     SELECT
@@ -161,6 +187,7 @@
       b.email as doctorEmail,
       c.title as title,
       d.sex as sex,
+      a.question_id as questionId,
       a.answer_id as answerId
       from answer_question a
       LEFT  JOIN  doctor b
@@ -175,4 +202,24 @@
     DELETE
     FROM  answer_question WHERE answer_id=#{answerId}
   </delete>
+  <select id="selectMyAnswerQuestion" resultType="com.neusoft.entity.AnswerQuestion">
+    SELECT
+      a.answer_detail as answerDetail,
+      a.create_time as answerTime,
+      d.username as userName,
+      d.pic as userHeadPhoto,
+      c.create_time as createTime,
+      c.title as title,
+      d.sex as sex,
+      a.question_id as questionId,
+      a.answer_id as answerId
+      from answer_question a
+      LEFT  JOIN  doctor b
+      on b.doctor_id = a.doctor_id
+      LEFT  JOIN question c
+      on c.question_id=a.question_id
+      LEFT JOIN  user d
+      on c.user_id = d.user_id
+      where a.doctor_id=#{doctorId} order by a.create_time desc
+  </select>
 </mapper>

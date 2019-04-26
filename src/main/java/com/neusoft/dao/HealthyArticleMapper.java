@@ -53,6 +53,9 @@ public interface HealthyArticleMapper {
     //分页审核通过文章
     Page<HealthyArticle> selectHealthyArticle();
 
+    //分类查询审核通过的文章
+    Page<HealthyArticle> selectHealthArticleByGenre(@Param("genre") String genre);
+
     //收藏文章
     int collectionArticles(CollectionArticle collectionArticle);
 
@@ -81,8 +84,17 @@ public interface HealthyArticleMapper {
     int deleteLikeArticle(@Param("likeArticleId") String likeArticleId);
 
     //文章总点赞数
-    List<String>selectLikeArticleAll(@Param("articleId")String articleId);
+    List<String> selectLikeArticleAll(@Param("articleId") String articleId);
 
     //我发布的文章列表
-    Page<HealthyArticle>selectAllMyCreateHealthArticle(@Param("userId")String userId,@Param("role")String role);
+    Page<HealthyArticle> selectAllMyCreateHealthArticle(@Param("userId") String userId, @Param("role") String role);
+
+    //根据文章id查询多少喜欢
+    List<String> selectAllLikeById(String articleId);
+
+    //根据文章id评论数量
+    List<String> selectCommentById(String articleId);
+
+    //根据文章id查询回复数量
+    List<String> selectReplyById(String articleId);
 }

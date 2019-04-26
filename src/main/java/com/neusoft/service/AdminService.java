@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.neusoft.DataDictionary.NoticeState;
 import com.neusoft.DataDictionary.Role;
 import com.neusoft.dao.DoctorMapper;
 import com.neusoft.dao.UserMapper;
@@ -180,7 +181,7 @@ public class AdminService {
      * @param msg
      * @return
      */
-    public Result selectDoctorInfoById(String doctorId, String msg) {
+    public Result deleteDoctorInfoById(String doctorId, String msg) {
         Blacklist deleteDoctor = new Blacklist();
         deleteDoctor.setBlacklistId(SystemTool.uuid());
         deleteDoctor.setCreateTime(SystemTool.getDateTime());
@@ -477,9 +478,14 @@ public class AdminService {
      * @param pageSize
      * @return
      */
-    public Page<HealthArticleGenre> selectAllArticleGenre(Integer pageNum, Integer pageSize) {
+    public Page<HealthArticleGenre> selectAllArticleGenre(Integer pageNum, Integer pageSize, String all) {
         PageHelper.startPage(pageNum, pageSize);
-        return adminMapper.selectAllArticleGenre();
+        if (all.equals("100")) {
+            return adminMapper.selectAllArticleGenre();
+        } else {
+            return adminMapper.selectArticleGenreOutAll();
+        }
+
     }
 
     /**
@@ -516,9 +522,15 @@ public class AdminService {
      * @param pageSize
      * @return
      */
-    public Page<HealthQuestionGenre> selectAllHealthQuestionGenre(Integer pageNum, Integer pageSize) {
+    public Page<HealthQuestionGenre> selectAllHealthQuestionGenre(Integer pageNum, Integer pageSize, String all) {
         PageHelper.startPage(pageNum, pageSize);
-        return adminMapper.selectAllHealthQuestionGenre();
+        if (all.equals("100")) {
+            //包括全部
+            return adminMapper.selectAllHealthQuestionGenre();
+        } else {
+            return adminMapper.selectHealthQuestionGenreOutAll();
+        }
+
     }
 
     /**
@@ -551,5 +563,94 @@ public class AdminService {
      */
     public Result updateHealthQuestionGenre(String healthyQuestionGenreId, String questionGenreName) {
         return SystemTool.update(adminMapper.updateHealthQuestionGenre(healthyQuestionGenreId, questionGenreName));
+    }
+
+    /**
+     * 新增用户通知栏
+     *
+     * @param noticeMsg
+     * @return
+     */
+    public Result insertNoticeMsg(NoticeMsg noticeMsg) {
+        noticeMsg.setCreateTime(SystemTool.getDateTime());
+        noticeMsg.setNoticeMsgId(SystemTool.uuid());
+        noticeMsg.setState(NoticeState.NOT_STATE.getCode());
+        return SystemTool.insert(adminMapper.insertNoticeMsg(noticeMsg));
+    }
+
+    /**
+     * 所有用户通知
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public Page<NoticeMsg> selectAllNoticeMsg(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return adminMapper.selectAllNoticeMsg();
+    }
+
+    /**
+     * 开启通知
+     *
+     * @param state
+     * @param noticeMsgId
+     * @return
+     */
+    public Result updateNoticeState(String state, String noticeMsgId) {
+        //查询是否存在已开启的通知
+        List<String> list = adminMapper.selectAllNoticeStateIsYes();
+        if (list.size() != 0) {
+            return new Result(300, "已存在开启的通知", true);
+        } else {
+            int code = adminMapper.updateNoticeState(state, noticeMsgId);
+            if (code == 1) {
+                return new Result(100, "开启通知成功", true);
+            } else {
+                return new Result(200, "开启通知失败", false);
+            }
+        }
+
+    }
+
+    /**
+     * 关闭通知
+     *
+     * @param state
+     * @param noticeMsgId
+     * @return
+     */
+    public Result updateNoticeStateIsFalse(String state, String noticeMsgId) {
+        int code = adminMapper.updateNoticeState(state, noticeMsgId);
+        if (code == 1) {
+            return new Result(100, "关闭通知成功", true);
+        } else {
+            return new Result(200, "关闭通知失败", false);
+        }
+    }
+
+    /**
+     * 删除通知
+     *
+     * @param noticeMsgId
+     * @return
+     */
+    public Result deleteNoticeStateById(String noticeMsgId) {
+        return SystemTool.delete(adminMapper.deleteNoticeStateById(noticeMsgId));
+    }
+
+    /**
+     * 查询正在通知的消息
+     *
+     * @return
+     */
+    public Result selectIsYesNotice() {
+        List<NoticeMsg> list = adminMapper.selectIsYesNotice();
+        if (list.size() != 0) {
+            return new Result(100, "成功", true, list.get(0));
+        } else {
+            return new Result(200, "没有正在通知的消息", false);
+        }
+
     }
 }

@@ -16,6 +16,12 @@ public class Question {
 
     private Date createTime; //创建时间
 
+    private int sex; //提问者性别
+
+    private String username;//提问者姓名
+
+    private String questionGenre; //问题分类
+
     public String getQuestionId() {
         return questionId;
     }
@@ -54,5 +60,29 @@ public class Question {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getQuestionGenre() {
+        return questionGenre;
+    }
+
+    public void setQuestionGenre(String questionGenre) {
+        this.questionGenre = questionGenre;
     }
 }

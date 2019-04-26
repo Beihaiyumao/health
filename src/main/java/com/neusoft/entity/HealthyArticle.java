@@ -33,6 +33,26 @@ public class HealthyArticle {
 
     private String createUserRole; //创建者身份
 
+    private Integer likeAll;
+
+    private Integer commentAll;
+
+    public Integer getLikeAll() {
+        return likeAll;
+    }
+
+    public void setLikeAll(Integer likeAll) {
+        this.likeAll = likeAll;
+    }
+
+    public Integer getCommentAll() {
+        return commentAll;
+    }
+
+    public void setCommentAll(Integer commentAll) {
+        this.commentAll = commentAll;
+    }
+
     public String getArticleId() {
         return articleId;
     }

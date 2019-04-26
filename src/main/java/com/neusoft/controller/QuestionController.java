@@ -41,10 +41,20 @@ public class QuestionController {
      */
     @RequestMapping(value = "/allQuestion", method = RequestMethod.GET)
     public PageInfo<Question> selectAllQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
-                                                @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
-        Page<Question> allQuestion = questionService.selectAllQuestion(pageNum, pageSize);
-        PageInfo<Question> pageInfo = new PageInfo<>(allQuestion);
-        return pageInfo;
+                                                @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                @RequestParam("genre") String genre) {
+        //未分类查询
+        if (genre.isEmpty()) {
+            Page<Question> allQuestion = questionService.selectAllQuestion(pageNum, pageSize);
+            PageInfo<Question> pageInfo = new PageInfo<>(allQuestion);
+            return pageInfo;
+        }
+        //分类查询
+        else {
+            Page<Question> allQuestion = questionService.selectAllQuestionByGenre(pageNum, pageSize, genre);
+            PageInfo<Question> pageInfo = new PageInfo<>(allQuestion);
+            return pageInfo;
+        }
     }
 
     /**
@@ -179,5 +189,22 @@ public class QuestionController {
     @GetMapping("/deleteQuestionAnswerById")
     public Result deleteQuestionAnswerById(@RequestParam("answerId") String answerId) {
         return questionService.deleteQuestionAnswerById(answerId);
+    }
+
+    /**
+     * 我回答的问题
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param doctorId
+     * @return
+     */
+    @GetMapping("/selectMyAnswerQuestion")
+    public PageInfo<AnswerQuestion> selectMyAnswerQuestion(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                           @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                           @RequestParam("doctorId") String doctorId) {
+        Page<AnswerQuestion> answerQuestionPage = questionService.selectMyAnswerQuestion(pageNum, pageSize, doctorId);
+        PageInfo<AnswerQuestion> pageInfo = new PageInfo<>(answerQuestionPage);
+        return pageInfo;
     }
 }

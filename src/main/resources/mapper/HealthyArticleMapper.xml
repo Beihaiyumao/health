@@ -281,6 +281,11 @@
     <include refid="Base_Column_List" />
     from healthy_article a where a.article_state='000000000020' order by a.create_time desc
   </select>
+  <select id="selectHealthArticleByGenre" resultType="com.neusoft.entity.HealthyArticle">
+    SELECT
+    <include refid="Base_Column_List" />
+    from healthy_article a where a.article_state='000000000020' and a.article_genre=#{genre} order by a.create_time desc
+  </select>
   <insert id="collectionArticles" parameterType="com.neusoft.entity.CollectionArticle" >
     insert into collection_article (collection_article_id, user_id, article_id,
     create_time)
@@ -351,7 +356,26 @@
   </select>
   <select id="selectAllMyCreateHealthArticle" resultType="com.neusoft.entity.HealthyArticle">
     SELECT
+    b.article_genre_name as articleGenre,
     <include refid="Base_Column_List"/>
-    FROM healthy_article a where a.create_user_id=#{userId} and a.create_user_role=#{role}
+    FROM healthy_article a
+    LEFT JOIN healthy_article_genre b
+    on a.article_genre = b.article_genre_code
+    where a.create_user_id=#{userId} and a.create_user_role=#{role}
+  </select>
+  <select id="selectAllLikeById" resultType="java.lang.String">
+    select
+    a.like_article_id
+    from like_article a where a.article_id =#{articleId}
+  </select>
+  <select id="selectCommentById" resultType="java.lang.String">
+    select
+    a.comment_id
+    from article_comment a where a.article_id=#{articleId}
+  </select>
+  <select id="selectReplyById" resultType="java.lang.String">
+    SELECT
+    a.reply_id
+    from comment_reply a where a.article_id=#{articleId}
   </select>
 </mapper>

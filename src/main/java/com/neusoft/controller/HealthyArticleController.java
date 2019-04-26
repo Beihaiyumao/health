@@ -145,11 +145,20 @@ public class HealthyArticleController {
      */
     @RequestMapping(value = "/healthyArticle", method = RequestMethod.GET)
     public PageInfo<HealthyArticle> selectHealthyArticle(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
-                                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
-        Page<HealthyArticle> healthyArticle = healthyArticleService.selectHealthyArticle(pageNum, pageSize);
-        // 需要把Page包装成PageInfo对象才能序列化。该插件也默认实现了一个PageInfo
-        PageInfo<HealthyArticle> pageInfo = new PageInfo<>(healthyArticle);
-        return pageInfo;
+                                                         @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                         @RequestParam("articleGenre") String articleGenre) {
+        //未分类
+        if (articleGenre.isEmpty()) {
+            Page<HealthyArticle> healthyArticle = healthyArticleService.selectHealthyArticle(pageNum, pageSize);
+            PageInfo<HealthyArticle> pageInfo = new PageInfo<>(healthyArticle);
+            return pageInfo;
+        } else {
+            //分类查询
+            Page<HealthyArticle> healthyArticle = healthyArticleService.selectHealthArticleByGenre(pageNum, pageSize, articleGenre);
+            PageInfo<HealthyArticle> pageInfo = new PageInfo<>(healthyArticle);
+            return pageInfo;
+        }
+
     }
 
     /**

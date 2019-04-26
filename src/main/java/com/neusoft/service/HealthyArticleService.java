@@ -54,15 +54,18 @@ public class HealthyArticleService {
             String time = sdf.format(new Date());
             // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)
             // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
+            //本地地址
             String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/" + "img/" + "healthArticle/" + time + "/";
-            File filePath = new File(path);
+            //服务器地址
+            String fwqPath="C:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/health/WEB-INF/classes/static/img/healthArticle/" + time + "/";
+            File filePath = new File(fwqPath);
             //如果目录不存在则自动创建
             if (!filePath.exists()) {
                 filePath.mkdirs();
             }
             try {
                 // 该方法是对文件写入的封装，在tool类中，导入该包即可使用，后面会给出方法
-                FileUtil.fileupload(file.getBytes(), path, fileName);
+                FileUtil.fileupload(file.getBytes(), fwqPath, fileName);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -89,7 +92,16 @@ public class HealthyArticleService {
      */
     public Page<HealthyArticle> selectHealthyArticleByTitle(Integer pageNum, Integer pageSize, String title) {
         PageHelper.startPage(pageNum, pageSize);
-        return healthyArticleMapper.selectHealthyArticleByTitle(title);
+        Page<HealthyArticle> healthyArticle=healthyArticleMapper.selectHealthyArticleByTitle(title);
+        for (int i=0;i<healthyArticle.size();i++){
+            Integer likeAll=healthyArticleMapper.selectAllLikeById(healthyArticle.get(i).getArticleId()).size();
+            Integer comment=healthyArticleMapper.selectCommentById(healthyArticle.get(i).getArticleId()).size();
+            Integer reply=healthyArticleMapper.selectReplyById(healthyArticle.get(i).getArticleId()).size();
+            Integer commentAll=comment+reply;
+            healthyArticle.get(i).setCommentAll(commentAll);
+            healthyArticle.get(i).setLikeAll(likeAll);
+        }
+        return healthyArticle;
     }
 
     /**
@@ -260,7 +272,38 @@ public class HealthyArticleService {
     public Page<HealthyArticle> selectHealthyArticle(Integer pageNum, Integer pageSize) {
         //用插件进行分页
         PageHelper.startPage(pageNum, pageSize);
-        return healthyArticleMapper.selectHealthyArticle();
+        Page<HealthyArticle> healthyArticle=healthyArticleMapper.selectHealthyArticle();
+        for (int i=0;i<healthyArticle.size();i++){
+            Integer likeAll=healthyArticleMapper.selectAllLikeById(healthyArticle.get(i).getArticleId()).size();
+            Integer comment=healthyArticleMapper.selectCommentById(healthyArticle.get(i).getArticleId()).size();
+            Integer reply=healthyArticleMapper.selectReplyById(healthyArticle.get(i).getArticleId()).size();
+            Integer commentAll=comment+reply;
+            healthyArticle.get(i).setCommentAll(commentAll);
+            healthyArticle.get(i).setLikeAll(likeAll);
+        }
+        return healthyArticle;
+    }
+
+    /**
+     * 分类查询审核通过的文章
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param genre
+     * @return
+     */
+    public Page<HealthyArticle> selectHealthArticleByGenre(Integer pageNum, Integer pageSize, String genre) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<HealthyArticle> healthyArticle=healthyArticleMapper.selectHealthArticleByGenre(genre);
+        for (int i=0;i<healthyArticle.size();i++){
+            Integer likeAll=healthyArticleMapper.selectAllLikeById(healthyArticle.get(i).getArticleId()).size();
+            Integer comment=healthyArticleMapper.selectCommentById(healthyArticle.get(i).getArticleId()).size();
+            Integer reply=healthyArticleMapper.selectReplyById(healthyArticle.get(i).getArticleId()).size();
+            Integer commentAll=comment+reply;
+            healthyArticle.get(i).setCommentAll(commentAll);
+            healthyArticle.get(i).setLikeAll(likeAll);
+        }
+        return healthyArticle;
     }
 
     /**
@@ -311,7 +354,16 @@ public class HealthyArticleService {
      */
     public Page<HealthyArticle> selectHealthyArticleByUserId(Integer pageNum, Integer pageSize, String userId) {
         PageHelper.startPage(pageNum, pageSize);
-        return healthyArticleMapper.selectHealthyArticleByUserId(userId);
+        Page<HealthyArticle> healthyArticle=healthyArticleMapper.selectHealthyArticleByUserId(userId);
+        for (int i=0;i<healthyArticle.size();i++){
+            Integer likeAll=healthyArticleMapper.selectAllLikeById(healthyArticle.get(i).getArticleId()).size();
+            Integer comment=healthyArticleMapper.selectCommentById(healthyArticle.get(i).getArticleId()).size();
+            Integer reply=healthyArticleMapper.selectReplyById(healthyArticle.get(i).getArticleId()).size();
+            Integer commentAll=comment+reply;
+            healthyArticle.get(i).setCommentAll(commentAll);
+            healthyArticle.get(i).setLikeAll(likeAll);
+        }
+        return healthyArticle;
     }
 
     /**

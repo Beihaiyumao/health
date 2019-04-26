@@ -1,5 +1,7 @@
 package com.neusoft.entity;
 
+import com.neusoft.DataDictionary.LikedStatusEnum;
+
 import java.util.Date;
 
 /**
@@ -14,6 +16,14 @@ public class LikeArticle {
     private String articleId;//文章id
 
     private Date createTime; //创建时间
+    //点赞的状态.默认未点赞
+    private Integer status = LikedStatusEnum.UNLIKE.getCode();
+
+    public LikeArticle(String userId, String articleId, Integer status) {
+        this.userId = userId;
+        this.articleId = articleId;
+        this.status = status;
+    }
 
     public String getLikeArticleId() {
         return likeArticleId;

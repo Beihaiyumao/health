@@ -1,5 +1,7 @@
 package com.neusoft.entity;
 
+import java.util.Date;
+
 /**
  * 健康工具结果分析
  * 2019/1/22
@@ -8,7 +10,7 @@ public class HealthToolResult {
 
     private String healthToolId; //id
 
-    private String type; //工具类型
+    private String toolType; //工具类型
 
     private double resultCodeStart;//结果值开始
 
@@ -20,6 +22,8 @@ public class HealthToolResult {
 
     private int sex; //性别
 
+    private Date createTime;
+
     public String getHealthToolId() {
         return healthToolId;
     }
@@ -28,12 +32,12 @@ public class HealthToolResult {
         this.healthToolId = healthToolId == null ? null : healthToolId.trim();
     }
 
-    public String getType() {
-        return type;
+    public String getToolType() {
+        return toolType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setToolType(String toolType) {
+        this.toolType = toolType;
     }
 
     public double getResultCodeStart() {
@@ -78,5 +82,13 @@ public class HealthToolResult {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

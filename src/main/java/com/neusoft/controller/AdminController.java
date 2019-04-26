@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 
 import com.github.pagehelper.Page;
+import com.neusoft.DataDictionary.NoticeState;
 import com.neusoft.dao.AdminMapper;
 import com.neusoft.entity.*;
 import com.neusoft.tool.PageInfo;
@@ -193,8 +194,8 @@ public class AdminController {
      * @return
      */
     @GetMapping("/blackDoctor")
-    public Result selectDoctorInfoById(@RequestParam("doctorId") String doctorId, @RequestParam("msg") String msg) {
-        return adminService.selectDoctorInfoById(doctorId, msg);
+    public Result deleteDoctorInfoById(@RequestParam("doctorId") String doctorId, @RequestParam("msg") String msg) {
+        return adminService.deleteDoctorInfoById(doctorId, msg);
 
     }
 
@@ -483,8 +484,9 @@ public class AdminController {
      */
     @GetMapping("/selectAllArticleGenre")
     public PageInfo<HealthArticleGenre> selectAllArticleGenre(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
-                                                              @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
-        Page<HealthArticleGenre> healthArticleGenrePage = adminService.selectAllArticleGenre(pageNum, pageSize);
+                                                              @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                              @RequestParam("all")String all) {
+        Page<HealthArticleGenre> healthArticleGenrePage = adminService.selectAllArticleGenre(pageNum, pageSize,all);
         PageInfo<HealthArticleGenre> pageInfo = new PageInfo<>(healthArticleGenrePage);
         return pageInfo;
     }
@@ -520,8 +522,9 @@ public class AdminController {
      */
     @GetMapping("/selectAllHealthQuestionGenre")
     public PageInfo<HealthQuestionGenre> selectAllHealthQuestionGenre(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
-                                                                      @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
-        Page<HealthQuestionGenre> healthQuestionGenrePage = adminService.selectAllHealthQuestionGenre(pageNum, pageSize);
+                                                                      @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+                                                                      @RequestParam("all") String all){
+        Page<HealthQuestionGenre> healthQuestionGenrePage = adminService.selectAllHealthQuestionGenre(pageNum, pageSize,all);
         PageInfo<HealthQuestionGenre> pageInfo = new PageInfo<>(healthQuestionGenrePage);
         return pageInfo;
     }
@@ -559,5 +562,76 @@ public class AdminController {
     @GetMapping("/updateHealthQuestionGenre")
     public Result updateHealthQuestionGenre(@RequestParam("healthyQuestionGenreId") String healthyQuestionGenreId, @RequestParam("questionGenreName") String questionGenreName) {
         return adminService.updateHealthQuestionGenre(healthyQuestionGenreId, questionGenreName);
+    }
+
+    /**
+     * 新增用户通知
+     *
+     * @param noticeMsg
+     * @return
+     */
+    @PostMapping("/insertNoticeMsg")
+    public Result insertNoticeMsg(@RequestBody NoticeMsg noticeMsg) {
+        return adminService.insertNoticeMsg(noticeMsg);
+    }
+
+    /**
+     * 所有用户通知
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/selectAllNoticeMsg")
+    public PageInfo<NoticeMsg> selectAllNoticeMsg(@RequestParam(defaultValue = "1", value = "currentPage") Integer pageNum,
+                                                  @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize) {
+        Page<NoticeMsg> noticeMsgPage = adminService.selectAllNoticeMsg(pageNum, pageSize);
+        PageInfo<NoticeMsg> pageInfo = new PageInfo<>(noticeMsgPage);
+        return pageInfo;
+    }
+
+    /**
+     * 更新用户通知
+     *
+     * @param state
+     * @param noticeMsgId
+     * @return
+     */
+    @GetMapping("/updateNoticeState")
+    public Result updateNoticeState(@RequestParam("state") String state, @RequestParam("noticeMsgId") String noticeMsgId) {
+        return adminService.updateNoticeState(state, noticeMsgId);
+    }
+
+    /**
+     * 关闭用户通知
+     *
+     * @param state
+     * @param noticeMsgId
+     * @return
+     */
+    @GetMapping("/updateNoticeStateIsFalse")
+    public Result updateNoticeStateIsFalse(@RequestParam("state") String state, @RequestParam("noticeMsgId") String noticeMsgId) {
+        return adminService.updateNoticeStateIsFalse(state, noticeMsgId);
+    }
+
+    /**
+     * 删除通知
+     *
+     * @param noticeMsgId
+     * @return
+     */
+    @GetMapping("/deleteNoticeStateById")
+    public Result deleteNoticeStateById(@RequestParam("noticeMsgId") String noticeMsgId) {
+        return adminService.deleteNoticeStateById(noticeMsgId);
+    }
+
+    /**
+     * 查询正在播报的通知
+     *
+     * @return
+     */
+    @GetMapping("/selectIsYesNotice")
+    public Result selectIsYesNotice() {
+        return adminService.selectIsYesNotice();
     }
 }

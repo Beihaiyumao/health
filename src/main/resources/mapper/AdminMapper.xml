@@ -94,20 +94,29 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectExamineHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
+		b.article_genre_name as articleGenre,
 		<include refid="healthyArticle"/>
 		from healthy_article a
+		LEFT JOIN healthy_article_genre b
+		on a.article_genre = b.article_genre_code
 		where a.article_state='000000000010' order by a.create_time desc
 	</select>
 	<select id="selectPassHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
+		b.article_genre_name as articleGenre,
 		<include refid="healthyArticle"/>
 		from healthy_article a
+		LEFT JOIN healthy_article_genre b
+		on a.article_genre = b.article_genre_code
 		where a.article_state='000000000020' order by a.create_time desc
 	</select>
 	<select id="selectOutHelthyArticle" resultType="com.neusoft.entity.HealthyArticle">
 		SELECT
+		b.article_genre_name as articleGenre,
 		<include refid="healthyArticle" />
 		from healthy_article a
+		LEFT JOIN healthy_article_genre b
+		on a.article_genre = b.article_genre_code
 		where a.article_state='000000000030' order by a.create_time desc
 	</select>
 	<select id="selectAllAdmin" resultType="com.neusoft.entity.Admin">
@@ -294,6 +303,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<include refid="HealthArticleGenre"/>
 		FROM healthy_article_genre a order by a.create_time desc
 	</select>
+	<select id="selectArticleGenreOutAll" resultType="com.neusoft.entity.HealthArticleGenre">
+		SELECT
+		<include refid="HealthArticleGenre"/>
+		FROM healthy_article_genre a WHERE  a.article_genre_code &lt;&gt; '999999999999' order by a.create_time desc
+	</select>
 	<select id="selectHealthArticleGenreByCodeOrName" resultType="com.neusoft.entity.HealthArticleGenre">
 		SELECT
 		<include refid="HealthArticleGenre"/>
@@ -327,6 +341,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<include refid="HealthQuestionGenre"/>
 		FROM healthy_question_genre a order by a.create_time desc
 	</select>
+	<select id="selectHealthQuestionGenreOutAll" resultType="com.neusoft.entity.HealthQuestionGenre">
+		SELECT
+		<include refid="HealthQuestionGenre"/>
+		FROM healthy_question_genre a  WHERE  a.question_genre_code &lt;&gt; '999999999999' order by a.create_time desc
+	</select>
 	<delete id="deleteHealthQuestionGenreById">
 		DELETE
 		FROM healthy_question_genre where healthy_question_genre_id=#{healthyQuestionGenreId}
@@ -341,4 +360,39 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     set question_genre_name = #{questionGenreName,jdbcType=VARCHAR}
     where healthy_question_genre_id = #{healthyQuestionGenreId,jdbcType=VARCHAR}
 	</update>
+	<insert id="insertNoticeMsg" parameterType="com.neusoft.entity.NoticeMsg" >
+	insert into notice_msg (notice_msg_id, msg, state,
+	create_time)
+	values (#{noticeMsgId,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+	#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<select id="selectAllNoticeMsg" resultType="com.neusoft.entity.NoticeMsg">
+		SELECT
+		a.notice_msg_id as noticeMsgId,
+		a.msg as msg,
+		a.state as state,
+		a.create_time as createTime
+		from notice_msg a ORDER BY a.create_time desc
+	</select>
+	<update id="updateNoticeState">
+	update notice_msg
+     set state = #{state,jdbcType=VARCHAR}
+    where notice_msg_id = #{noticeMsgId,jdbcType=VARCHAR}
+	</update>
+	<select id="selectAllNoticeStateIsYes" resultType="java.lang.String">
+		SELECT
+		a.notice_msg_id
+		from notice_msg a where a.state="000500000010"
+	</select>
+	<delete id="deleteNoticeStateById">
+	delete from notice_msg
+    where notice_msg_id = #{noticeMsgId,jdbcType=VARCHAR}
+	</delete>
+	<select id="selectIsYesNotice" resultType="com.neusoft.entity.NoticeMsg">
+		SELECT
+		a.msg as msg,
+		a.state as state,
+		a.create_time as createTime
+		from notice_msg a WHERE  a.state="000500000010" ORDER BY a.create_time desc
+	</select>
 </mapper>

@@ -119,6 +119,8 @@ public interface AdminMapper {
     //所有文章分类
     Page<HealthArticleGenre> selectAllArticleGenre();
 
+    Page<HealthArticleGenre>selectArticleGenreOutAll();
+
     //判断是否已存在此文章分类
     HealthArticleGenre selectHealthArticleGenreByCodeOrName(@Param("articleGenreCode") String articleGenreCode, @Param("articleGenreName") String articleGenreName);
 
@@ -134,6 +136,8 @@ public interface AdminMapper {
     //所有文章分类
     Page<HealthQuestionGenre> selectAllHealthQuestionGenre();
 
+    Page<HealthQuestionGenre> selectHealthQuestionGenreOutAll();
+
     //删除问题分类
     int deleteHealthQuestionGenreById(@Param("healthyQuestionGenreId") String healthyQuestionGenreId);
 
@@ -143,6 +147,22 @@ public interface AdminMapper {
     //修改问题类别名称
     int updateHealthQuestionGenre(@Param("healthyQuestionGenreId") String healthyQuestionGenreId, @Param("questionGenreName") String questionGenreName);
 
+    //新增用户通知
+    int insertNoticeMsg(NoticeMsg noticeMsg);
+
+    //所有用户通知
+    Page<NoticeMsg> selectAllNoticeMsg();
+
+    //更新用户通知状态
+    int updateNoticeState(@Param("state") String state, @Param("noticeMsgId") String noticeMsgId);
+
+    //判断是否存在已开启的通知
+    List<String> selectAllNoticeStateIsYes();
+
+    //删除通知
+    int deleteNoticeStateById(@Param("noticeMsgId") String noticeMsgId);
+
+    List<NoticeMsg>selectIsYesNotice();
 
 }
 

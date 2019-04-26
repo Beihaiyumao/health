@@ -26,6 +26,9 @@ public interface QuestionMapper {
     //问题列表
     Page<Question> selectAllQuestion();
 
+    //根据分类查询问题列表
+    Page<Question>selectAllQuestionByGenre(@Param("genre")String genre);
+
     //模糊查询问题
     Page<Question> selectQuestionByTitle(String title);
 
@@ -52,4 +55,7 @@ public interface QuestionMapper {
 
     //删除问题的回复根据回答id
     int deleteQuestionAnswerById(@Param("answerId")String answerId);
+
+    //我回复的问题列表
+    Page<AnswerQuestion>selectMyAnswerQuestion(@Param("doctorId")String doctorId);
 }

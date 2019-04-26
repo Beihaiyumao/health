@@ -20,7 +20,7 @@ public class CorsConfig {
      */
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        // // addAllowedOrigin 不能设置为* 因为与 allowCredential 冲突,需要设置为具体前端开发地址
+        //  这里匹配了所有的URL，允许所有的外域发起跨域请求，允许外域发起请求任意HTTP
         corsConfiguration.addAllowedOrigin("*");//前端的开发地址
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");

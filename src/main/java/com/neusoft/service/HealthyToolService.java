@@ -1,11 +1,15 @@
 package com.neusoft.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.neusoft.DataDictionary.HealthToolType;
 import com.neusoft.dao.HealthyToolMapper;
 import com.neusoft.entity.HealthToolResult;
 import com.neusoft.entity.Result;
+import com.neusoft.tool.SystemTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.pkcs11.P11Util;
 
 import java.text.DecimalFormat;
 
@@ -26,11 +30,12 @@ public class HealthyToolService {
      * @return
      */
     public Result bmiResult(double height, double weight) {
-        //检验用户输入的数值是否有误 身高:m , 体重: kg
-        if (height <= 0.00 || weight <= 0.00 || height >= 2.50 || weight >= 150.00) {
+        //检验用户输入的数值是否有误 身高:cm , 体重: kg
+        double height1 = height / 100;
+        if (height1 <= 0.50 || weight <= 0.00 || height1 >= 2.50 || weight >= 150.00) {
             return new Result(200, "请输入正确的数据", false);
         } else {
-            double calBMI = weight / (height * height);
+            double calBMI = weight / (height1 * height1);
             //BMI保留两位小数
             DecimalFormat df = new DecimalFormat(".00");
             double calBMI2 = Double.parseDouble(df.format(calBMI));
@@ -89,17 +94,18 @@ public class HealthyToolService {
      * @return
      */
     public Result denResult(double height, double weight, int age, int sex) {
-        //检验用户输入的数值是否有误 身高:m , 体重: kg
-        if (height <= 0.00 || weight <= 0.00 || height >= 2.50 || weight >= 150.00 || age <= 0.00 || age >= 120.00) {
+        //检验用户输入的数值是否有误 身高:cm , 体重: kg
+        double height1 = height / 100;
+        if (height1 <= 0.50 || weight <= 0.00 || height1 >= 2.50 || weight >= 150.00 || age <= 0.00 || age >= 120.00) {
             return new Result(200, "请输入正确的数据", false);
         }
         if (sex == 0) {
-            double denResult = 66 + 13.7 * weight + 500 * height - 6.8 * age;
+            double denResult = 66 + 13.7 * weight + 500 * height1 - 6.8 * age;
             DecimalFormat df = new DecimalFormat(".00");
             double denResult2 = Double.parseDouble(df.format(denResult));
             return new Result(100, "您每日所需能量:" + denResult2 + "Kcal", true);
         } else {
-            double denResult = 655 + 9.5 * weight + 180 * height - 4.7 * age;
+            double denResult = 655 + 9.5 * weight + 180 * height1 - 4.7 * age;
             DecimalFormat df = new DecimalFormat(".00");
             double denResult2 = Double.parseDouble(df.format(denResult));
             return new Result(100, "您每日所需能量:" + denResult2 + "Kcal", true);
@@ -114,11 +120,12 @@ public class HealthyToolService {
      * @return
      */
     public Result cdbwResult(double height, double weight) {
-        //检验用户输入的数值是否有误 身高:m , 体重: kg
-        if (height <= 0.00 || weight <= 0.00 || height >= 2.50 || weight >= 150.00) {
+        //检验用户输入的数值是否有误 身高:cm , 体重: kg
+        double height1 = height / 100;
+        if (height1 <= 0.50 || weight <= 0.00 || height1 >= 2.50 || weight >= 150.00) {
             return new Result(200, "请输入正确的数据", false);
         } else {
-            double cdbwResult = 22 * height * height;
+            double cdbwResult = 22 * height1 * height1;
             DecimalFormat df = new DecimalFormat(".00");
             //理想体重保存两位小数
             double cdbwResult2 = Double.parseDouble(df.format(cdbwResult));
@@ -136,5 +143,64 @@ public class HealthyToolService {
             }
         }
 
+    }
+
+    /**
+     * 所有BMI结果
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public Page<HealthToolResult> selectAllBMIResult(Integer pageNum, Integer pageSize, String toolType) {
+        PageHelper.startPage(pageNum, pageSize);
+        return healthyToolMapper.selectAllBMIResult(toolType);
+    }
+
+    /**
+     * 删除结果
+     *
+     * @param healthToolId
+     * @return
+     */
+    public Result deleteToolResultById(String healthToolId) {
+        return SystemTool.delete(healthyToolMapper.deleteToolResultById(healthToolId));
+    }
+
+    /**
+     * 更新结果
+     *
+     * @param healthToolResult
+     * @return
+     */
+    public Result updateToolResult(HealthToolResult healthToolResult) {
+        return SystemTool.update(healthyToolMapper.updateToolResult(healthToolResult));
+    }
+
+    /**
+     * 新增健康结果
+     *
+     * @param healthToolResult
+     * @return
+     */
+    public Result insertToolResult(HealthToolResult healthToolResult) {
+        healthToolResult.setHealthToolId(SystemTool.uuid());
+        healthToolResult.setCreateTime(SystemTool.getDateTime());
+        return SystemTool.insert(healthyToolMapper.insertToolResult(healthToolResult));
+    }
+
+    /**
+     * 根据id查询结果
+     *
+     * @param healthToolId
+     * @return
+     */
+    public Result selectToolResultById(String healthToolId) {
+        HealthToolResult healthToolResult = healthyToolMapper.selectToolResultById(healthToolId);
+        if (healthToolResult != null) {
+            return new Result(100, "成功", true, healthToolResult);
+        } else {
+            return new Result(200, "未知错误", false);
+        }
     }
 }

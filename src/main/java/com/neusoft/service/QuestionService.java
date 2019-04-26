@@ -204,4 +204,30 @@ public class QuestionService {
     public Result deleteQuestionAnswerById(String answerId) {
         return SystemTool.delete(questionMapper.deleteQuestionAnswerById(answerId));
     }
+
+    /**
+     * 所有我回答的问题
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param doctorId
+     * @return
+     */
+    public Page<AnswerQuestion> selectMyAnswerQuestion(Integer pageNum, Integer pageSize, String doctorId) {
+        PageHelper.startPage(pageNum, pageSize);
+        return questionMapper.selectMyAnswerQuestion(doctorId);
+    }
+
+    /**
+     * 分类查询问题
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param genre
+     * @return
+     */
+    public Page<Question> selectAllQuestionByGenre(Integer pageNum, Integer pageSize, String genre) {
+        PageHelper.startPage(pageNum, pageSize);
+        return questionMapper.selectAllQuestionByGenre(genre);
+    }
 }

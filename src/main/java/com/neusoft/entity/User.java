@@ -13,7 +13,7 @@ public class User {
 
     private String password; //密码
 
-    private Integer sex; //性别
+    private int sex; //性别
 
     private String email; //邮箱
 
@@ -24,8 +24,6 @@ public class User {
     private String pic; //头像
 
     private String address; //住址
-
-    private String identifying; //验证码
 
     private String blackState; //是否被拉黑
 
@@ -81,6 +79,10 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -111,14 +113,6 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
-    }
-
-    public String getIdentifying() {
-        return identifying;
-    }
-
-    public void setIdentifying(String identifying) {
-        this.identifying = identifying;
     }
 
     public String getBlackMsg() {

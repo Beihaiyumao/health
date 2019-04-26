@@ -38,7 +38,7 @@
       sex, phone, email, 
       hospital, create_time,black_state)
     values (#{doctorId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{sex}, #{phone}, #{email,jdbcType=VARCHAR},
       #{hospital,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{blackState})
   </insert>
     <insert id="insertSelective" parameterType="com.neusoft.entity.Doctor">
@@ -126,11 +126,9 @@
     <update id="updateDoctorInfo" parameterType="com.neusoft.entity.Doctor">
     update doctor
     set username = #{username,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      hospital = #{hospital,jdbcType=VARCHAR},
-      pic =#{pic}
+      sex = #{sex},
+      phone = #{phone},
+      hospital = #{hospital,jdbcType=VARCHAR}
     where doctor_id = #{doctorId,jdbcType=VARCHAR}
   </update>
     <select id="login" resultType="com.neusoft.entity.Doctor">

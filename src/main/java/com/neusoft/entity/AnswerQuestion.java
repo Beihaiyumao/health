@@ -12,7 +12,7 @@ public class AnswerQuestion {
 
     private String questionId; //问题id
 
-    private String sex; //提问者性别
+    private int sex; //提问者性别
 
     private String answerDetail; //回答内容
 
@@ -124,11 +124,11 @@ public class AnswerQuestion {
         this.createTime = createTime;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 

@@ -78,7 +78,7 @@ public class DoctorService {
      * @return
      */
     public Result deleteDoctorById(String doctorId) {
-       int code=doctorMapper.deleteDoctorById(doctorId);
+        int code = doctorMapper.deleteDoctorById(doctorId);
         if (code == 1) {
             return new Result(100, "注销成功", true);
         } else {
@@ -92,8 +92,13 @@ public class DoctorService {
      * @param doctorId
      * @return
      */
-    public Doctor selectDoctorInfoById(String doctorId) {
-        return doctorMapper.selectDoctorInfoById(doctorId);
+    public Result selectDoctorInfoById(String doctorId) {
+        Doctor doctor = doctorMapper.selectDoctorInfoById(doctorId);
+        if (doctor != null) {
+            return new Result(100, "查询成功", true, doctor);
+        } else {
+            return new Result(200, "未知错误", false);
+        }
     }
 
     /**
@@ -103,7 +108,7 @@ public class DoctorService {
      * @return
      */
     public Result updateDoctorInfo(Doctor doctor) {
-        int code=doctorMapper.updateDoctorInfo(doctor);
+        int code = doctorMapper.updateDoctorInfo(doctor);
         if (code == 1) {
             return new Result(100, "更新个人信息成功", true);
         } else {
@@ -131,7 +136,7 @@ public class DoctorService {
     public Result insertAnswerQuestion(AnswerQuestion answerQuestion) {
         answerQuestion.setAnswerId(SystemTool.uuid());
         answerQuestion.setCreateTime(SystemTool.getDateTime());
-        int code= doctorMapper.insertAnswerQuestion(answerQuestion);
+        int code = doctorMapper.insertAnswerQuestion(answerQuestion);
         if (code == 1) {
             return new Result(100, "感谢您的回答", true);
         } else {
@@ -159,7 +164,7 @@ public class DoctorService {
      * @return
      */
     public Result deleteMyAnswerQuestion(String answerId) {
-        int code=doctorMapper.deleteMyAnswerQuestion(answerId);
+        int code = doctorMapper.deleteMyAnswerQuestion(answerId);
         if (code == 1) {
             return new Result(100, "删除回答成功", true);
         } else {

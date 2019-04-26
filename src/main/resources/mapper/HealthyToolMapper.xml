@@ -1,11 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.neusoft.dao.HealthyToolMapper" >
+    <sql id="Base_Column_List" >
+        a.health_tool_id as healthToolId,
+        a.tool_type as toolType,
+        a.result_code_start as resultCodeStart,
+        a.result_code_end as resultCodeEnd,
+        a.result_msg as resultMsg,
+        a.proposal  as  proposal,
+        a.sex as sex,
+        a.create_time as createTime
+    </sql>
     <select id="healthToolResult" resultType="com.neusoft.entity.HealthToolResult">
         select
         a.result_msg as resultMsg,
         a.proposal as proposal
         from health_tool_result a
-        where a.type=#{type} and #{calResult}<![CDATA[ < ]]> a.result_code_end and #{calResult}<![CDATA[ > ]]> a.result_code_start and a.sex=#{sex}
+        where a.tool_type=#{type} and #{calResult}<![CDATA[ < ]]> a.result_code_end and #{calResult}<![CDATA[ > ]]> a.result_code_start and a.sex=#{sex}
+    </select>
+    <select id="selectAllBMIResult" resultType="com.neusoft.entity.HealthToolResult">
+      SELECT
+      <include refid="Base_Column_List"/>
+        FROM health_tool_result a where a.tool_type=#{toolType} order by a.create_time desc
+    </select>
+    <delete id="deleteToolResultById">
+        DELETE
+        FROM health_tool_result where health_tool_id=#{healthToolId}
+    </delete>
+    <update id="updateToolResult" parameterType="com.neusoft.entity.HealthToolResult" >
+        update health_tool_result
+        set
+        result_code_start = #{resultCodeStart,jdbcType=INTEGER},
+        result_code_end = #{resultCodeEnd,jdbcType=INTEGER},
+        result_msg = #{resultMsg,jdbcType=VARCHAR},
+        proposal = #{proposal,jdbcType=VARCHAR},
+        sex=#{sex}
+        where health_tool_id = #{healthToolId,jdbcType=VARCHAR}
+    </update>
+    <insert id="insertToolResult" parameterType="com.neusoft.entity.HealthToolResult">
+        insert into health_tool_result (health_tool_id, tool_type, result_code_start,
+      result_code_end, result_msg, proposal, sex,create_time
+      )
+    values (#{healthToolId,jdbcType=VARCHAR}, #{toolType,jdbcType=INTEGER}, #{resultCodeStart,jdbcType=INTEGER},
+      #{resultCodeEnd,jdbcType=INTEGER}, #{resultMsg,jdbcType=VARCHAR}, #{proposal,jdbcType=VARCHAR},#{sex},#{createTime}
+      )
+    </insert>
+    <select id="selectToolResultById" resultType="com.neusoft.entity.HealthToolResult">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM health_tool_result a where a.health_tool_id=#{healthToolId}
     </select>
 </mapper>
